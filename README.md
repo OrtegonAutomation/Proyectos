@@ -332,18 +332,6 @@ Este repositorio implementa un **sistema completo de documentación profesional*
 | LESSONS_LEARNED | MD | Mid-project | Bi-weekly | Team |
 | SECURITY_CHECKLIST | XLSX | W6 | Pre-deploy | Security |
 
-### 🔄 Documentos Vivos (Actualizar Regularmente)
-
-| Documento | Frecuencia | Día/Hora | Dueño |
-|-----------|-----------|----------|-------|
-| **RISK_REGISTER.xlsx** | Semanal | 🔴 **VIERNES 10:00 AM** | PM |
-| **WEEKLY_STATUS_REPORT.docx** | Semanal | 🔴 **VIERNES 3:00 PM** | PM |
-| **EXECUTIVE_SUMMARY.pptx** | Semanal | 🔴 **VIERNES 3:00 PM** | PM |
-| CHANGE_LOG.xlsx | Ad-hoc | Cuando se solicita | PM |
-| USER_STORIES.xlsx | Semanal | Fin de sprint | Product Owner |
-| TEST_CASES.xlsx | Durante testing | Diario/Semanal | QA |
-| TEST_RESULTS.xlsx | Diario | Viernes 5pm | QA |
-
 ---
 
 ## 📖 Guías de Uso
