@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>FifoCleanup.Engine</RootNamespace>
+    <AssemblyName>FifoCleanup.Engine</AssemblyName>
+    <Description>Motor de lógica FIFO: inventario, limpieza, simulación, monitoreo RF-07/RF-08</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+</Project>

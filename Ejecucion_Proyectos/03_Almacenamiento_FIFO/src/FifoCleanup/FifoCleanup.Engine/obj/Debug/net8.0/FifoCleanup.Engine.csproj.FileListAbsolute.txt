@@ -1,0 +1,11 @@
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\bin\Debug\net8.0\FifoCleanup.Engine.deps.json
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\bin\Debug\net8.0\FifoCleanup.Engine.dll
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\bin\Debug\net8.0\FifoCleanup.Engine.pdb
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.AssemblyInfoInputs.cache
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.AssemblyInfo.cs
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.csproj.CoreCompileInputs.cache
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.dll
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\refint\FifoCleanup.Engine.dll
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.pdb
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\ref\FifoCleanup.Engine.dll

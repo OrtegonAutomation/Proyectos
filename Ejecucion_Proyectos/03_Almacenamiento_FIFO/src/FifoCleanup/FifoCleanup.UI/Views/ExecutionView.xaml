@@ -1,0 +1,182 @@
+<UserControl x:Class="FifoCleanup.UI.Views.ExecutionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:FifoCleanup.UI.Converters"
+             Background="{StaticResource BackgroundBrush}">
+
+    <UserControl.Resources>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+        <StackPanel MaxWidth="900">
+            <TextBlock Text="Ejecución y Monitoreo" Style="{StaticResource HeaderText}"/>
+
+            <!-- Controles de servicios RF-07 y RF-08 -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- RF-07 -->
+                <Border Grid.Column="0" Style="{StaticResource CardPanel}" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="RF-07: Limpieza Programada" Style="{StaticResource SubHeaderText}"/>
+                        <TextBlock Text="Evalúa periódicamente si se requiere limpieza basado en promedio histórico de crecimiento."
+                                   Style="{StaticResource SecondaryText}" Margin="0,4,0,12" TextWrapping="Wrap"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SecondaryText}">
+                                    <Run Text="Estado: "/>
+                                    <Run Text="{Binding IsScheduledRunning, Mode=OneWay}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource SecondaryText}" Margin="0,4,0,0">
+                                    <Run Text="Próxima ejecución: "/>
+                                    <Run Text="{Binding ScheduledNextRun}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <Button Grid.Column="1" Style="{StaticResource PrimaryButton}"
+                                    Command="{Binding ToggleScheduledCommand}" VerticalAlignment="Center">
+                                <Button.Content>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="▶ Iniciar"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsScheduledRunning}" Value="True">
+                                                        <Setter Property="Text" Value="⏹ Detener"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- RF-08 -->
+                <Border Grid.Column="1" Style="{StaticResource CardPanel}" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="RF-08: Monitoreo Preventivo" Style="{StaticResource SubHeaderText}"/>
+                        <TextBlock Text="Detecta adiciones en tiempo real y ejecuta limpieza local si proyecta riesgo de llenado."
+                                   Style="{StaticResource SecondaryText}" Margin="0,4,0,12" TextWrapping="Wrap"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource SecondaryText}">
+                                    <Run Text="Archivos detectados: "/>
+                                    <Run Text="{Binding PreventiveFilesDetected}" FontWeight="Bold"/>
+                                </TextBlock>
+                                <TextBlock Style="{StaticResource SecondaryText}" Margin="0,4,0,0">
+                                    <Run Text="Limpiezas preventivas: "/>
+                                    <Run Text="{Binding PreventiveCleanups}" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <Button Grid.Column="1" Style="{StaticResource PrimaryButton}"
+                                    Command="{Binding TogglePreventiveCommand}" VerticalAlignment="Center">
+                                <Button.Content>
+                                    <TextBlock>
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Text" Value="▶ Iniciar"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsPreventiveRunning}" Value="True">
+                                                        <Setter Property="Text" Value="⏹ Detener"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Limpieza manual -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <TextBlock Text="Limpieza Manual FIFO" Style="{StaticResource SubHeaderText}" Margin="0,0,0,8"/>
+                    <TextBlock Text="Ejecuta una limpieza FIFO inmediata basada en la configuración actual. Se recomienda hacer un preview primero."
+                               Style="{StaticResource SecondaryText}" Margin="0,0,0,12" TextWrapping="Wrap"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Button Content="👁 Preview" Style="{StaticResource SecondaryButton}"
+                                Command="{Binding PreviewCleanupCommand}" Margin="0,0,8,0"
+                                ToolTip="Muestra qué se eliminaría sin ejecutar la operación"/>
+                        <Button Content="▶ Ejecutar Limpieza" Style="{StaticResource DangerButton}"
+                                Command="{Binding ExecuteCleanupCommand}"
+                                ToolTip="Ejecuta la limpieza FIFO. Se requiere confirmación."/>
+                        <Button Content="⏹ Cancelar" Style="{StaticResource SecondaryButton}"
+                                Command="{Binding CancelExecutionCommand}" Margin="8,0,0,0"
+                                Visibility="{Binding IsExecuting, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
+
+                    <!-- Progreso de ejecución -->
+                    <StackPanel Visibility="{Binding IsExecuting, Converter={StaticResource BoolToVis}}"
+                                Margin="0,12,0,0">
+                        <TextBlock Text="{Binding ProgressMessage}" Style="{StaticResource BodyText}"/>
+                        <ProgressBar Value="{Binding Progress}" Maximum="100" Margin="0,8,0,0" Height="10"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Resultado -->
+            <Border Style="{StaticResource CardPanel}"
+                    Visibility="{Binding HasResult, Converter={StaticResource BoolToVis}}">
+                <StackPanel>
+                    <TextBlock Text="Resultado de Última Ejecución" Style="{StaticResource SubHeaderText}" Margin="0,0,0,8"/>
+                    <TextBlock Text="{Binding ResultMessage}" Style="{StaticResource BodyText}"
+                               FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Espacio liberado" Style="{StaticResource SecondaryText}"/>
+                            <TextBlock Text="{Binding BytesFreed}" Style="{StaticResource SubHeaderText}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Carpetas eliminadas" Style="{StaticResource SecondaryText}"/>
+                            <TextBlock Text="{Binding FoldersDeleted}" Style="{StaticResource SubHeaderText}"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Log de ejecución -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <TextBlock Text="Log de Ejecución" Style="{StaticResource SubHeaderText}" Margin="0,0,0,8"/>
+                    <ListBox ItemsSource="{Binding ExecutionLog}" MaxHeight="300"
+                             FontFamily="Consolas" FontSize="11" Background="#1E1E1E" Foreground="#D4D4D4"
+                             BorderThickness="0" Padding="8">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="2"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

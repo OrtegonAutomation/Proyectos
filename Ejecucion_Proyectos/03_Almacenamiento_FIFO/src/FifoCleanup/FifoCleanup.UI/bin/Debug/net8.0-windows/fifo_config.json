@@ -1,0 +1,16 @@
+{
+  "storagePath": "D:\\tests",
+  "thresholdPercent": 85,
+  "cleanupCapPercent": 20,
+  "scheduledFrequencyHours": 24,
+  "scheduledHour": 2,
+  "preventiveThresholdDays": 3,
+  "enableScheduledCleanup": true,
+  "enablePreventiveCleanup": true,
+  "maxConcurrentAssets": 5,
+  "maxDaysToDeletePerAsset": 10,
+  "configFilePath": "fifo_config.json",
+  "bitacoraPath": "bitacora",
+  "bitacoraRetentionDays": 90,
+  "bitacoraMaxSizeMB": 100
+}

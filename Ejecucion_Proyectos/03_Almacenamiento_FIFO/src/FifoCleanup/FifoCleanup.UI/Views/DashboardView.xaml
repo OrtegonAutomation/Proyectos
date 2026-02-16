@@ -1,0 +1,150 @@
+<UserControl x:Class="FifoCleanup.UI.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:FifoCleanup.UI.Converters"
+             Background="{StaticResource BackgroundBrush}">
+
+    <UserControl.Resources>
+        <conv:StorageLevelToColorConverter x:Key="LevelToColor"/>
+        <conv:BytesToSizeConverter x:Key="BytesToSize"/>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
+        <StackPanel>
+            <!-- Título y botón de actualización -->
+            <Grid Margin="0,0,0,16">
+                <TextBlock Text="Dashboard - Estado del Almacenamiento" Style="{StaticResource HeaderText}"/>
+                <Button Content="🔄 Actualizar" Style="{StaticResource PrimaryButton}"
+                        HorizontalAlignment="Right" Command="{Binding RefreshCommand}"/>
+            </Grid>
+
+            <!-- Métricas principales -->
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Uso de almacenamiento -->
+                <Border Grid.Column="0" Style="{StaticResource CardPanel}" Margin="0,0,8,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding UsageText}" Style="{StaticResource MetricValue}"
+                                   Foreground="{Binding StorageLevel, Converter={StaticResource LevelToColor}}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Uso del Disco" Style="{StaticResource MetricLabel}"
+                                   HorizontalAlignment="Center"/>
+                        <ProgressBar Value="{Binding UsagePercent}" Maximum="100" Margin="0,8,0,0" Height="8"
+                                     Foreground="{Binding StorageLevel, Converter={StaticResource LevelToColor}}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Assets monitoreados -->
+                <Border Grid.Column="1" Style="{StaticResource CardPanel}" Margin="4,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding AssetsCount}" Style="{StaticResource MetricValue}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Assets Monitoreados" Style="{StaticResource MetricLabel}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Crecimiento diario -->
+                <Border Grid.Column="2" Style="{StaticResource CardPanel}" Margin="4,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding DailyGrowth}" Style="{StaticResource MetricValue}"
+                                   FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Crecimiento Diario" Style="{StaticResource MetricLabel}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Días hasta umbral -->
+                <Border Grid.Column="3" Style="{StaticResource CardPanel}" Margin="8,0,0,0">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding EstimatedDays}" Style="{StaticResource MetricValue}"
+                                   FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Días hasta Umbral" Style="{StaticResource MetricLabel}"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Resumen de espacio -->
+            <Border Style="{StaticResource CardPanel}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Espacio Total" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding TotalSpace}" Style="{StaticResource SubHeaderText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Espacio Usado" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding UsedSpace}" Style="{StaticResource SubHeaderText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Espacio Libre" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding FreeSpace}" Style="{StaticResource SubHeaderText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3">
+                        <TextBlock Text="Datos Monitoreados" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding MonitoredData}" Style="{StaticResource SubHeaderText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Estado de servicios -->
+            <Border Style="{StaticResource CardPanel}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="RF-07 (Programada)" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding ScheduledStatus}" Style="{StaticResource SubHeaderText}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="RF-08 (Preventiva)" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding PreventiveStatus}" Style="{StaticResource SubHeaderText}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Último Escaneo" Style="{StaticResource SecondaryText}"/>
+                        <TextBlock Text="{Binding LastScan}" Style="{StaticResource SubHeaderText}"
+                                   Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Tabla de Assets -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <TextBlock Text="Assets Monitoreados" Style="{StaticResource SubHeaderText}" Margin="0,0,0,10"/>
+                    <DataGrid ItemsSource="{Binding Assets}" MaxHeight="300">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Asset" Binding="{Binding AssetId}" Width="120"/>
+                            <DataGridTextColumn Header="Tamaño" Binding="{Binding TotalSizeFormatted}" Width="100"/>
+                            <DataGridTextColumn Header="Variables E" Binding="{Binding VariablesWithE}" Width="80"/>
+                            <DataGridTextColumn Header="Variables F" Binding="{Binding VariablesWithF}" Width="80"/>
+                            <DataGridTextColumn Header="Carpetas Día" Binding="{Binding TotalDayFolders}" Width="90"/>
+                            <DataGridTextColumn Header="Proporción (%)" Binding="{Binding FillProportion, StringFormat=F1}" Width="100"/>
+                            <DataGridTextColumn Header="Dato Más Antiguo" Binding="{Binding OldestDate, StringFormat=dd/MM/yyyy}" Width="110"/>
+                            <DataGridTextColumn Header="Dato Más Reciente" Binding="{Binding NewestDate, StringFormat=dd/MM/yyyy}" Width="110"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

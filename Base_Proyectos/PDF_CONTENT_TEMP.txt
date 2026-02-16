@@ -1,0 +1,1189 @@
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 1 de 29 
+ 
+ 
+ 
+ 
+ 
+PORTAFOLIO DE LÍNEAS DE TRABAJO -  
+INGENIERO DE ANALÍTICA PREDICTIVA  
+ 
+ 
+ 
+ 
+ 
+ 
+ Nombre  Cargo  Fecha  
+ELABORÓ  Juan Camilo Urango  Lider de confiabilidad  29/01/2026  
+REVISÓ  Carolina Camacho  Lider SIG  30/01/2026  
+APROBÓ  Juan Camilo Urango  Lider de confiabilidad  30/01/2026  
+ 
+  
+
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 2 de 29 
+Presentación del rol y su importancia estratégica  
+ 
+El cargo Ingeniero de Analítica Predictiva es un rol de ingeniería aplicada que convierte 
+datos operativos y de monitoreo de condición en decisiones y productos analíticos 
+implementables. Su objetivo es acelerar la transición desde diagnóstico puntual haci a 
+gestión predictiva de activos, con evidencia técnica, trazabilidad y adopción en operación y 
+mantenimiento.  
+En IDC  Ingeniería de Confiabilidad , este rol es estratégico porque habilita tres capacidades 
+críticas para un equipo de clase mundial en Industria 4.0: Gobierno de producto para el 
+desarrollo y despliegue proyectos con terceros con una mirada de expertos en confiabilidad, 
+industrialización  de productos IA y de analítica de datos en entornos OT y transformación 
+del conocimiento experto de confiabilidad en agentes y modelos escalables entre clientes, 
+tipos de industria y de activos.  
+Mandato del rol  
+ 
+▪ Liderar proyectos de analítica avanzada como Product Owner  técnico, asegurando la 
+definición clara de valor esperado, la disponibilidad de los datos, el diseño de 
+herramientas que respondan a las expectativas del proyecto y su correcta adopción.  
+▪ Diseñar, validar y desplegar modelos y agentes predictivos para mantenimiento y 
+operación de maquinaria de proceso, con coherencia física y control estadístico.  
+▪ Garantizar que cada producto analítico tenga los procesos asociado correctos: Alertas, 
+decisiones, responsables, trazabilidad y mejora continua.  
+▪ Construir activos intangibles reutilizables de ingeniería y que se mantengan apegados 
+a las mejores prácticas de desarrollo de software y analítica de datos, como librerías, 
+diccionarios, pipelines de datos y mecanismos de monitoreo de desempeño de modelos . 
+Principios de ejecución  
+ 
+▪ El valor se prioriza y se define antes del modelo. Cada desarrollo parte de una decisión 
+operacional o de mantenimiento que persiga la generación de valor para los objetivos 
+estratégicos propios y de nuestros aliados para los que se diseñan las soluciones.  
+▪ La calidad de datos debe asegurarse siempre y es propiamente una entrega. Sin 
+diccionario, validación, trazabilidad y garantía de calidad de datos, no se debe continuar 
+hacia los desarrollos.  
+▪ La explicabilidad y coherencia física como principio, antes que cualquier métrica. Si un 
+modelo no es explicable físicamente y su información genera valor o se desvía de lo 
+esperable desde una visión para ingeniería de confiabilidad, no se pone en operació n. 
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 3 de 29 
+▪ Operabilidad y trazabilidad en OT. Toda solución incluye monitoreo, logs, control de 
+versiones y auditorías internas que garanticen las buenas prácticas.  
+Gobernanza del portafolio  
+ 
+Las líneas de trabajo se gestionan como proyectos con enfoque PMI y apegados a las 
+mejores prácticas de gestión y desarrollo de proyectos de Ingeniería. Cada proyecto cuenta 
+con propósito, caso de negocio, objetivos, alcance, entregables, criterios de acep tación, 
+plan de hitos, gestión de riesgos e indicadores. La cadencia recomendada es de sprints de 
+dos semanas, con revisión quincenal y comité de desarrollo mensual para planeación, 
+priorización y gestión de recursos.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 4 de 29 
+Resumen del portafolio de líneas de trabajo planteadas 2026  
+ 
+Línea de 
+desarrollo  Proyecto  Horizonte  Resultado esperado  Prioridad  
+1 Actua ción como 
+Product Owner  con 
+visión experta de 
+confiabilidad para la 
+implementación de 
+Aspen Tech  Mtell en 
+ODL Año 2026  Gestión exitosa del 
+proyecto que lleve a 
+agentes accionables y 
+captura de valor con 
+gobierno técnico  en 8 
+BPC.  1 
+2 Desarrollo de 
+herramienta de 
+Gestión automática de 
+almacenamiento FIFO  1 mes  Aplicativo/Agente 
+funcional que asegure la 
+continuidad del monitoreo 
+sin incidentes por 
+almacenamiento lleno.  1 
+3 Generación de 
+aplicativo o Agente de 
+OCR operativo para 
+01 formato  1 mes  Aplicativo/Agente 
+funcional para la 
+digitalización trazable y 
+consultable de registros 
+operativos.  2 
+4 Desarrollo analítico 
+para la toma de 
+decisiones de proceso 
+de acuerdo con la 
+relación vibración -
+proceso en 
+desfibradora de caña.  1 
+Trimestre  Modelos de analítica que 
+busquen optimizar la 
+colocación de recursos de 
+mantenimiento a área de 
+preparación de caña.  3 
+5 Aplicativo/agente de 
+detección de tipo de 
+crudo con registros de  
+vibración  1 mes Agente de detección del 
+tipo de  batch para  
+contexto de  CBM y 
+reducción de ruido . 2 
+6 Modelo de 
+optimización 
+energética  para 
+bomba principal  de 
+crudo  1 
+Semestre  Aplicativo/Agente de 
+recomendación para la 
+gestión operativa de 
+acuerdo con consumo 
+energético.  2 
+ 
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 5 de 29 
+Línea  de desarrollo  1. Product Owner para proyecto de Aspen  Tech  Mtell para  
+proyecto de  ODL en 8 Bombas Principales de Crudo y 6 Bombas Booster  
+ 
+Cliente o sponsor : Oleoducto de los Llanos Orientales  -  
+Coordinación con AspenTech.  
+Horizonte  de tiempo : Año 2026  con entregables trimestrales y control quincenal  
+Rol líder  desde  IDC: Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Asegurar la implementación de Aspen Mtell en 8 bombas principales de crudo y 6 bombas 
+Booster, garantizando agentes de diagnóstico y predicción accionables, que se conviertan 
+en herramientas para la gestión de la  operación y mantenimiento ; así como la  captura de 
+valor medible por reducción de costos de mantenimiento, con un control riguroso del riesgo 
+y una mejora  sostenible  de la disponibilidad  de estos activos críticos . 
+2. Caso de negocio  objetivo  y metodología planteada para estimación de valor 
+obtenido  
+Una bomba principal de crudo (BPC) con intervalo de mantenimiento mayor cercano, en la 
+que se pone a prueba la efectividad de los agentes, evaluando técnicamente la presencia 
+o no de afectaciones o de degradaciones en la condición de componentes. Posterior mente, 
+y partiendo de resultados positivos en lo anterior, la siguiente fase obedecerá a una 
+extensión de un intervalo de mantenimiento mayor controlado sobre una bomba, con 
+gestión y monitoreo del riesgo de manera cercana – Haciendo uso de criterio expert o 
+durante esta prueba. Se cuantificará el valor obtenido como la cantidad de unidades 
+monetarias o en términos de volúmenes transportados durante el periodo de extensión de 
+intervalo de los tiempos de intervención mayor.  
+3. Objetivos  
+▪ Liderar la gestión del proyecto desde las necesidades y expectativas de nuestro aliado 
+ODL hacia el proveedor Aspen Tech, pero con la visión técnica y experta en Ingeniería 
+de Confiabilidad que promovemos desde IDC.  
+▪ Gestionar las actividades en  backlog priorizad as por activo y /o modo s de falla  objetivo 
+que se han planteado , con  el propósito de habilitar el correcto desarrollo de los agentes 
+de predicción establecidos como meta.  
+▪ Asegurar  la disponibilidad y calidad de datos de los  activo s que provienen del servidor 
+de rotodinámica y demás fuentes paralelas  con reportes e indicadores de calidad y 
+disponibilidad  auditables . 
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 6 de 29 
+▪ Acompañar con el rol de guía, habilitador, validador y evaluador de los agentes  
+predictivos  únicamente si cumplen coherencia física, trazabilidad y accionabilida d con 
+criterios conjuntamente definidos con líderes del proceso de Ingeniería de IDC y 
+stakeholders claves de ODL . 
+▪ Generar reportes mensuales de desempeño y casos de valor cerrados con evidencia.  
+4. Alcance  
+Dentro del  alcance : 
+▪ Integrar equipos, recursos, personas y procesos en pro de la correcta ejecución y 
+direccionamiento del proyecto hacia los metas y expectativas establecidas.  
+▪ Definición de variables, estados operativos y c riterios  de ajuste de modelos . 
+▪ Revisión técnica de agentes, control de calidad de alertas y reducción de ruido.  
+▪ Gestión del backlog de agentes por activo y modo de falla.  
+▪ Gobernanza de cambios y captura de valor  con criterio experto . 
+Fuera de l alcance : 
+▪ Administración directa de infraestructura OT del cliente.  
+▪ Gestión y toma de decisiones de  mantenimiento  u operación de los activos  como 
+responsable principal.  
+▪ Cambios de alcance/capacidades y criterios de aceptación de los modelos y/o agentes  
+sin aprobación del cliente.  
+5. Entregables  
+▪ Matriz de data readiness por activo  y/o por modo de falla; además del plan de cierre de 
+brechas  para asegurar la disponibilidad y calidad de los datos.  
+▪ Reporte de desempeño de agentes y registro de  los ajustes y  decisiones  para la 
+optimización de su desempeño.  
+▪ Informes, presentaciones y reportes del avance y finalización del caso de negocio.  
+▪ Tablero de indicadores clave - KPIs del avance del proyecto y métricas finales de cada 
+agente funcional . 
+6. Criterios de aceptación  
+▪ Para calidad de datos, se definirán umbrales mínimos aceptables para los indicadores 
+clavo de calidad; como %outliers, %Null values, # stuck sensor values, % Sentinels y 
+otros que se definan en conjunto con el cliente y/o que hagan parte del estado del art e 
+para la calificación de calidad de datos para bombas principales de crudo.  
+▪ Para agentes de falla, se desarrollará en conjunto con ODL, una herramienta 
+metodológica de pruebas de desempeño de los agentes para detección de un conjunto 
+particular de modos de falla, con evidencia y trazabilidad de los datos; así como una 
+riguroso jui cio sobre la capacidad de individualización de la falla . 
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 7 de 29 
+7. Partes interesadas y roles  
+Las parte interesadas están centradas, pero no limitadas a:  
+ 
+▪ ODL Instrumentación y Control : Acceso a datos y soporte OT.  
+▪ ODL DOGA:  Dueño de decisiones operativas ante alertas.  
+▪ ODL Planeación y Confiabilida d: Cierre técnico de casos y órdenes de trabajo.  
+▪ AspenTech. Configuración, construcción de agentes y soporte.  
+▪ Equipo de Ingeniería IDC. Gobierno técnico, validación y auditoría de calidad.  
+8. Gobernanza y cadencia  
+Revisión quincenal de avance s con discusión sobre actividades, recursos requeridos, 
+bloqueos en el desarrollo y socialización de resultados . Además se realiza c omité mensual 
+de priorización ; y se plantearán sesiones extraordinarias para la evaluación rigurosa de los 
+agentes con miras a su aprobación y/o requerimiento de ajustes.  
+9. Hitos y cronograma de alto nivel  
+Q1: Backlog y data readiness para activos priorizados. Primer conjunto de agentes en 
+monitoreo controlado.  
+Q2: Ampliación de cobertura. Proceso de alertas completo y operativo.  
+Q3: Estabilización, reducción de ruido y casos de valor cerrados.  
+Q4: Operación sostenida, auditoría de desempeño y plan de expansión.  
+10. Supuestos y restricciones  
+Supuestos  
+▪ Se espera un apropiado a cceso  y capacidad de gestión de  los datos históricos , sin 
+bloqueos por permisos ni barreras de conexión de los servidores fuente.  
+▪ Se espera p articipación  activa y engrane adecuado con equipo de desarrollo de  
+AspenTech y los roles claves de  ODL para las tareas de desarrollo y toma de decisiones 
+dentro del proyecto . 
+▪ Se cuenta con que l a asignación de  recursos y  responsables  de parte de ODL y 
+AspenTech será garantizada y oportuna.  
+Restricciones  
+▪ Dependencia de arquitectura OT y potenciales c ambios  en ésta, están por fuera del 
+margen de control de IDC  Ingeniería .  
+▪ Estabilidad de la transmisión y disponibilidad de los datos, se encuentras por fuera del 
+margen de control de IDC  Ingeniería . 
+▪ Podrían existir restricciones por s eguridad  de la información que limiten el correcto 
+avance del proyecto hasta que se hagan las verificaciones y aprobaciones 
+correspondientes; que incluso puede que no generen concepto positivo en pro del 
+desarrollo de este proyecto.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 8 de 29 
+11. Riesgos y respuesta  
+▪ Calidad de datos insuficiente.  
+Respuesta : Desarrollo de matriz de readiness y seguimiento a hallazgos para buscar la 
+mejor cobertura de modos de falla técnicamente eficiente.  
+▪ Pérdida de confianza  de los modelos/Agentes  por alta presencia de  ruido.  
+Respuesta : Utilización de estrictos criterios de evaluación de calidad y pertinencia de 
+los datos  y goberna nza de refinación de los datos claramente establecida . 
+▪ Falta de integración con mantenimiento.  
+Respuesta : Integración y trabajo cercano con lideres de cada especialidad para 
+mantener respuesta s oportunas  con trazabilidad.  
+▪ Confusión o baja efectividad en la identificación de modos de falla.  
+Respuesta : Evaluación rigurosa y obligatoria de la coherencia física y revisión cruzada  
+por parte del equipo de expertos de IDC Ingeniería.  
+12. Gestión de calidad y validación técnica  
+Evidencia de calidad de datos, coherencia física rotodinámica, trazabilidad de decisiones y 
+operación sostenible con documentación ante cada evaluación . 
+13. Indicadores de seguimiento y desempeño  – Preliminar, se definirán durante el 
+proyecto  
+▪ Cobertura de agentes por activo y modo de falla.  
+▪ Porcentaje de alertas correcta s sobre total.  
+▪ Tiempo  promedio de adelanto ( Time ahead ) de detección  hasta  potencial afectación.  
+▪ Casos de valor identificados con evidencia.  
+14. Herramientas y tecnología  
+▪ Aspen Tech  Mtell.  
+▪ Servidor de rotodinámica.  
+▪ Maintraq Online Serrver  
+▪ Historiador y fuentes OT del cliente  - Datalake . 
+▪ Herramientas ofimática o de BI para t ableros de KPIs y reportes mensuales.  
+15. Plan de comunicaciones  
+ 
+▪ Reunión /Conversación -15 minutes meeting - de seguimiento ( Técnica) : Semanal  
+durante fase de  entendimiento, construcción  y desarrollo ; luego pasará a ser  quincenal 
+en operación estable  y mejor a continua . 
+▪ Comité de priorización ( Steering): Mensual con sponsor y líderes de 
+Operación/Confiabilidad/I&C.  
+▪ Gestión de incidentes: Canal inmediato  (Whatsapp ) con tiempos de respuesta  que se 
+buscará mantener por debajo de las 24 horas . 
+▪ Reporte ejecutivo: Mensual con reporte de KPIs, descripción bloqueos, riesgos, 
+decisiones y avance en los casos de negocio.   
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 9 de 29 
+Línea  de desarrollo  2. Gestión de almacenamiento FIFO para servidor de monitoreo  
+ 
+Cliente o sponsor:  ODL Instrumentación y Control.  
+IDC Ingeniería  define política y pruebas.  
+Horizonte de tiempo:  1 Mes  
+Rol líder desde IDC:  Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Asegurar la continuidad del sistema de monitoreo de variables vibratorias y de proceso 
+mediante una gestión automática del almacenamiento, evitando saturación de disco, 
+pérdida de histórico y paradas del sistema por indisponibilidad de espacio.  
+2. Caso de negocio y valor esperado  
+En sistemas de monitoreo, la saturación de almacenamiento es un modo de falla operativo 
+que genera pérdida de datos, discontinuidad de tendencias y reducción de capacidad 
+diagnóstica. Un evento de disco lleno puede detener adquisición, degradar el desempeñ o 
+del servidor y forzar intervención correctiva en condiciones de riesgo. El valor esperado se 
+materializa como reducción de incidentes por almacenamiento, preservación controlada del 
+histórico mínimo útil y disminución de horas hombre dedicadas a limpieza  manual, bajo una 
+política de retención formal aprobada por ODL.  
+3. Objetivos  
+▪ Caracterizar consumo, tasa de crecimiento y distribución de almacenamiento por rutas 
+y tipos de archivo.  
+▪ Definir una política de retención con umbrales, histéresis, lista blanca de rutas y 
+exclusiones explícitas.  
+▪ Implementar un motor de limpieza FIFO por lotes, con modo simulación obligatorio antes 
+de producción.  
+▪ Habilitar auditoría completa por ejecución, alarmas por umbrales y bitácora trazable.  
+▪ Realizar pruebas de estrés y transferencia operativa al equipo de Instrumentación y 
+Control de ODL.  
+4. Alcance  
+En alcance  
+▪ Inventario de rutas, tamaños, tasa de crecimiento y criticidad del dato.  
+▪ Definición y aprobación de política de retención y criterio FIFO por fecha de creación o 
+modificación.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 10 de 29 
+▪ Servicio automatizado de limpieza por lotes con validaciones previas, bitácora y 
+alarmas.  
+▪ Pruebas de estrés controladas y procedimiento de rollback documentado.  
+▪ Handover y capacitación operativa para ejecución y supervisión por ODL 
+Instrumentación y Control.  
+Fuera de alcance  
+▪ Modificaciones a la arquitectura OT del cliente o al sistema de adquisición de datos.  
+▪ Eliminación de archivos protegidos, configuraciones, licencias o evidencia requerida por 
+auditoría.  
+▪ Cambios de política sin aprobación formal del dueño de la infraestructura.  
+5. Entregables  
+▪ Documento de política de retención con umbrales, histéresis, lista blanca y exclusiones.  
+▪ Aplicativo o agente FIFO con modo simulación y modo productivo, parametrizable y 
+versionado.  
+▪ Bitácora auditable con trazabilidad de rutas, tamaño liberado, archivos eliminados y 
+validaciones.  
+▪ Alarmas por espacio bajo umbral, falla de ejecución y crecimiento anormal del 
+almacenamiento.  
+▪ Runbook operativo con procedimientos de verificación, operación rutinaria y rollback.  
+6. Criterios de aceptación  
+▪ Incidentes por disco lleno iguales a cero en operación sostenida.  
+▪ Cero eliminaciones fuera de rutas autorizadas y exclusiones verificadas antes de 
+producción.  
+▪ Trazabilidad completa de cada ejecución mediante bitácora y evidencia reproducible.  
+▪ Espacio libre mínimo sostenido por encima del umbral acordado durante operación 
+normal.  
+▪ Operación autónoma por ODL Instrumentación y Control luego del handover.  
+7. Partes interesadas y roles  
+▪ ODL Instrumentación y Control: Dueño de infraestructura, permisos, operación diaria y 
+ejecución.  
+▪ ODL Confiabilidad y Operación: Define requerimientos mínimos de histórico útil y 
+criticidad del dato.  
+▪ IDC Ingeniería: Diseño de política, controles, pruebas, validación y documentación.  
+▪ Proveedor del sistema de monitoreo, si aplica: Referencia de rutas críticas y 
+restricciones del software.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 11 de 29 
+8. Gobernanza y cadencia  
+Seguimiento técnico semanal durante el mes de implementación. Aprobación formal de la 
+política de retención antes de habilitar el modo productivo. Revisión mensual de bitácoras 
+durante tres meses posteriores para estabilización y ajuste controlado de parám etros.  
+9. Hitos y cronograma de alto nivel  
+▪ Semana 1: Inventario de almacenamiento, tasa de crecimiento y política de retención 
+propuesta para aprobación.  
+▪ Semana 2: Implementación del motor y ejecución en modo simulación con evidencia 
+auditable.  
+▪ Semana 3: Despliegue productivo con alarmas, bitácora y control de cambios OT.  
+▪ Semana 4: Pruebas de estrés, validación final, runbook y handover.  
+10. Supuestos y restricciones  
+Supuestos  
+▪ Disponibilidad de permisos mínimos para ejecutar el servicio en rutas autorizadas.  
+▪ Estructura de archivos con criterio temporal confiable para aplicar FIFO.  
+▪ Ventanas OT disponibles para despliegue y pruebas controladas.  
+Restricciones  
+▪ El dueño de infraestructura del servidor es ODL Instrumentación y Control y se gestiona 
+con la guía de IDC.  
+▪ Todas las modificaciones se realizan bajo control de cambios OT y aprobaciones 
+internas del cliente.  
+▪ Eliminación por lotes limitada para minimizar riesgo operativo.  
+11. Riesgos y respuesta  
+▪ Riesgo de eliminación accidental de archivos críticos.  
+Respuesta : lista blanca estricta, exclusiones explícitas, modo simulación y validación 
+previa obligatoria.  
+▪ Riesgo de archivos en uso o bloqueados.  
+Respuesta : detección de locks, reintentos controlados y diferimiento con evidencia.  
+▪ Riesgo de crecimiento acelerado que supere la capacidad de limpieza.  
+Respuesta : monitoreo de tasa de crecimiento, alertas tempranas y ajuste de política.  
+12. Gestión de calidad y validación técnica  
+Validación en tres capas. Simulación con evidencia auditable, pruebas de estrés por lotes 
+y auditoría en producción. La calidad se confirma por ausencia de afectación a adquisición, 
+integridad de rutas protegidas y consistencia completa de logs.  
+13. Indicadores de seguimiento y desempeño  
+▪ Incidentes por disco lleno  = 0. 
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 12 de 29 
+▪ Porcentaje de ejecuciones con auditoría completa  = 100%. 
+▪ Espacio libre mínimo sostenido: por encima del umbral acordado.  
+▪ Tiempo de atención a alarmas críticas de almacenamiento: menor a 24 horas.  
+14. Herramientas y tecnología  
+▪ Servicio o script parametrizable con control de versiones.  
+▪ Scheduler del servidor para ejecución automática.  
+▪ Bitácora estructurada y mecanismo de alertas acordado con ODL.  
+15. Plan de comunicaciones  
+▪ Reunión de seguimiento técnica: semanal durante construcción; quincenal en operación 
+estable.  
+▪ Comité mensual con sponsor y líderes de Operación, Confiabilidad e Instrumentación y 
+Control para ajustes de política.  
+▪ Canal único de incidentes con SLA definido para alertas críticas.  
+▪ Reporte ejecutivo mensual con KPIs, hallazgos, riesgos, decisiones y ajustes aplicados.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 13 de 29 
+Línea de desarrollo  3. Generación de aplicativo o Agente de OCR operativo para 01 
+formato  de recole cción de datos  
+ 
+Cliente o sponsor  IDC I ngeniería ; y Confiabilidad Ingenio Pic hichí como 
+primer usuario final con ret roalime ntación.  
+Horizonte  1 mes  
+Rol líder IDC  Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Digitalizar de forma trazable registros operativos capturados en fotografías, 
+transformándolos en datos estructurados en una base de datos consultable. En el primer 
+mes se soporta un solo formato, con control de calidad por campo y flujo de revisión para 
+garantizar confiabilidad del dato.  
+2. Caso de negocio y valor esperado  
+Cuando la información operativa queda en imágenes, se pierde oportunidad analítica, se 
+incrementa el tiempo de disponibilidad del dato y se elevan los errores por transcripción. 
+Esto limita la correlación entre condición y proceso y reduce la capacidad de cerrar casos 
+con evidencia. El valor esperado se obtiene al convertir el registro a datos estructurados 
+con trazabilidad a la fuente, validaciones por rangos y consistencia, y una ruta explícita de 
+revisión para campos con baja confianza.  
+3. Objetivos  
+▪ Construir un conjunto de imágenes representativas para calibración y verificación del 
+desempeño del OCR.  
+▪ Implementar extracción por plantilla y validación por campo con puntaje de confianza y 
+registro de calidad.  
+▪ Implementar revisión humana para excepciones con bitácora de correcciones y 
+trazabilidad a la imagen.  
+▪ Publicar los registros en base de datos con consultas y exportación para analítica de 
+operación y confiabilidad.  
+4. Alcance  
+En alcance  
+▪ Un solo formato operativo durante el primer mes, con control de cambios del formato.  
+▪ OCR, extracción por campo, validaciones, control de calidad y trazabilidad a imagen 
+fuente.  
+▪ Base de datos estructurada y consultas para análisis y auditoría.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 14 de 29 
+▪ Flujo de revisión humana para campos con baja confianza y bitácora de correcciones.  
+Fuera de alcance  
+▪ Soporte de varios  formato s diferentes  en el primer mes.  
+▪ Integraciones complejas con sistemas corporativos que requieran otro proyecto.  
+▪ Automatización de decisiones operativas sin procedimiento de aprobación y control de 
+riesgo  por pérdida o indisponibilidad de información  
+5. Entregables  
+▪ Diccionario del formato con definición de campos, unidades, rangos y reglas de 
+validación.  
+▪ Pipeline OCR productivo para el formato objetivo con puntaje de confianza por campo.  
+▪ Base de datos con trazabilidad a imagen, auditoría y capacidad de exportación.  
+▪ Flujo de revisión humana y bitácora de correcciones con sello de tiempo y usuario.  
+▪ Manual de captura de fotografías con criterios mínimos de calidad y procedimiento de 
+control de cambios del formato.  
+6. Criterios de aceptación  
+▪ Trazabilidad completa de cada registro a la imagen fuente.  
+▪ % de campos con baja confianza o errores e n la revisión registrada  por enci ma de 5% 
+activa la retroalimentación y ajuste del modelo . 
+▪ Latencia controlada entre captura y disponibilidad en base de datos, no puede ser 
+superior a 1 hora . 
+▪ Operación estable del pipeline con auditoría y evidencias de ejecución  – efectividad de 
+digitaliz ación del 98% sostenida en 2 semanas . 
+7. Partes interesadas y roles  
+▪ Operación: usuario final, define formato objetivo y valida reglas de negocio.  
+▪ Ingeniería IDC para definición de formatos : Soporte para despliegue, permisos y 
+operación en infraestructura.  
+▪ Confiabilidad Pichichí : Para desarrollo de prueba con formato de ellos . 
+▪ IDC Ingeniería: Diseño del pipeline, validación, aseguramiento de calidad y 
+documentación.  
+8. Gobernanza y cadencia  
+Seguimiento técnico semanal durante el primer mes  más c omité quincenal de revisión de 
+calidad de datos y control de cambios del formato.  
+Reporte  formal al cierre del mes con evidencia de desempeño y bitácora de operación.  
+9. Hitos y cronograma de alto nivel  
+Semana 1: Definición de  formato, diccionario s, reglas de validación ; y muestra inicial . 
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 15 de 29 
+Semana 2: Construcción del dataset de verificación y primer pipeline OCR con 
+extracción por plantilla.  
+Semana 3: Validación por campo, flujo de revisión humana, bitácora y persistencia en 
+base de datos.  
+Semana 4: Despliegue, auditoría de desempeño, manual de captura y reporte . 
+10. Supuestos y restricciones  
+ 
+Supuestos  
+▪ El formato objetivo es estable durante el primer mes o se gestiona por control de 
+cambios.  
+▪ Las fotografías cumplen criterios mínimos de legibilidad y encuadre definidos en el 
+manual.  
+▪ Existe acceso a una base de datos autorizada para persistencia y consulta.  
+Restricciones  
+▪ El primer mes se limita a un solo formato por control de alcance y calidad.  
+▪ Cumplimiento de políticas de seguridad de la información y permisos del cliente para 
+imágenes y almacenamiento.  
+▪ Dependencia de disponibilidad de usuarios para revisión humana de excepciones.  
+11. Riesgos y respuesta  
+▪ Riesgo de baja calidad de imagen que degrade exactitud.  
+Respuesta : lineamientos de captura, validación automática de legibilidad y rechazo 
+controlado.  
+▪ Riesgo de cambios no controlados del formato.  
+Respuesta : control de cambios, versionado de plantillas y trazabilidad por versión.  
+▪ Riesgo de errores silenciosos en campos críticos.  
+Respuesta : reglas de consistencia, revisión humana por umbral de confianza y 
+auditorías periódicas.  
+12. Gestión de calidad y validación técnica  
+Aseguramiento de calidad por campo con auditoría sobre muestra representativa. 
+Validación de rangos, unidades y consistencia entre campos. Revisión humana obligatoria 
+para campos con baja confianza y evidencias de corrección.  
+13. Indicadores de seguimiento y desempeño  
+▪ Exactitud por campo en muestra auditada.  
+▪ Porcentaje de campos auto extraídos sin revisión.  
+▪ Tiempo promedio entre captura y disponibilidad en base de datos.  
+▪ Porcentaje de registros rechazados por baja calidad y causas predominantes.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 16 de 29 
+14. Herramientas y tecnología  
+▪ Motor OCR y extracción por plantilla con puntaje de confianza.  
+▪ Base de datos relacional o equivalente para persistencia y consultas.  
+▪ Bitácora de auditoría y tablero simple de calidad de captura.  
+15. Plan de comunicaciones  
+▪ Reunión técnica semanal durante construcción y despliegue.  
+▪ Revisión quincenal de calidad con Operación y Confiabilidad para ajustes de reglas.  
+▪ Reporte ejecutivo de cierre del mes con desempeño, riesgos y plan de escalamiento a 
+nuevos formatos.  
+ 
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 17 de 29 
+Línea de desarrollo 4. Desarrollo analítico para la toma de decisiones de proceso de 
+acuerdo con la relación vibración -proceso en desfibradora de caña.  
+ 
+Cliente o sponsor  Cliente de industria azucarera. Operación, mantenimiento y 
+confiabilidad de planta.  
+Horizonte  1 Trimestre  
+Rol líder IDC  Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Desarrollar analítica aplicada para soportar decisiones de operación y mantenimiento en 
+una desfibradora de caña, integrando variables de vibración con indicadores de proceso. El 
+objetivo es reducir incertidumbre diagnóstica, priorizar recursos de mantenim iento y definir 
+reglas operativas que minimicen riesgo y optimicen los indicadores del proceso de  
+preparación de caña  de un Ingenio Azucare ro. 
+2. Caso de negocio y valor esperado  
+En activos de preparación de caña  de un Ingenio Azucarero , la vibración responde tanto a 
+condición mecánica como a variaciones de alimentación, carga y régimen de operación. Sin 
+un modelo que separe efectos de proceso de degradación mecánica, se incrementan falsas 
+alarmas, intervenciones innecesarias y se pierde  oportunidad de actuar tempranamente. El 
+valor esperado se traduce en priorización técnica de intervenciones, reducción de paros no 
+planificados y asignación más eficiente de recursos de mantenimiento según  la evidencia 
+multivariable ; de manera q ue las decisiones estratégicas sobre el p roceso sea n efectivas . 
+3. Objetivos  
+▪ Integrar y sincronizar series de tiempo de vibración y proceso con diccionario de 
+variables y reglas de calidad  aplicadas para la cali ficación sobre los datos que se 
+generan desde los sistemas de monitoreo y sistemas de control . 
+▪ Explorar l as diferentes características  y . 
+▪ Cuantificar la relación vibración -proceso por régimen operativo y detectar patrones 
+anómalos consistentes.  
+▪ Construir modelos interpretables de riesgo o condición que soporten priorización de  las 
+decisiones de  mantenimiento.  
+▪ Implementar tableros de seguimiento y un procedimiento de uso operativo y de 
+mantenimiento.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 18 de 29 
+4. Alcance  
+En alcance  
+▪ Consolidación de dataset y diccionario de variables con evaluación de calidad y 
+trazabilidad.  
+▪ Análisis exploratorio, segmentación por régimen operativo y pruebas estadísticas de 
+correlación multivarial . 
+▪ Modelos multivariables con validación temporal por bloques y revisión experta de 
+coherencia física.  
+▪ Definición de umbrales, reglas de decisión y tableros para seguimiento de condición y  
+de proceso.  
+Fuera de alcance  
+▪ Instalación de nuevos sensores o modificaciones físicas del activo, salvo que se definan 
+en proyecto separado.  
+▪ Implementación de control automático en tiempo real sin gestión de riesgo y aprobación 
+del cliente.  
+▪ Extrapolación del modelo fuera del rango operativo observado en el dataset.  
+5. Entregables  
+▪ Dataset integra do y conformado con datos de  vibración  y proceso con diccionario, 
+trazabilidad y reporte de calidad.  
+▪ Caracterización por estados operativos con métricas de dispersión y sensibilidad.  
+▪ Modelo multivariable de condición - riesgo con interpretación  y evaluación física 
+variables y supuestos . 
+▪ Reportes y presentaciones periódicas  para presentación de resultados de analítica.  
+▪ Informe técnico de cierre con criterios de uso, limitaciones y plan de mejora continua.  
+6. Criterios de aceptación  
+▪ Sincronización y trazabilidad del dataset verificad os y documentad os con sus 
+indicadores de calidad de data . 
+▪ Evaluación satisfactoria con calificación por encima del 90% de r esultados con 
+coherencia física y validados por revisión cruzada con expertos.  
+▪ Desempeño del modelo validado con partición temporal por bloques, sin fuga de 
+información ; a través de validación cruzada de expertos . 
+7. Partes interesadas y roles  
+▪ Operación de planta  – Ingenio San Diego : Define regímenes, restricciones y valida 
+aplicabilidad de recomendaciones.  
+▪ Mantenimiento  de planta – Ingenio San Diego : Define criterios de intervención y valida 
+priorización con base en evidencia.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 19 de 29 
+▪ Confiabilidad  de planta – Ingenio San Diego : Establece el gobierno técnico de condición, 
+indicadores y cierre de casos.  
+▪ IDC Ingeniería: Realiza la i ntegración de datos, modelado, validación y entrega de 
+metodología  y resultados . 
+8. Gobernanza y cadencia  
+Cadencia quincenal de revisión técnica durante el trimestre. Comité mensual con sponsor 
+para priorización de hallazgos, definición de pruebas de campo y decisiones de despliegue. 
+Revisión final de aceptación con acta de entrega.  
+9. Hitos y cronograma de alto nivel  
+▪ Mes 1: Integración de datos, generación del diccionario, evaluación de calidad y 
+definición de regímenes operativos.  
+▪ Mes 2: Análisis  de datos  vibración -proceso, pruebas estadísticas por régimen y modelos 
+preliminares interpretables.  
+▪ Mes 3: Validación por bloques temporales, definición de umbrales, desarrollo de 
+correlaciones, pruebas de hipótesis  sobre las conclusiones y síntesis  de resultados . 
+10. Supuestos y restricciones  
+Supuestos  
+▪ Disponibilidad de variables de proceso relevantes , con la calidad y cadencias propicia 
+para los objetivos de  los análisis.  
+▪ Disponibilidad de registros de vibración con frecuencia y calidad suficiente para análisis 
+multivariable.  
+▪ Participación clave y constantes del personal de Operación , Mantenimiento  y 
+Confiabilidad  para definición de regímenes y validación de hipótesis.  
+Restricciones  
+▪ Riesgo de variables de proceso con baja calidad o cambios de instrumentación no 
+documentados.  
+▪ Tiempo de validación en campo sujeto a ventanas operativas de la planta.  
+▪ Indicadores calcu lados o que son producto de pruebas de laboratorio; y de los cuales 
+solo se cuenta  con 2 o 3 datos al día.  
+11. Riesgos y respuesta  
+ 
+▪ Riesgo de desalineación temporal entre fuentes.  
+Respuesta : Uso riguroso  de sincronización , pruebas de desfase y verificación de 
+integridad por ventanas.  
+▪ Riesgo de confusión entre causa de proceso y falla mecánica.  
+Respuesta : Segmentación por régimen, revisión experta y validación cruzada con 
+eventos conocidos.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 20 de 29 
+▪ Riesgo de sobreajuste del modelo.  
+Respuesta : Validación por bloques temporales, control de complejidad y métricas  de 
+evaluación  robustas.  
+12. Gestión de calidad y validación técnica  
+Control de calidad del dato con indicadores de completitud, outliers, valores pegados y 
+consistencia. Adicionalmente, se aplica v alidación del modelo por bloques temporales y 
+revisión experta de coherencia física.  Y Documentación explícita de limitaciones y rango de 
+validez.  
+13. Indicadores de seguimiento y desempeño  
+▪ Porcentaje de datos válidos por variable y por régimen operativo.  
+▪ Desempeño del modelo en validación por bloques, con métricas acordadas.  
+▪ Reducción de falsas alarmas frente a criterio base, cuando aplique.  
+▪ Casos cerrados con evidencia donde el modelo soportó decisión de intervención o de 
+operación.  
+14. Herramientas y tecnología  
+▪ Base de datos o repositorio de series de tiempo del cliente para extracción.  
+▪ Herramienta de BI para tableros y reporte operativo.  
+15. Plan de comunicaciones  
+▪ Reunión técnica quincenal con Confiabilidad y Mantenimiento.  
+▪ Comité mensual con sponsor de planta para decisiones y priorización.  
+▪ Reporte mensual de avance con KPIs de datos, hallazgos y riesgos.  
+▪ Informe final con socialización . 
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 21 de 29 
+Línea de desarrollo 5. Aplicativo/agente de detección de tipo de crudo con registros 
+de vibración  
+ 
+Cliente o sponsor : ODC: Confiabilidad , Gestión de Activos  e Instrumentación y 
+Control.  
+Horizonte : 1 mes  
+Rol líder IDC : Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Desarrollar un aplicativo o agente de clasificación para la definición del tipo de crudo o batch 
+bombeado utilizando registros de vibración, con el fin de contextualizar el diagnóstico de 
+condición, reducir ruido por variación de proceso y habilitar analítica avanzada para CBM  
+de seguimiento y monitoreo en evaluaciones futuras . 
+2. Caso de negocio y valor esperado  
+Los c ambios en  el tipo de crudo  que se trasiega en un sistema de bombeo d e un ole oducto  
+modifican  las propiedades reológicas y condiciones hidráulicas que enfrentan los 
+componentes de impulsión de las bombas  dispuestas para ello , con lo cual se  puede  alterar 
+la firma vibratoria  de estas máqui na, sin que en real idad exista degradación mecánica. En 
+ese sentido, s in un identificador confiable de batch, se incrementa la probabilidad de falsas 
+alarmas y se pierde capacidad de comparar condición entre periodos equivalentes. El valor 
+esperado se obtiene al disponer de una etiqueta automática de batch para segmentación,  
+normalización y análisis de condición, además de un mapa claro de sensores que mejor 
+capturan la diferencia.  
+3. Objetivos  
+▪ Retomar el  baseline multivariable por batch con pruebas estadísticas de diferencia y 
+control de dispersión  desarrollado para el caso particular de BPC 704 Vasconia . 
+▪ Verificar y escalar  el entrena miento de  un modelo de clasificación con validación 
+cruzada por bloques temporales ya desarrollado para el caso 704 y ll evarlo a demás 
+bombas de esta estaci ón. 
+▪ Con lo anterior, generar un agente robusto y escalabl e con la visión de que opere como 
+clasificador dentro de una estrategia de monitoreo y seg uimiento periódico  sobre la 
+condición de bombas principales de bombeo de crudo.  
+▪ Entregar un pipeline reproducible y un procedimiento de uso para soportar CBM y 
+analítica en línea futura.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 22 de 29 
+4. Alcance  
+En alcance  
+▪ Desarrollo de análisis exploratorio  de variables de vibración existentes y etiquetas de 
+batch provistas por operación.  
+▪ Feature engineering y entrenamiento de modelos con control de independencia por 
+ventanas o bloques.  
+▪ Evaluación con métricas multiclase y análisis de errores con coherencia física.  
+▪ Ranking de importancia por variable base, sensor, punto y componente.  
+Fuera de alcance  
+▪ Implementación de control automático en lazo cerrado sobre el proceso.  
+▪ Diagnóstico de modos de falla más allá del rango operativo observado en el dataset.  
+▪ Generalización a otras bombas sin fase de transferencia y recalibración.  
+5. Entregables  
+▪ Pipeline de preparación de datos, entrenamiento y validación cruzada por bloques.  
+▪ Modelo de clasificación con reporte de desempeño por clase y matriz de confusión.  
+▪ Ranking de importancia por variable, sensor, punto y componente para priorización de 
+monitoreo.  
+▪ Reporte técnico de coherencia física, limitaciones y recomendaciones de monitoreo 
+periódico.  
+▪ Artefacto /Agente  ejecutable para predicción offline y lineamientos para integración 
+futura en línea.  
+6. Criterios de aceptación  
+▪ Métricas de clasificación superiores al baseline aleatorio y evaluadas con validación por 
+bloques.  
+▪ Ausencia de fuga de información demostrada mediante partición temporal y controles 
+de duplicidad.  
+▪ Interpretación física consistente de los sensores destacados como discriminantes.  
+▪ Procedimiento de uso y actualización del modelo definido, incluyendo monitoreo de 
+deriva.  
+▪ Reporte con evidencia reproducible y trazabilidad de versiones del modelo.  
+7. Partes interesadas y roles  
+▪ Operación: Define batch real, valida etiquetas y usa el resultado para contexto operativo.  
+▪ Confiabilidad: Define uso para reducción de ruido y segmentación de tendencias.  
+▪ Instrumentación y Control: Asegura disponibilidad de variables y consistencia de tags.  
+▪ IDC Ingeniería: Modelado, validación, explicación y guía de implementación.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 23 de 29 
+8. Gobernanza y cadencia  
+Reunión técnica semanal durante el mes. Revisión de resultados en semana 3 con 
+stakeholders para validar coherencia y ajustar etiquetas o reglas. Cierre con socialización 
+ejecutiva y plan de despliegue.  
+9. Hitos y cronograma de alto nivel  
+▪ Semana 1: Verificación de etiquetas de batch, calidad de datos y baseline estadístico 
+por batch.  
+▪ Semana 2: Feature engineering, entrenamiento de modelos candidatos y definición de 
+validación por bloques.  
+▪ Semana 3: Evaluación final, análisis de errores, ranking de variables y priorización de 
+sensores.  
+▪ Semana 4: Empaquetado del pipeline, documentación, reporte y handover.  
+10. Supuestos y restricciones  
+Supuestos  
+▪ Las etiquetas de batch son correctas y están alineadas temporalmente con los registros 
+de vibración.  
+▪ Los registros reflejan operación representativa y no están dominados por fallas 
+transitorias no documentadas.  
+▪ Se dispone de volumen suficiente de datos por clase para entrenamiento y validación.  
+Restricciones  
+▪ El desbalance entre clases puede limitar desempeño y debe gestionarse con técnicas 
+robustas.  
+▪ El modelo solo es válido dentro del rango operativo observado , las condiciones de 
+proceso no cambian para cada crudo en el tiempo  y se mantiene la calidad de datos de 
+la instrumentación actual.  
+11. Riesgos y respuesta  
+▪ Riesgo de fugas de información por correlación temporal.  
+Respuesta : Validación cruzada por bloques, separación por ventanas y controles de 
+duplicidad.  
+▪ Riesgo de que el modelo aprenda ruido de medición.  
+Respuesta : Limpieza como estándar  de prepro cesamiento  y evaluación de  calidad y  
+estabilidad del m odelo por periodos.  
+12. Gestión de calidad y validación técnica  
+Control de calidad del dataset, verificación de independencia por bloques temporales y 
+evaluación multiclase con métricas robustas. La interpretabilidad se asegura mediante 
+ranking estadístico y explicación por métodos de importancia  se evalú a para definir su  
+consistentes con la física del equipo.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 24 de 29 
+13. Indicadores de seguimiento y desempeño  
+▪ Balanced accuracy y macro F1 por validación cruzada.  
+▪ Estabilidad del desempeño por bloque temporal.  
+▪ Porcentaje de predicciones con alta confianza y tasa de incertidumbre.  
+▪ Reducción de falsas alarmas por segmentación adecuada de batch, cuando aplique.  
+14. Herramientas y tecnología  
+▪ Modelos de pruebas de hipótesis  estadisticas  
+▪ Repositorios de métodos  de clasificaci ón y evaluación de la efectividad de clasificación . 
+▪ Herram ientas para la creación de agentes . 
+15. Plan de comunicaciones  
+▪ Reunión semanal con Analítica  IDC durante el mes.  
+▪ Reporte de avance semana 2 y revisión de resultados semana 3  con ODC . 
+▪ Informe final y socialización de implicaciones para CBM y monitoreo futuro.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 25 de 29 
+Línea  de desarrollo  6: Modelo /Agente  de optimización energética para bomba 
+principal de crudo  
+ 
+Cliente o sponsor  ODL. Operación, gestión energética, confiabilidad e 
+Instrumentación y Control.  
+Horizonte  1 Semestre  
+Rol líder IDC  Ingeniero de Analítica Predictiva. Product Owner técnico y 
+responsable del desempeño del proyecto.  
+ 
+1. Propósito  
+Desarrollar un modelo de optimización energética para una bomba principal de crudo que 
+recomiende condiciones operativas eficientes, minimizando consumo energético sin 
+comprometer caudal, presión, confiabilidad y restricciones de proceso.  
+2. Caso de negocio y valor esperado  
+El consumo energético de bombeo es uno de los costos operativos dominantes en  el 
+segmento de  midstream. Operar lejos del punto de mejor eficiencia incrementa el consumo 
+de kWh por volumen bombeado y puede elevar  el riesgo de cavitación, recirculación y 
+sobre -esfuerzos mecánicos que se reflejan en vibración y desgaste. El valor esperado se 
+cuantifica en reducción de kWh por unidad de volumen transportado, disminución de 
+eventos operativos fuera de ventanas recomendadas y reducción del riesgo asociado a 
+operació n ineficiente.  
+3. Objetivos  
+▪ Definir baseline energético por régimen operativo y por tipo de crudo, con trazabilidad a 
+variables de proceso.  
+▪ Construir un modelo que relacione condiciones de operación con consumo energético 
+y restricciones hidráulicas.  
+▪ Establecer ventanas operativas recomendadas y un optimizador que proponga 
+setpoints o rangos.  
+▪ Validar recomendaciones en piloto controlado con medición y verificación del ahorro.  
+▪ Integrar indicadores energéticos con indicadores de condición para gobernar decisiones 
+de operación.  
+4. Alcance  
+En alcance  
+▪ Consolidación de variables de proceso, potencia, caudal, presión y variables de 
+condición relevantes.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 26 de 29 
+▪ Modelado estadístico y de optimización bajo restricciones operativas definidas por el 
+cliente.  
+▪ Definición de recomendaciones y tablero de seguimiento con indicadores energéticos.  
+▪ Piloto controlado y plan de escalamiento a otras bombas si aplica.  
+Fuera de alcance  
+▪ Implementación directa de control automático en lazo cerrado sin aprobación y gestión 
+de cambio OT.  
+▪ Intervenciones físicas del sistema, cambios de equipos o instrumentación, salvo 
+proyecto aparte.  
+▪ Recomendaciones fuera del rango observado o sin restricción explícita de seguridad 
+operativa.  
+5. Entregables  
+▪ Baseline energético por régimen operativo y por tipo de crudo, con métricas de 
+variabilidad  que m antengan el enfoque an alítico . 
+▪ Modelo de consumo  energético  y restricciones con explicación de variables dominantes.  
+▪ Optimización con ventanas operativas recomendadas y criterios de seguridad.  
+▪ Tablero de seguimiento con kWh por volumen, dispersión y alertas de desviación.  
+▪ Reporte  de piloto con medición y verificación del ahorro ; además  plan de despliegue.  
+6. Criterios de aceptación  
+▪ Ahorro energético verificado en piloto según metodología de medición y verificación 
+acordada  de acuerdo con datos disponibles . 
+▪ Evaluación  experta satisfactoria  de que las recomendaciones no violan restricciones de 
+proceso, hidráulicas ni de confiabilidad.  
+▪ Modelo documentado con supuestos, rango de validez y mecanismos de actualización.  
+▪ Integración  aprobada por expertos  de indicadores energéticos con indicadores de 
+condición para gestión de riesgo.  
+7. Partes interesadas y roles  
+▪ Operación: Define restricciones, valida recomendaciones y ejecuta piloto.  
+▪ Gestión energética: Define indicadores, metas y metodología de verificación.  
+▪ Confiabilidad: Valida impacto en condición, cavitación y riesgo mecánico.  
+▪ Instrumentación y Control: Soporte de datos y gestión de cambio OT.  
+▪ IDC Ingeniería: Modelado, optimización, validación y entrega.  
+8. Gobernanza y cadencia  
+Comité mensual con sponsor para decisiones y control de alcance. Seguimiento quincenal 
+técnico en fases de modelado y piloto. Control de cambios para cada ajuste de reglas o 
+restricciones.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 27 de 29 
+9. Hitos y cronograma de alto nivel  
+Mes 1: consolidación de datos, baseline energético y segmentación por crudo y régimen 
+operativo.  
+Mes 2 -3: modelado de consumo y restricciones, definición de ventanas operativas 
+recomendadas.  
+Mes 4: implementación de optimizador y tablero, preparación de piloto controlado.  
+Mes 5 -6: piloto con medición y verificación, ajustes y plan de escalamiento.  
+10. Supuestos y restricciones  
+Supuestos  
+▪ Disponibilidad de variables de proceso confiables como caudal, presión y potencia.  
+▪ Etiquetas de tipo de crudo disponibles para segmentación y control de variabilidad.  
+▪ Acceso a históricos suficientes para representar distintos regímenes operativos.  
+Restricciones  
+▪ Recomendaciones deben ser conservadoras ante incertidumbre y priorizar seguridad 
+operativa.  
+▪ Limitaciones por calidad de data o probl emas de calibración en  instrumentación pueden 
+restringir precisión del modelo.  
+11. Riesgos y respuesta  
+▪ Riesgo de etiquetado de modos de operación incorrect os y baja calidad de datos por 
+afectaciones en  instrumentación.  
+Respuesta : Auditoría  periódica  de los de dato  que incluya  validación de consistencia y 
+reglas de calidad.  
+▪ Riesgo de variabilidad por tipo de crudo que sesgue el modelo.  
+Respuesta : Segmentación por crudo, modelos por régimen y validación por periodos.  
+▪ Riesgo de recomendación con impacto adverso en condición.  
+Respuesta : Restricciones explícitas, integración con métricas de vibración y revisión 
+experta  de manera periódica . 
+12. Gestión de calidad y validación técnica  
+Aseguramiento de calidad del dato, validación por periodos y verificación de coherencia 
+física con curvas de bomba y restricciones del sistema. Medición y verificación del ahorro 
+en piloto con metodología acordada y evidencia reproducible.  
+13. Indicadores de seguimiento y desempeño  
+▪ kWh por unidad de volumen transportado, por régimen operativo.  
+▪ Porcentaje de operación dentro de la ventana recomendada.  
+▪ Ahorro energético verificado en piloto.  
+▪ Indicadores de condición asociados, incluyendo tendencia de vibración y eventos de 
+cavitación si aplica.  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 28 de 29 
+14. Herramientas y tecnología  
+▪ Historiador o repositorio de po tencia consumida de unidades de bombeo  para extracción 
+de datos.  
+▪ Python para modelado y optimización.  
+▪ Herramienta de BI para tableros y seguimiento.  
+15. Plan de comunicaciones  
+▪ Reunión quincenal técnica durante modelado y piloto.  
+▪ Comité mensual con sponsor para decisiones y escalamiento.  
+▪ Reporte mensual de KPIs energéticos, hallazgos y riesgos.  
+▪ Socialización de cierre con procedimiento operativo y plan de continuidad.  
+  
+ PORTAFOLIO DE LÍNEAS DE TRABAJO - 
+INGENIERO DE ANALÍTICA PREDICTIVA  CÓDIGO: IC -PR-18  
+VERSIÓN: 0 1 
+VIGENCIA: 29/01/2026 
+ 
+ 
+IDC Ingeniería de Confiabilidad SAS  
+Tel: +57 (2) 2316359  
+E-mail: info@idc -confiabilidad.com  / Web: www.idc -confiabilidad.com  
+Página 29 de 29 
+CONTROL DE CAMBIO  
+ 
+Versión  Descripción del cambio  Fecha  
+1.0 Desarrollo  29/01/2026  
+   
+   
+   
+   
+ 
+ 
