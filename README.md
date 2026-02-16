@@ -4,7 +4,7 @@
 [![Proyectos](https://img.shields.io/badge/Proyectos-7-blue)](https://github.com/OrtegonAutomation/Proyectos)
 [![Documentación](https://img.shields.io/badge/Documentaci%C3%B3n-Completa-success)](https://github.com/OrtegonAutomation/Proyectos)
 
-**Organización**: OrtegonAutomation  
+**Organización**: IDC Confiabilidad
 **Fecha de Actualización**: Febrero 2026  
 **Propósito**: Sistema integral de gestión y documentación para portafolio de 7 proyectos de analítica predictiva
 
