@@ -78,7 +78,7 @@ public class InventoryService : IInventoryService
         var allDayFolders = assets.SelectMany(a => a.Variables.SelectMany(v => v.DayFolders)).ToList();
         status.AverageDailyGrowthBytes = CalculateAverageDailyGrowth(allDayFolders);
 
-        // Estimar días hasta el umbral
+        // Estimar días hasta el umbral (usando 85% como referencia genérica)
         if (status.AverageDailyGrowthBytes > 0)
         {
             double bytesUntilThreshold = status.TotalSpaceBytes * 0.85 - status.UsedSpaceBytes;

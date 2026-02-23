@@ -9,6 +9,11 @@ public class FifoConfiguration
     /// <summary>Ruta raíz donde se encuentran los Assets (ej: D:\MonitoringData)</summary>
     public string StoragePath { get; set; } = string.Empty;
 
+    /// <summary>Espacio máximo asignado para el almacenamiento en GB.
+    /// Si es 0, se usa el tamaño real del disco/partición.
+    /// Si es > 0, los umbrales se calculan contra este valor en vez del disco completo.</summary>
+    public double MaxStorageSizeGB { get; set; } = 0;
+
     /// <summary>Umbral de almacenamiento (%) a partir del cual se activa limpieza. Rango: 50-95</summary>
     public double ThresholdPercent { get; set; } = 85.0;
 

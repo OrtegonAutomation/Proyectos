@@ -13,6 +13,7 @@ public partial class ConfigurationViewModel : ObservableObject
     private readonly MainViewModel _main;
 
     [ObservableProperty] private string _storagePath = "";
+    [ObservableProperty] private double _maxStorageSize = 0;
     [ObservableProperty] private double _thresholdPercent = 85;
     [ObservableProperty] private double _cleanupCapPercent = 20;
     [ObservableProperty] private int _scheduledFrequencyHours = 24;
@@ -37,6 +38,7 @@ public partial class ConfigurationViewModel : ObservableObject
     public void LoadFromConfig(FifoConfiguration config)
     {
         StoragePath = config.StoragePath;
+        MaxStorageSize = config.MaxStorageSizeGB;
         ThresholdPercent = config.ThresholdPercent;
         CleanupCapPercent = config.CleanupCapPercent;
         ScheduledFrequencyHours = config.ScheduledFrequencyHours;
@@ -53,6 +55,7 @@ public partial class ConfigurationViewModel : ObservableObject
     }
 
     partial void OnStoragePathChanged(string value) { HasChanges = true; Validate(); }
+    partial void OnMaxStorageSizeChanged(double value) { HasChanges = true; Validate(); }
     partial void OnThresholdPercentChanged(double value) { HasChanges = true; Validate(); }
     partial void OnCleanupCapPercentChanged(double value) { HasChanges = true; Validate(); }
     partial void OnScheduledFrequencyHoursChanged(int value) { HasChanges = true; Validate(); }
@@ -74,6 +77,7 @@ public partial class ConfigurationViewModel : ObservableObject
     private FifoConfiguration ToConfig() => new()
     {
         StoragePath = StoragePath,
+        MaxStorageSizeGB = MaxStorageSize,
         ThresholdPercent = ThresholdPercent,
         CleanupCapPercent = CleanupCapPercent,
         ScheduledFrequencyHours = ScheduledFrequencyHours,

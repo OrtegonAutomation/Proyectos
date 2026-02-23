@@ -22,6 +22,20 @@ public class StorageStatus
         ? (double)UsedSpaceBytes / TotalSpaceBytes * 100.0
         : 0;
 
+    /// <summary>
+    /// Aplica el límite de espacio configurado (MaxStorageSizeGB).
+    /// Si maxGB > 0, reemplaza TotalSpaceBytes y recalcula UsedSpaceBytes basado en MonitoredDataBytes.
+    /// Esto permite que los umbrales se calculen contra el espacio asignado en vez del disco completo.
+    /// </summary>
+    public void ApplyStorageLimit(double maxStorageSizeGB)
+    {
+        if (maxStorageSizeGB <= 0) return;
+
+        TotalSpaceBytes = (long)(maxStorageSizeGB * 1024 * 1024 * 1024);
+        UsedSpaceBytes = MonitoredDataBytes;
+        FreeSpaceBytes = Math.Max(0, TotalSpaceBytes - UsedSpaceBytes);
+    }
+
     /// <summary>Espacio total de las carpetas E/F monitoreadas en bytes</summary>
     public long MonitoredDataBytes { get; set; }
 

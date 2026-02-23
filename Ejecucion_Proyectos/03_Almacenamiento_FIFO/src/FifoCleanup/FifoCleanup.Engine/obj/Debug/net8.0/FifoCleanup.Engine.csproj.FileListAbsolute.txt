@@ -9,3 +9,4 @@ C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenami
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\refint\FifoCleanup.Engine.dll
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.pdb
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\ref\FifoCleanup.Engine.dll
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.Engine\obj\Debug\net8.0\FifoCleanup.Engine.sourcelink.json

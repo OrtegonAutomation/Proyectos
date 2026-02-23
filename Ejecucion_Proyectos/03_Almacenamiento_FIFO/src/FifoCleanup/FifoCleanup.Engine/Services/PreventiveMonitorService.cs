@@ -210,6 +210,9 @@ public class PreventiveMonitorService : IPreventiveMonitorService
         // Escanear estado actual del storage
         var status = await _inventory.ScanAsync(_storagePath, _cts?.Token ?? CancellationToken.None);
 
+        // Aplicar límite de espacio configurado (si MaxStorageSizeGB > 0, calcula contra ese límite)
+        status.ApplyStorageLimit(_config.MaxStorageSizeGB);
+
         // Verificar si el uso actual ya supera el umbral
         if (status.UsagePercent < _config.ThresholdPercent * 0.9) // 90% del umbral como margen
             return;

@@ -65,11 +65,6 @@
                             <TextBlock Text="Cap limpieza (%)" Style="{StaticResource SecondaryText}"/>
                             <TextBox Text="{Binding CleanupCapPercent, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
-
-                        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Margin="0,8,0,0">
-                            <TextBlock Text="Alocar archivo real (MB, opcional)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding AllocateRealBytesMB, UpdateSourceTrigger=PropertyChanged}"/>
-                        </StackPanel>
                     </Grid>
                 </StackPanel>
             </Border>

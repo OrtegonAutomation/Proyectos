@@ -127,6 +127,9 @@ public class ScheduledCleanupService : IScheduledCleanupService
         // 1. Inventario
         var status = await _inventory.ScanAsync(_config.StoragePath, ct);
 
+        // Aplicar límite de espacio configurado
+        status.ApplyStorageLimit(_config.MaxStorageSizeGB);
+
         // 2. Proyección
         double hoursUntilNext = _config.ScheduledFrequencyHours;
         double projectedGrowth = status.AverageDailyGrowthBytes * (hoursUntilNext / 24.0);

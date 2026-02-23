@@ -1,5 +1,5 @@
 {
-  "storagePath": "D:\\tests",
+  "storagePath": "D:\\test",
   "thresholdPercent": 85,
   "cleanupCapPercent": 20,
   "scheduledFrequencyHours": 24,

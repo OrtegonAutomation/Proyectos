@@ -40,12 +40,6 @@ public class SimulationParams
 
     /// <summary>Cap de limpieza para la simulación (%)</summary>
     public double CleanupCapPercent { get; set; } = 20;
-
-    /// <summary>Si >0, intentará alocar realmente esta cantidad (MB) como archivo de relleno para
-    /// que la carpeta de simulación ocupe espacio en disco. Útil para pruebas en entornos controlados.
-    /// Si = 0 (por defecto), se calculará automáticamente basado en SimulatedDiskSizeGB * InitialUsagePercent,
-    /// creando un archivo sim_alloc.bin que simule el uso real del disco configurado.</summary>
-    public int AllocateRealBytesMB { get; set; } = 0;
 }
 
 /// <summary>

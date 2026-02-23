@@ -40,8 +40,6 @@ public class SimulationService : ISimulationService
         {
             if (Directory.Exists(parameters.SimulationPath))
             {
-                // Si ya existen datos sintéticos, reutilizarlos para ahorrar I/O y mantener la información
-                // previa entre ejecuciones de "Simular". Solo regenerar si el directorio está vacío.
                 if (Directory.EnumerateFileSystemEntries(parameters.SimulationPath).Any())
                 {
                     progress?.Report(("Datos de simulación existentes detectados, reutilizando...", 0));
@@ -53,16 +51,23 @@ public class SimulationService : ISimulationService
 
             Directory.CreateDirectory(parameters.SimulationPath);
 
-            int totalOperations = parameters.NumberOfAssets * parameters.VariablesPerAsset * parameters.DaysOfHistory * 2;
+            int typeCount = (parameters.GenerateEData && parameters.GenerateFData) ? 2
+                          : (parameters.GenerateEData || parameters.GenerateFData) ? 1 : 0;
+            int totalOperations = parameters.NumberOfAssets * parameters.VariablesPerAsset * parameters.DaysOfHistory * typeCount;
             int completed = 0;
+            long totalBytesWritten = 0;
 
-            for (int a = 1; a <= parameters.NumberOfAssets; a++)
+            // Límite real: no generar más datos que el uso objetivo del disco simulado
+            long targetUsageBytes = (long)(parameters.SimulatedDiskSizeGB * 1024 * 1024 * 1024 * parameters.InitialUsagePercent / 100.0);
+            bool capacityReached = false;
+
+            for (int a = 1; a <= parameters.NumberOfAssets && !capacityReached; a++)
             {
                 ct.ThrowIfCancellationRequested();
                 var assetName = $"Asset{a:D3}";
                 var assetPath = Path.Combine(parameters.SimulationPath, assetName);
 
-                for (int v = 0; v < parameters.VariablesPerAsset; v++)
+                for (int v = 0; v < parameters.VariablesPerAsset && !capacityReached; v++)
                 {
                     ct.ThrowIfCancellationRequested();
                     var varName = v.ToString("D2");
@@ -71,7 +76,7 @@ public class SimulationService : ISimulationService
                     // Generar carpetas de tendencias (se ignoran en FIFO)
                     var trendPath = Path.Combine(varPath, DateTime.Now.Year.ToString());
                     Directory.CreateDirectory(trendPath);
-                    await CreateDummyFile(Path.Combine(trendPath, "trend.dat"), 1024); // 1KB
+                    await CreateRealFileAsync(Path.Combine(trendPath, "trend.dat"), 1024, ct);
 
                     // Generar datos E y F
                     string[] types = { };
@@ -88,6 +93,13 @@ public class SimulationService : ISimulationService
                         {
                             ct.ThrowIfCancellationRequested();
 
+                            // Verificar si ya alcanzamos el uso objetivo
+                            if (totalBytesWritten >= targetUsageBytes)
+                            {
+                                capacityReached = true;
+                                break;
+                            }
+
                             var date = DateTime.Now.AddDays(-d);
                             var dayPath = Path.Combine(varPath, folderType,
                                 date.Year.ToString("D4"),
@@ -96,69 +108,44 @@ public class SimulationService : ISimulationService
 
                             Directory.CreateDirectory(dayPath);
 
-                            // Generar archivos con tamaño variable
+                            // Generar archivos con tamaño real y variación
                             double variation = 1 + (_random.NextDouble() * 2 - 1) * parameters.SizeVariationPercent / 100;
                             long targetSize = (long)(parameters.AvgDayFolderSizeMB * 1024 * 1024 * variation);
 
-                            // Crear varios archivos que sumen el tamaño objetivo
+                            // Recortar si excedería el objetivo
+                            long bytesRemaining = targetUsageBytes - totalBytesWritten;
+                            if (targetSize > bytesRemaining)
+                                targetSize = bytesRemaining;
+
                             int fileCount = _random.Next(3, 10);
                             long sizePerFile = targetSize / fileCount;
 
                             for (int f = 0; f < fileCount; f++)
                             {
                                 var fileName = $"data_{f:D3}.bin";
-                                await CreateDummyFile(Path.Combine(dayPath, fileName), sizePerFile);
+                                await CreateRealFileAsync(Path.Combine(dayPath, fileName), sizePerFile, ct);
                             }
 
+                            totalBytesWritten += targetSize;
                             completed++;
-                            double percent = (double)completed / totalOperations * 100;
-                            progress?.Report(($"Generando: {assetName}/{varName}/{folderType}/{date:yyyy/MM/dd}", percent));
+                            double percent = (double)totalBytesWritten / targetUsageBytes * 100;
+                            double totalGB = totalBytesWritten / (1024.0 * 1024 * 1024);
+                            double targetGB = targetUsageBytes / (1024.0 * 1024 * 1024);
+                            progress?.Report(($"Generando: {assetName}/{varName}/{folderType}/{date:yyyy/MM/dd} ({totalGB:F2}/{targetGB:F2} GB)", Math.Min(percent, 100)));
                         }
+
+                        if (capacityReached) break;
                     }
                 }
             }
 
-            progress?.Report(("Generación de datos sintéticos completada", 100));
-
-            // Calcular tamaño de asignación: si el usuario no especificó AllocateRealBytesMB (==0),
-            // calcularlo automáticamente basado en SimulatedDiskSizeGB * InitialUsagePercent
-            int allocateMB = parameters.AllocateRealBytesMB;
-            if (allocateMB == 0)
-            {
-                // Calcular uso objetivo en MB: SimulatedDiskSizeGB * 1024 * InitialUsagePercent / 100
-                double targetUsageGB = parameters.SimulatedDiskSizeGB * parameters.InitialUsagePercent / 100.0;
-                allocateMB = (int)(targetUsageGB * 1024); // Convertir GB a MB
-
-                // Restar el tamaño de los archivos sintéticos ya generados para no exceder el objetivo
-                // (los archivos sintéticos ya ocupan ~5-6 GB típicamente)
-                long syntheticDataMB = GetDirectorySizeMB(parameters.SimulationPath);
-                allocateMB = Math.Max(0, allocateMB - (int)syntheticDataMB);
-            }
-
-            // Si se debe alocar, crear un archivo de relleno que ocupe espacio real en disco
-            if (allocateMB > 0)
-            {
-                try
-                {
-                    progress?.Report(($"Alocando {allocateMB} MB para simular uso de disco real...", 100));
-                    var allocPath = Path.Combine(parameters.SimulationPath, "sim_alloc.bin");
-                    long bytes = (long)allocateMB * 1024 * 1024;
-
-                    // Crear archivo y establecer su tamaño sin escribir todo el contenido (SetLength)
-                    using (var fs = new FileStream(allocPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                    {
-                        fs.SetLength(bytes);
-                    }
-
-                    progress?.Report(($"Archivo de asignación creado: {allocateMB} MB", 100));
-                }
-                catch (Exception ex)
-                {
-                    // No fatal: si no se puede alocar, continuar sin fallo
-                    progress?.Report(($"Advertencia: No se pudo alocar espacio real ({ex.Message})", 100));
-                }
-            }
-
+            double finalGB = totalBytesWritten / (1024.0 * 1024 * 1024);
+            double diskGB = parameters.SimulatedDiskSizeGB;
+            double usagePct = (double)totalBytesWritten / (parameters.SimulatedDiskSizeGB * 1024 * 1024 * 1024) * 100;
+            string stopReason = capacityReached 
+                ? $"Uso objetivo alcanzado ({parameters.InitialUsagePercent}%)" 
+                : "Todos los Assets/Variables/Días generados";
+            progress?.Report(($"Generación completada: {finalGB:F2} GB / {diskGB:F1} GB ({usagePct:F1}%) — {stopReason}", 100));
             return true;
         }
         catch (OperationCanceledException)
@@ -192,41 +179,22 @@ public class SimulationService : ISimulationService
             return result;
         }
 
-        // 2. Escanear inventario de datos generados
-        progress?.Report(("Fase 2: Escaneando inventario...", 40));
+        // 2. Escanear inventario de datos generados (métricas reales)
+        progress?.Report(("Fase 2: Escaneando inventario real...", 40));
         result.StatusBefore = await _inventory.ScanAsync(parameters.SimulationPath, ct);
 
-        // Simular disco con el tamaño configurado
+        // Disco virtual: SimulatedDiskSizeGB define el tamaño total del disco simulado
         result.StatusBefore.TotalSpaceBytes = (long)(parameters.SimulatedDiskSizeGB * 1024 * 1024 * 1024);
 
-        // Si se pidió alocar espacio real, ajustar UsedSpace basado en archivos creados + archivo de allocación
-        if (parameters.AllocateRealBytesMB > 0)
-        {
-            long actualMonitored = result.StatusBefore.MonitoredDataBytes;
-            try
-            {
-                var allocPath = Path.Combine(parameters.SimulationPath, "sim_alloc.bin");
-                if (File.Exists(allocPath))
-                {
-                    actualMonitored += new FileInfo(allocPath).Length;
-                }
-            }
-            catch { }
+        // Uso real: los bytes reales que ocupan los datos generados en disco
+        result.StatusBefore.UsedSpaceBytes = result.StatusBefore.MonitoredDataBytes;
+        result.StatusBefore.FreeSpaceBytes = result.StatusBefore.TotalSpaceBytes - result.StatusBefore.UsedSpaceBytes;
 
-            long allocRequested = (long)parameters.AllocateRealBytesMB * 1024 * 1024;
-            long used = Math.Min(result.StatusBefore.TotalSpaceBytes, actualMonitored + allocRequested);
-            result.StatusBefore.UsedSpaceBytes = used;
-            result.StatusBefore.FreeSpaceBytes = result.StatusBefore.TotalSpaceBytes - used;
-        }
-        else
-        {
-            result.StatusBefore.UsedSpaceBytes = (long)(result.StatusBefore.TotalSpaceBytes * parameters.InitialUsagePercent / 100);
-            result.StatusBefore.FreeSpaceBytes = result.StatusBefore.TotalSpaceBytes - result.StatusBefore.UsedSpaceBytes;
-        }
-
+        double realDataGB = result.StatusBefore.MonitoredDataBytes / (1024.0 * 1024 * 1024);
         result.LogMessages.Add($"Inventario: {result.StatusBefore.Assets.Count} Assets, " +
             $"{result.StatusBefore.Assets.Sum(a => a.TotalDayFolders)} carpetas de día.");
-        result.LogMessages.Add($"Uso simulado: {result.StatusBefore.UsagePercent:F1}%");
+        result.LogMessages.Add($"Datos reales en disco: {realDataGB:F2} GB");
+        result.LogMessages.Add($"Uso real: {result.StatusBefore.UsagePercent:F1}% de {parameters.SimulatedDiskSizeGB} GB");
 
         // 3. Ejecutar limpieza simulada (dry run)
         progress?.Report(("Fase 3: Ejecutando limpieza FIFO simulada...", 60));
@@ -366,18 +334,22 @@ public class SimulationService : ISimulationService
 
                             Directory.CreateDirectory(dayPath);
 
-                            // Generar varios archivos pequeños que sumen el tamaño objetivo
+                            // Generar varios archivos reales que sumen el tamaño objetivo
                             int fileCount = _random.Next(2, 6);
                             long sizePerFile = bytesPerType / fileCount;
 
+                            long bytesWrittenThisType = 0;
                             for (int f = 0; f < fileCount; f++)
                             {
-                                var fileName = $"data_{now:HHmmss}_{f:D3}.bin";
-                                await CreateDummyFile(Path.Combine(dayPath, fileName), sizePerFile);
+                                if (ct.IsCancellationRequested) break;
+                                var fileName = $"data_{now:HHmmss}_{now.Millisecond:D3}_{f:D3}.bin";
+                                var filePath = Path.Combine(dayPath, fileName);
+                                await CreateRealFileAsync(filePath, sizePerFile, ct);
+                                bytesWrittenThisType += sizePerFile;
                             }
 
-                            // Notificar que se generaron datos
-                            OnContinuousDataGenerated?.Invoke(this, (assetId, variableId, bytesPerType));
+                            // Notificar que se generaron datos reales
+                            OnContinuousDataGenerated?.Invoke(this, (assetId, variableId, bytesWrittenThisType));
                         }
                     }
                 }
@@ -421,45 +393,26 @@ public class SimulationService : ISimulationService
         return assets;
     }
 
-    /// <summary>Crea un archivo dummy del tamaño especificado con datos aleatorios mínimos.</summary>
-    private async Task CreateDummyFile(string path, long sizeBytes)
+    /// <summary>Crea un archivo con tamaño REAL en disco.
+    /// Usa buffer de 64 KB para escritura eficiente. Sin límite de tamaño.</summary>
+    private async Task CreateRealFileAsync(string path, long sizeBytes, CancellationToken ct = default)
     {
-        // Para simulación, crear archivos sparse o con datos mínimos
-        // En terminal low-power, evitamos escribir GBs reales
         var dir = Path.GetDirectoryName(path);
         if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
             Directory.CreateDirectory(dir);
 
-        // Limitar tamaño real del archivo para simulación (max 1MB por archivo)
-        long actualSize = Math.Min(sizeBytes, 1024 * 1024);
-
-        using var fs = new FileStream(path, FileMode.Create, FileAccess.Write);
-        var buffer = new byte[Math.Min(actualSize, 8192)];
+        const int bufferSize = 64 * 1024;
+        var buffer = new byte[bufferSize];
         _random.NextBytes(buffer);
 
+        using var fs = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize);
         long written = 0;
-        while (written < actualSize)
+        while (written < sizeBytes)
         {
-            int toWrite = (int)Math.Min(buffer.Length, actualSize - written);
-            await fs.WriteAsync(buffer.AsMemory(0, toWrite));
+            ct.ThrowIfCancellationRequested();
+            int toWrite = (int)Math.Min(bufferSize, sizeBytes - written);
+            await fs.WriteAsync(buffer.AsMemory(0, toWrite), ct);
             written += toWrite;
-        }
-    }
-
-    /// <summary>Calcula el tamaño total de un directorio en MB.</summary>
-    private long GetDirectorySizeMB(string path)
-    {
-        try
-        {
-            if (!Directory.Exists(path)) return 0;
-
-            var dirInfo = new DirectoryInfo(path);
-            long totalBytes = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(f => f.Length);
-            return totalBytes / (1024 * 1024); // Convertir a MB
-        }
-        catch
-        {
-            return 0;
         }
     }
 }

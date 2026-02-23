@@ -1,0 +1,220 @@
+{
+  "skill_name": "auto-documentacion",
+  "version": "1.0.0",
+  "description": "Automatiza generación de documentación de código, arquitectura y reportes",
+  "categories": ["documentation", "code-quality", "architecture", "reporting"],
+  
+  "configurations": {
+    "languages": {
+      "python": {
+        "docstring_style": "google",
+        "comment_style": "python",
+        "extensions": [".py"]
+      },
+      "cpp": {
+        "docstring_style": "doxygen",
+        "comment_style": "cpp",
+        "extensions": [".cpp", ".h", ".hpp"]
+      },
+      "csharp": {
+        "docstring_style": "xml-doc",
+        "comment_style": "csharp",
+        "extensions": [".cs"]
+      },
+      "javascript": {
+        "docstring_style": "jsdoc",
+        "comment_style": "javascript",
+        "extensions": [".js", ".ts", ".tsx"]
+      }
+    },
+
+    "documentation_types": {
+      "code": {
+        "name": "Documentación de Código",
+        "outputs": ["docstrings", "comments", "API_REFERENCE.md"],
+        "template": "code_documentation",
+        "trigger": "post-commit"
+      },
+      "architecture": {
+        "name": "Documentación de Arquitectura",
+        "outputs": ["ADR", "INDEX.md", "ARCHITECTURE.md"],
+        "template": "adr_template",
+        "trigger": "on-request"
+      },
+      "reports": {
+        "name": "Reportes Administrativos",
+        "outputs": ["WEEKLY_STATUS.docx", "RISK_REGISTER.xlsx", "EXECUTIVE_SUMMARY.pptx"],
+        "template": "report_template",
+        "trigger": "weekly"
+      }
+    },
+
+    "output_formats": {
+      "markdown": {
+        "extension": ".md",
+        "use_for": ["API documentation", "ADRs", "Architecture notes"]
+      },
+      "docx": {
+        "extension": ".docx",
+        "use_for": ["Weekly status", "Project reports"]
+      },
+      "xlsx": {
+        "extension": ".xlsx",
+        "use_for": ["Risk register", "Metrics tracking"]
+      },
+      "pptx": {
+        "extension": ".pptx",
+        "use_for": ["Executive summary", "Presentations"]
+      }
+    },
+
+    "folder_structure": {
+      "docs": {
+        "Decisiones_arquitectura": "Architecture Decision Records",
+        "project_management": "Administrative reports",
+        "Requisitos": "Requirements documentation",
+        "testing": "Testing documentation",
+        "Operaciones": "Operational documentation",
+        "Auditorias": "Audit reports"
+      }
+    }
+  },
+
+  "adr_template": {
+    "filename_pattern": "ADR_XXXX_Titulo_Descriptivo.md",
+    "sections": [
+      "Estado",
+      "Contexto",
+      "Decisión",
+      "Consecuencias",
+      "Alternativas Consideradas"
+    ],
+    "states": ["Proposed", "Accepted", "Deprecated", "Superseded"]
+  },
+
+  "report_templates": {
+    "weekly_status": {
+      "filename": "WEEKLY_STATUS_YYYY-MM-DD.docx",
+      "sections": [
+        "Encabezado (Proyecto, Periodo, Responsable)",
+        "Estado General (Verde/Amarillo/Rojo)",
+        "Progreso General (%)",
+        "Hitos Completados",
+        "Hitos en Progreso",
+        "Riesgos Identificados",
+        "Próximos Pasos",
+        "Firma/Aprobación"
+      ]
+    },
+    "risk_register": {
+      "filename": "RISK_REGISTER.xlsx",
+      "columns": [
+        "ID",
+        "Descripción",
+        "Categoría",
+        "Probabilidad",
+        "Impacto",
+        "Nivel de Riesgo",
+        "Estado",
+        "Plan de Mitigación",
+        "Propietario",
+        "Fecha de Identificación"
+      ]
+    },
+    "executive_summary": {
+      "filename": "EXECUTIVE_SUMMARY_YYYY-MM-DD.pptx",
+      "slides": [
+        {
+          "number": 1,
+          "title": "Portada",
+          "content": "Nombre proyecto, período, fecha, responsable"
+        },
+        {
+          "number": 2,
+          "title": "Estado General",
+          "content": "KPIs, % progreso, estado (Verde/Amarillo/Rojo)"
+        },
+        {
+          "number": 3,
+          "title": "Hitos Completados",
+          "content": "Lista de logros principales"
+        },
+        {
+          "number": 4,
+          "title": "Riesgos Principales",
+          "content": "Top 3 riesgos con planes de mitigación"
+        },
+        {
+          "number": 5,
+          "title": "Próximos Pasos",
+          "content": "Actividades previstas para próxima semana"
+        },
+        {
+          "number": 6,
+          "title": "Contacto",
+          "content": "PM, email, teléfono, horario disponible"
+        }
+      ]
+    }
+  },
+
+  "conventions": {
+    "naming": {
+      "adr": "ADR_XXXX_Descripcion_Corta",
+      "report": "TIPO_REPORTE_YYYY-MM-DD",
+      "api_reference": "API_REFERENCE.md",
+      "architecture_index": "INDEX.md"
+    },
+    "language": {
+      "code_documentation": "English or Spanish (project language)",
+      "administrative_reports": "Spanish (PMI-based)",
+      "technical_architecture": "English (international standard)"
+    },
+    "timestamps": {
+      "format": "YYYY-MM-DD HH:MM:SS",
+      "timezone": "America/Bogota"
+    }
+  },
+
+  "restrictions": {
+    "must_not_document": [
+      "API keys",
+      "Database credentials",
+      "Personal information",
+      "Internal user paths",
+      "Confidential business data"
+    ],
+    "must_always_include": [
+      "Generation timestamp",
+      "Document version",
+      "Cross-references",
+      "Author attribution"
+    ],
+    "operational_limits": {
+      "auto_modify_code": false,
+      "require_pm_review": ["reports", "executive_summary"],
+      "publish_automatically": false
+    }
+  },
+
+  "examples": {
+    "code_docstring_python": "def procesar_archivo(path: str, buffer: int = 4096) -> bool:\n    \"\"\"Procesa un archivo FIFO.\n    \n    Args:\n        path: Ruta al archivo\n        buffer: Tamaño en bytes\n    \n    Returns:\n        True si exitoso\n    \"\"\"",
+    
+    "adr_title": "ADR 0001: Arquitectura WPF-C++ para el Almacenamiento FIFO",
+    
+    "risk_entry": {
+      "id": "RISK-001",
+      "description": "Retrasó en integración del módulo de pruebas",
+      "probability": "Alta",
+      "impact": "Alto",
+      "risk_level": "Alto",
+      "mitigation": "Asignar 2 developers adicionales; iniciar paralelamente"
+    }
+  },
+
+  "integration": {
+    "git_workflow": "Commit documentación automatizada con prefix 'docs:'",
+    "ci_cd_trigger": "Post-PR: generar API docs; Weekly (viernes): generar reportes",
+    "version_control": "Todas las documentación versionada en git"
+  }
+}

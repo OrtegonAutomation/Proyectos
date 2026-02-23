@@ -52,3 +52,4 @@ C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenami
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.UI\obj\Debug\net8.0-windows\FifoCleanup.pdb
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.UI\obj\Debug\net8.0-windows\FifoCleanup.UI.genruntimeconfig.cache
 C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.UI\obj\Debug\net8.0-windows\ref\FifoCleanup.dll
+C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\src\FifoCleanup\FifoCleanup.UI\obj\Debug\net8.0-windows\FifoCleanup.UI.sourcelink.json

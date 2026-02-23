@@ -25,7 +25,6 @@ public partial class SimulationViewModel : ObservableObject
     [ObservableProperty] private double _initialUsagePercent = 80;
     [ObservableProperty] private double _thresholdPercent = 85;
     [ObservableProperty] private double _cleanupCapPercent = 20;
-    [ObservableProperty] private int _allocateRealBytesMB = 0;
 
     // Parámetros de simulación continua
     [ObservableProperty] private double _dataRateMBPerInterval = 100;
@@ -130,7 +129,6 @@ public partial class SimulationViewModel : ObservableObject
                 InitialUsagePercent = InitialUsagePercent,
                 ThresholdPercent = ThresholdPercent,
                 CleanupCapPercent = CleanupCapPercent,
-                AllocateRealBytesMB = AllocateRealBytesMB,
                 GenerateEData = true,
                 GenerateFData = true
             };
