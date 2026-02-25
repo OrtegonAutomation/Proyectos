@@ -1,0 +1,5 @@
+"Timestamp","EventType","Action","AssetId","VariableId","Details","BytesAffected","Result","Source"
+"2026-02-23 13:24:18","Inventory","SCAN","","","",0,"OK","SYSTEM"
+"2026-02-23 13:24:18","CleanupScheduled","CLEANUP","","","",0,"OK","SYSTEM"
+"2026-02-23 13:24:18","Error","ERROR","","","",0,"OK","SYSTEM"
+"2026-02-23 13:24:18","Inventory","SCAN2","","","",0,"OK","SYSTEM"

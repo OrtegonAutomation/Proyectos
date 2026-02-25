@@ -1,0 +1,3 @@
+"Timestamp","EventType","Action","AssetId","VariableId","Details","BytesAffected","Result","Source"
+"2026-02-23 13:25:05","Information","IMMUTABLE_LINE_1","","","",0,"OK","SYSTEM"
+"2026-02-23 13:25:05","Information","IMMUTABLE_LINE_2","","","",0,"OK","SYSTEM"

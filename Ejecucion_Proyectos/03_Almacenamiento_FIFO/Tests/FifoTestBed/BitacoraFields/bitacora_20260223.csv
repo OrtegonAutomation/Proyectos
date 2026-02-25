@@ -1,0 +1,2 @@
+"Timestamp","EventType","Action","AssetId","VariableId","Details","BytesAffected","Result","Source"
+"2026-02-23 13:24:17","CleanupScheduled","TEST_ACTION","Asset001","02","Detalle de prueba con comas, y ""comillas""",1048576,"OK","AUTOMATED_TEST"

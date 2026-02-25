@@ -1,0 +1,2 @@
+"Timestamp","EventType","Action","AssetId","VariableId","Details","BytesAffected","Result","Source"
+"2026-02-23 13:24:18","Information","TIMESTAMP_TEST","","","",0,"OK","SYSTEM"
