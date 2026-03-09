@@ -1,0 +1,34 @@
+{
+  "executionTime": 4351,
+  "itemsInput": 0,
+  "itemsOutput": 2,
+  "status": "success",
+  "data": {
+    "output": [
+      [
+        {
+          "json": {
+            "content": {
+              "parts": [
+                {
+                  "text": "```json\n[\n  {\"codigo\": \"1029800\", \"version\": \"2.1\", \"vigencia\": \"12/05/2026\"},\n  {\"codigo\": \"1029800\", \"version\": \"2.1\", \"vigencia\": \"12/05/2026\"}\n]\n```"
+                }
+              ],
+              "role": "model"
+            },
+            "finishReason": "STOP",
+            "index": 0
+          },
+          "pairedItem": {
+            "item": 0
+          }
+        }
+      ]
+    ],
+    "metadata": {
+      "totalItems": 2,
+      "itemsShown": 2,
+      "truncated": false
+    }
+  }
+}

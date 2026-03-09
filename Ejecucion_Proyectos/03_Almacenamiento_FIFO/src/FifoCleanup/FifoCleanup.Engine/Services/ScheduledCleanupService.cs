@@ -83,6 +83,12 @@ public class ScheduledCleanupService : IScheduledCleanupService
 
     private async Task RunLoopAsync(CancellationToken ct)
     {
+        // Reducir prioridad del hilo para no competir con el software de monitoreo
+        if (_config.UseLowPriorityThreads)
+        {
+            Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
+        }
+
         while (!ct.IsCancellationRequested)
         {
             try

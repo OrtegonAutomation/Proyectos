@@ -73,6 +73,19 @@ public class PreventiveMonitorService : IPreventiveMonitorService
 
         try
         {
+            // Validar y crear directorio si no existe
+            if (string.IsNullOrWhiteSpace(storagePath))
+            {
+                throw new ArgumentException("La ruta de almacenamiento no puede estar vacía.", nameof(storagePath));
+            }
+
+            if (!Directory.Exists(storagePath))
+            {
+                throw new DirectoryNotFoundException(
+                    $"El directorio '{storagePath}' no existe. " +
+                    $"Por favor, verifique la configuración y asegúrese de que la ruta sea válida.");
+            }
+
             _storagePath = storagePath;
             _config = config;
             _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
@@ -80,7 +93,8 @@ public class PreventiveMonitorService : IPreventiveMonitorService
             _watcher = new FileSystemWatcher(storagePath)
             {
                 IncludeSubdirectories = true,
-                NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Size,
+                NotifyFilter = NotifyFilters.FileName | NotifyFilters.DirectoryName,
+                InternalBufferSize = 16384, // 16 KB (default 8 KB) — suficiente sin desperdiciar RAM
                 EnableRaisingEvents = true
             };
 
@@ -285,14 +299,21 @@ public class PreventiveMonitorService : IPreventiveMonitorService
     // Procesador de eventos que agrupa eventos y ejecuta evaluación por Asset/Variable cada intervalo
     private async Task EventProcessorLoop(CancellationToken ct)
     {
+        // Reducir prioridad del hilo para no competir con el software de monitoreo
+        if (_config.UseLowPriorityThreads)
+        {
+            Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;
+        }
+
         var grouped = new Dictionary<string, DateTime>();
+        var batchInterval = TimeSpan.FromSeconds(Math.Max(5, _config.EventBatchIntervalSeconds));
 
         while (!ct.IsCancellationRequested)
         {
             try
             {
-                // Esperar un intervalo breve para agrupar eventos
-                await Task.Delay(TimeSpan.FromSeconds(5), ct);
+                // Esperar el intervalo configurado para agrupar eventos
+                await Task.Delay(batchInterval, ct);
 
                 // Vaciar cola
                 while (_eventQueue.TryDequeue(out var path))

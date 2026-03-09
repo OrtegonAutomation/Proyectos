@@ -73,16 +73,19 @@ public class ConfigurationService : IConfigurationService
         StoragePath = @"D:\MonitoringData",
         ThresholdPercent = 85.0,
         CleanupCapPercent = 20.0,
-        ScheduledFrequencyHours = 24,
+        ScheduledFrequencyHours = 6,
         ScheduledHour = 2,
         PreventiveThresholdDays = 3,
         EnableScheduledCleanup = true,
         EnablePreventiveCleanup = true,
-        MaxConcurrentAssets = 5,
-        MaxDaysToDeletePerAsset = 10,
+        MaxConcurrentAssets = 2,
+        MaxDaysToDeletePerAsset = 5,
         ConfigFilePath = "fifo_config.json",
         BitacoraPath = "bitacora",
         BitacoraRetentionDays = 90,
-        BitacoraMaxSizeMB = 100
+        BitacoraMaxSizeMB = 100,
+        EventBatchIntervalSeconds = 10,
+        UseLowPriorityThreads = true,
+        DeleteThrottleMs = 50
     };
 }

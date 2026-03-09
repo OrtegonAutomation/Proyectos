@@ -1,6 +1,6 @@
 
-    
-    
+
+
     <UserControl x:Class="FifoCleanup.UI.Views.ConfigurationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,94 +9,149 @@
 
     <UserControl.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVis"/>
+
+        <!-- Estilo para etiquetas de campo -->
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <!-- Estilo para texto de ayuda debajo de campos -->
+        <Style x:Key="HelpText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+        </Style>
+
+        <!-- Estilo para encabezado de sección con icono -->
+        <Style x:Key="SectionHeader" TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+
+        <!-- Valor actual del slider -->
+        <Style x:Key="SliderValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+
+        <!-- Separador visual entre secciones -->
+        <Style x:Key="SectionSeparator" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#E8E8E8"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="0,8,0,12"/>
+        </Style>
     </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="20">
-        <StackPanel MaxWidth="700" HorizontalAlignment="Left">
-            <TextBlock Text="Configuración del Sistema FIFO" Style="{StaticResource HeaderText}"/>
+        <StackPanel MaxWidth="720" HorizontalAlignment="Left">
 
-            <!-- Ruta de almacenamiento -->
+            <!-- Título principal con descripción -->
+            <TextBlock Text="⚙️  Configuración" Style="{StaticResource HeaderText}" FontSize="22"/>
+            <TextBlock Text="Ajusta las reglas de limpieza automática. Los cambios se aplican al guardar."
+                       Style="{StaticResource SecondaryText}" Margin="0,-6,0,16" FontSize="12"/>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!-- SECCIÓN 1: RUTA DE ALMACENAMIENTO         -->
+            <!-- ══════════════════════════════════════════ -->
             <Border Style="{StaticResource CardPanel}">
                 <StackPanel>
-                    <TextBlock Text="Ruta de Almacenamiento" Style="{StaticResource SubHeaderText}"/>
-                    <TextBlock Text="Carpeta raíz donde se encuentran los Assets del sistema de monitoreo."
-                               Style="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource SubHeaderText}" FontSize="15">
+                            <Run Text="📂" FontSize="16"/>
+                            <Run Text="  Ruta de Almacenamiento"/>
+                        </TextBlock>
+                        <TextBlock Text="Carpeta donde se guardan los datos del sistema de monitoreo."
+                                   Style="{StaticResource SecondaryText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <TextBlock Text="Carpeta raíz" Style="{StaticResource FieldLabel}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Text="{Binding StoragePath, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Button Grid.Column="1" Content="📁 Explorar" Style="{StaticResource SecondaryButton}"
+                        <Button Grid.Column="1" Content="📁  Explorar" Style="{StaticResource SecondaryButton}"
                                 Command="{Binding BrowseStoragePathCommand}" Margin="8,0,0,0"/>
                     </Grid>
 
-                    <StackPanel Margin="0,12,0,0">
-                        <TextBlock Text="Espacio máximo asignado (GB)" Style="{StaticResource SecondaryText}"/>
-                        <TextBox Text="{Binding MaxStorageSize, UpdateSourceTrigger=PropertyChanged}"
-                                 ToolTip="Límite de espacio asignado a esta ruta. Los umbrales se calculan contra este valor. 0 = usar tamaño real del disco."/>
-                        <TextBlock Text="💡 Si es 0, los umbrales se calculan contra el disco completo. Si define un valor (ej: 5 GB), los umbrales se aplican solo a ese espacio."
-                                   Style="{StaticResource SecondaryText}" FontStyle="Italic" Margin="0,4,0,0" TextWrapping="Wrap"/>
-                    </StackPanel>
+                    <Border Style="{StaticResource SectionSeparator}"/>
+
+                    <TextBlock Text="Espacio máximo asignado (GB)" Style="{StaticResource FieldLabel}"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding MaxStorageSize, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Grid.Column="1" Style="{StaticResource HelpText}" VerticalAlignment="Center" Margin="12,0,0,0">
+                            <Run Text="0 = usar todo el disco."/>
+                            <Run Text=" Cualquier otro valor limita el espacio que el sistema considera disponible."/>
+                        </TextBlock>
+                    </Grid>
                 </StackPanel>
             </Border>
 
-            <!-- Umbrales -->
+            <!-- ══════════════════════════════════════════ -->
+            <!-- SECCIÓN 2: UMBRALES DE LIMPIEZA           -->
+            <!-- ══════════════════════════════════════════ -->
             <Border Style="{StaticResource CardPanel}">
                 <StackPanel>
-                    <TextBlock Text="Umbrales de Limpieza" Style="{StaticResource SubHeaderText}" Margin="0,0,0,8"/>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource SubHeaderText}" FontSize="15">
+                            <Run Text="📊" FontSize="16"/>
+                            <Run Text="  Umbrales de Limpieza"/>
+                        </TextBlock>
+                        <TextBlock Text="Define cuándo y cuánto limpiar cuando el almacenamiento se llena."
+                                   Style="{StaticResource SecondaryText}" Margin="0,4,0,0"/>
+                    </StackPanel>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,8,12">
-                            <TextBlock Text="Umbral de activación (%)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding ThresholdPercent, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Porcentaje de uso a partir del cual se activa la limpieza (50-95%)"/>
-                            <Slider Value="{Binding ThresholdPercent}" Minimum="50" Maximum="95"
-                                    TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,4,0,0"/>
-                        </StackPanel>
+                        <!-- Umbral de activación -->
+                        <Border Grid.Column="0" Margin="0,0,8,16" Padding="12" CornerRadius="4"
+                                Background="#F8F9FA">
+                            <StackPanel>
+                                <Grid>
+                                    <TextBlock Text="¿Cuándo limpiar?" Style="{StaticResource FieldLabel}"/>
+                                    <TextBlock Style="{StaticResource SliderValue}">
+                                        <Run Text="{Binding ThresholdPercent, StringFormat={}{0:0}}"/><Run Text="%"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Slider Value="{Binding ThresholdPercent}" Minimum="50" Maximum="95"
+                                        TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,8,0,4"/>
+                                <TextBlock Text="Uso del disco a partir del cual inicia la limpieza automática."
+                                           Style="{StaticResource HelpText}" FontStyle="Normal"/>
+                            </StackPanel>
+                        </Border>
 
-                        <StackPanel Grid.Column="1" Grid.Row="0" Margin="8,0,0,12">
-                            <TextBlock Text="Cap de limpieza (%)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding CleanupCapPercent, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Porcentaje máximo de datos a eliminar por ejecución (5-50%)"/>
-                            <Slider Value="{Binding CleanupCapPercent}" Minimum="5" Maximum="50"
-                                    TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,4,0,0"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,8,0">
-                            <TextBlock Text="Máx. Assets concurrentes" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding MaxConcurrentAssets, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Número máximo de Assets a procesar en paralelo (1-10)"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="8,0,0,0">
-                            <TextBlock Text="Máx. días a eliminar/Asset" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding MaxDaysToDeletePerAsset, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Días máximos a eliminar por Asset en limpieza local RF-08 (1-30)"/>
-                        </StackPanel>
+                        <!-- Cap de limpieza -->
+                        <Border Grid.Column="1" Margin="8,0,0,16" Padding="12" CornerRadius="4"
+                                Background="#F8F9FA">
+                            <StackPanel>
+                                <Grid>
+                                    <TextBlock Text="¿Cuánto limpiar?" Style="{StaticResource FieldLabel}"/>
+                                    <TextBlock Style="{StaticResource SliderValue}">
+                                        <Run Text="{Binding CleanupCapPercent, StringFormat={}{0:0}}"/><Run Text="%"/>
+                                    </TextBlock>
+                                </Grid>
+                                <Slider Value="{Binding CleanupCapPercent}" Minimum="5" Maximum="50"
+                                        TickFrequency="5" IsSnapToTickEnabled="True" Margin="0,8,0,4"/>
+                                <TextBlock Text="Máximo de datos a eliminar por cada ejecución."
+                                           Style="{StaticResource HelpText}" FontStyle="Normal"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
-                </StackPanel>
-            </Border>
-
-            <!-- RF-07: Limpieza programada -->
-            <Border Style="{StaticResource CardPanel}">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding EnableScheduledCleanup}" Margin="0,0,8,0"
-                                  VerticalAlignment="Center"/>
-                        <TextBlock Text="RF-07: Limpieza Programada" Style="{StaticResource SubHeaderText}"/>
-                    </StackPanel>
-                    <TextBlock Text="Evalúa periódicamente si el crecimiento proyectado supera el umbral."
-                               Style="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -105,77 +160,254 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                            <TextBlock Text="Frecuencia (horas)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding ScheduledFrequencyHours, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Cada cuántas horas se ejecuta la evaluación RF-07 (1-24)"/>
+                            <TextBlock Text="Máximo de Assets en paralelo" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding MaxConcurrentAssets, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Column="1" Text="de 1 a 10" Style="{StaticResource HelpText}" 
+                                           VerticalAlignment="Center" Margin="8,0,0,0" FontStyle="Normal"/>
+                            </Grid>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                            <TextBlock Text="Hora preferida (0-23)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding ScheduledHour, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Hora del día para la primera ejecución (formato 24h)"/>
+                            <TextBlock Text="Días máximos a borrar por Asset" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding MaxDaysToDeletePerAsset, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Column="1" Text="de 1 a 30" Style="{StaticResource HelpText}"
+                                           VerticalAlignment="Center" Margin="8,0,0,0" FontStyle="Normal"/>
+                            </Grid>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Border>
 
-            <!-- RF-08: Limpieza preventiva -->
+            <!-- ══════════════════════════════════════════ -->
+            <!-- SECCIÓN 3: LIMPIEZA PROGRAMADA (RF-07)    -->
+            <!-- ══════════════════════════════════════════ -->
             <Border Style="{StaticResource CardPanel}">
                 <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding EnablePreventiveCleanup}" Margin="0,0,8,0"
-                                  VerticalAlignment="Center"/>
-                        <TextBlock Text="RF-08: Monitoreo Preventivo (Tiempo Real)" Style="{StaticResource SubHeaderText}"/>
-                    </StackPanel>
-                    <TextBlock Text="Monitorea adiciones de archivos en tiempo real y ejecuta limpieza local si detecta riesgo."
-                               Style="{StaticResource SecondaryText}" Margin="0,4,0,8"/>
-
-                    <StackPanel>
-                        <TextBlock Text="Umbral preventivo (días)" Style="{StaticResource SecondaryText}"/>
-                        <TextBox Text="{Binding PreventiveThresholdDays, UpdateSourceTrigger=PropertyChanged}"
-                                 ToolTip="Si se proyecta llenado en menos de estos días, ejecuta limpieza local (1-10)"/>
-                        <Slider Value="{Binding PreventiveThresholdDays}" Minimum="1" Maximum="10"
-                                TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,4,0,0"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-
-            <!-- Bitácora -->
-            <Border Style="{StaticResource CardPanel}">
-                <StackPanel>
-                    <TextBlock Text="Bitácora de Auditoría" Style="{StaticResource SubHeaderText}" Margin="0,0,0,8"/>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Style="{StaticResource SectionHeader}">
+                            <TextBlock Style="{StaticResource SubHeaderText}" FontSize="15">
+                                <Run Text="🕐" FontSize="16"/>
+                                <Run Text="  Limpieza Programada"/>
+                            </TextBlock>
+                            <TextBlock Text="Revisa periódicamente si el almacenamiento necesita limpieza."
+                                       Style="{StaticResource SecondaryText}" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <!-- Toggle visual -->
+                        <CheckBox Grid.Column="1" IsChecked="{Binding EnableScheduledCleanup}"
+                                  VerticalAlignment="Top" Margin="0,4,0,0">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                    </Grid>
+
+                    <Grid Margin="0,4,0,0"
+                          IsEnabled="{Binding EnableScheduledCleanup}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.45"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
                         <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                            <TextBlock Text="Carpeta de bitácora" Style="{StaticResource SecondaryText}"/>
+                            <TextBlock Text="Revisar cada" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding ScheduledFrequencyHours, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Column="1" Text="horas (1–24)"
+                                           Style="{StaticResource HelpText}" VerticalAlignment="Center" Margin="8,0,0,0" FontStyle="Normal"/>
+                            </Grid>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
+                            <TextBlock Text="Primera revisión a las" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding ScheduledHour, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Column="1" Text="hrs (0–23)"
+                                           Style="{StaticResource HelpText}" VerticalAlignment="Center" Margin="8,0,0,0" FontStyle="Normal"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!-- SECCIÓN 4: MONITOREO EN TIEMPO REAL (RF-08) -->
+            <!-- ══════════════════════════════════════════ -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Style="{StaticResource SectionHeader}">
+                            <TextBlock Style="{StaticResource SubHeaderText}" FontSize="15">
+                                <Run Text="🛡️" FontSize="16"/>
+                                <Run Text="  Monitoreo en Tiempo Real"/>
+                            </TextBlock>
+                            <TextBlock Text="Detecta archivos nuevos al momento y limpia automáticamente si hay riesgo de llenado."
+                                       Style="{StaticResource SecondaryText}" Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <CheckBox Grid.Column="1" IsChecked="{Binding EnablePreventiveCleanup}"
+                                  VerticalAlignment="Top" Margin="0,4,0,0">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                    </Grid>
+
+                    <Border Padding="12" CornerRadius="4" Background="#F8F9FA" Margin="0,4,0,0"
+                            IsEnabled="{Binding EnablePreventiveCleanup}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.45"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="Actuar si el disco se llenará en menos de" Style="{StaticResource FieldLabel}"/>
+                                <TextBlock Style="{StaticResource SliderValue}">
+                                    <Run Text="{Binding PreventiveThresholdDays, StringFormat={}{0}}"/>
+                                    <Run Text=" días"/>
+                                </TextBlock>
+                            </Grid>
+                            <Slider Value="{Binding PreventiveThresholdDays}" Minimum="1" Maximum="10"
+                                    TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,8,0,4"/>
+                            <TextBlock Text="Si se proyecta que el espacio se agotará dentro de este rango, se ejecuta limpieza preventiva."
+                                       Style="{StaticResource HelpText}" FontStyle="Normal"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- ══════════════════════════════════════════ -->
+            <!-- SECCIÓN 5: BITÁCORA                       -->
+            <!-- ══════════════════════════════════════════ -->
+            <Border Style="{StaticResource CardPanel}">
+                <StackPanel>
+                    <StackPanel Style="{StaticResource SectionHeader}">
+                        <TextBlock Style="{StaticResource SubHeaderText}" FontSize="15">
+                            <Run Text="📋" FontSize="16"/>
+                            <Run Text="  Registro de Actividad"/>
+                        </TextBlock>
+                        <TextBlock Text="Almacena un historial de todas las operaciones del sistema."
+                                   Style="{StaticResource SecondaryText}" Margin="0,4,0,0"/>
+                    </StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="160"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                            <TextBlock Text="Carpeta de registros" Style="{StaticResource FieldLabel}"/>
                             <TextBox Text="{Binding BitacoraPath, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                            <TextBlock Text="Retención (días)" Style="{StaticResource SecondaryText}"/>
-                            <TextBox Text="{Binding BitacoraRetentionDays, UpdateSourceTrigger=PropertyChanged}"
-                                     ToolTip="Días de retención de registros de auditoría (1-365)"/>
+
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Conservar registros por" Style="{StaticResource FieldLabel}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding BitacoraRetentionDays, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Column="1" Text="días" Style="{StaticResource HelpText}"
+                                           VerticalAlignment="Center" Margin="8,0,0,0" FontStyle="Normal"/>
+                            </Grid>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
             </Border>
 
-            <!-- Validación y botones -->
-            <Border Style="{StaticResource CardPanel}">
+            <!-- ══════════════════════════════════════════ -->
+            <!-- VALIDACIÓN Y ACCIONES                     -->
+            <!-- ══════════════════════════════════════════ -->
+            <Border Style="{StaticResource CardPanel}" Margin="0,4,0,20">
                 <StackPanel>
-                    <TextBlock Text="{Binding ValidationMessage}" Margin="0,0,0,12"
-                               Foreground="{Binding IsValid, Converter={StaticResource BoolToVis}, ConverterParameter=ValidationColor}"/>
+                    <!-- Mensaje de validación -->
+                    <Border CornerRadius="4" Padding="10,8" Margin="0,0,0,14">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#F0FFF0"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsValid}" Value="False">
+                                        <Setter Property="Background" Value="#FFF0F0"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <TextBlock Text="{Binding ValidationMessage}" TextWrapping="Wrap" FontSize="12">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="#27AE60"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsValid}" Value="False">
+                                            <Setter Property="Foreground" Value="#E74C3C"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="↩ Valores por Defecto" Style="{StaticResource SecondaryButton}"
-                                Command="{Binding ResetDefaultsCommand}" Margin="0,0,8,0"/>
-                        <Button Content="✗ Cancelar" Style="{StaticResource SecondaryButton}"
+                    <!-- Botones de acción -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Content="↩  Restaurar Valores" Style="{StaticResource SecondaryButton}"
+                                Command="{Binding ResetDefaultsCommand}"/>
+
+                        <Button Grid.Column="2" Content="Cancelar" Style="{StaticResource SecondaryButton}"
                                 Command="{Binding CancelCommand}" Margin="0,0,8,0"/>
-                        <Button Content="💾 Guardar" Style="{StaticResource SuccessButton}"
-                                Command="{Binding SaveCommand}" IsEnabled="{Binding IsValid}"/>
-                    </StackPanel>
+                        <Button Grid.Column="3" Content="💾  Guardar Configuración" Style="{StaticResource SuccessButton}"
+                                Command="{Binding SaveCommand}" IsEnabled="{Binding IsValid}"
+                                Padding="24,8" FontSize="14"/>
+                    </Grid>
                 </StackPanel>
             </Border>
         </StackPanel>

@@ -83,6 +83,10 @@ public class CleanupService : ICleanupService
                     var (deletedFiles, deletedSize) = await DeleteDayFolderAsync(dayFolder.FullPath);
                     filesDeleted += deletedFiles;
                     totalFreed += deletedSize;
+
+                    // Throttle: pausa entre eliminaciones para reducir picos de I/O en servidor compartido
+                    if (config.DeleteThrottleMs > 0)
+                        await Task.Delay(config.DeleteThrottleMs, ct);
                 }
                 else
                 {

@@ -186,6 +186,37 @@ public static class EdgeCaseTests
                     return (successCount == 3, $"Limpiezas exitosas: {successCount}/3");
                 }
             },
+            new()
+            {
+                Id = "TC-1109", Area = "Edge Cases", Titulo = "RF-08 con ruta inválida",
+                Descripcion = "Verificar que RF-08 rechaza correctamente rutas de directorio inexistentes",
+                Precondiciones = "Ruta de directorio que no existe",
+                Pasos = "1. Intentar StartAsync con ruta inválida | 2. Capturar DirectoryNotFoundException | 3. Verificar mensaje",
+                ResultadoEsperado = "Lanza DirectoryNotFoundException con mensaje claro", Prioridad = "Alta", CARef = "RF-08", Tipo = "Edge Case",
+                TestAction = async () =>
+                {
+                    var invalidPath = @"D:\PathQueNoExiste_Test_12345";
+
+                    try
+                    {
+                        await ctx.PreventiveMonitor.StartAsync(invalidPath, ctx.DefaultConfig);
+                        return (false, "RF-08 debió lanzar DirectoryNotFoundException pero no lo hizo");
+                    }
+                    catch (DirectoryNotFoundException ex)
+                    {
+                        bool hasGoodMessage = ex.Message.Contains("no existe", StringComparison.OrdinalIgnoreCase) ||
+                                             ex.Message.Contains("does not exist", StringComparison.OrdinalIgnoreCase);
+                        return (hasGoodMessage, 
+                            hasGoodMessage 
+                                ? $"RF-08 rechazó ruta inválida correctamente: {ex.Message.Substring(0, Math.Min(100, ex.Message.Length))}" 
+                                : $"Mensaje incorrecto: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        return (false, $"Excepción incorrecta: {ex.GetType().Name} - {ex.Message}");
+                    }
+                }
+            },
         };
     }
 }

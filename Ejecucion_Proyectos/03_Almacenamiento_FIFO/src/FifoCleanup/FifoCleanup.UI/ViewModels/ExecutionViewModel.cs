@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FifoCleanup.Engine.Models;
@@ -201,6 +202,15 @@ public partial class ExecutionViewModel : ObservableObject
                 if (string.IsNullOrEmpty(_main.Configuration.StoragePath))
                 {
                     _main.StatusMessage = "Configure la ruta de almacenamiento primero.";
+                    ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] ✗ Error: Ruta de almacenamiento no configurada.");
+                    return;
+                }
+
+                if (!Directory.Exists(_main.Configuration.StoragePath))
+                {
+                    var msg = $"La ruta '{_main.Configuration.StoragePath}' no existe. Configure una ruta válida.";
+                    _main.StatusMessage = msg;
+                    ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] ✗ Error: {msg}");
                     return;
                 }
 
@@ -223,12 +233,15 @@ public partial class ExecutionViewModel : ObservableObject
                 await App.PreventiveService.StartAsync(_main.Configuration.StoragePath, _main.Configuration);
                 IsPreventiveRunning = true;
                 _main.IsPreventiveRunning = true;
-                ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] RF-08 iniciado. Monitoreando: {_main.Configuration.StoragePath}");
+                ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] ✓ RF-08 iniciado. Monitoreando: {_main.Configuration.StoragePath}");
             }
             catch (Exception ex)
             {
-                ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] ✗ Error al iniciar RF-08: {ex.Message}");
-                _main.StatusMessage = $"Error al iniciar RF-08: {ex.Message}";
+                var errorMsg = ex is DirectoryNotFoundException 
+                    ? $"Ruta no válida: {ex.Message}" 
+                    : $"Error: {ex.Message}";
+                ExecutionLog.Add($"[{DateTime.Now:HH:mm:ss}] ✗ Error al iniciar RF-08: {errorMsg}");
+                _main.StatusMessage = $"Error al iniciar RF-08: {errorMsg}";
             }
         }
     }

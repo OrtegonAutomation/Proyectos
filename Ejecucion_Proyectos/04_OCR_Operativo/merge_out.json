@@ -1,0 +1,82 @@
+{
+  "executionTime": 2,
+  "itemsInput": 0,
+  "itemsOutput": 2,
+  "status": "success",
+  "data": {
+    "output": [
+      [
+        {
+          "json": {
+            "update_id": 779641372,
+            "message": {
+              "message_id": 23,
+              "from": {
+                "id": 8683944902,
+                "is_bot": false,
+                "first_name": ".",
+                "language_code": "es"
+              },
+              "chat": {
+                "id": 8683944902,
+                "first_name": ".",
+                "type": "private"
+              },
+              "date": 1771992814,
+              "photo": [
+                {
+                  "file_id": "AgACAgEAAxkBAAMTaZ51Mnq2zooR_DbOSXCmmHyMPCAAAnsLaxvlZ_hEt2w-KUf8TWIBAAMCAANzAAM6BA",
+                  "file_unique_id": "AQADewtrG-Vn-ER4",
+                  "file_size": 1438,
+                  "width": 90,
+                  "height": 49
+                },
+                {
+                  "file_id": "AgACAgEAAxkBAAMTaZ51Mnq2zooR_DbOSXCmmHyMPCAAAnsLaxvlZ_hEt2w-KUf8TWIBAAMCAANtAAM6BA",
+                  "file_unique_id": "AQADewtrG-Vn-ERy",
+                  "file_size": 18384,
+                  "width": 320,
+                  "height": 175
+                },
+                {
+                  "file_id": "AgACAgEAAxkBAAMTaZ51Mnq2zooR_DbOSXCmmHyMPCAAAnsLaxvlZ_hEt2w-KUf8TWIBAAMCAAN4AAM6BA",
+                  "file_unique_id": "AQADewtrG-Vn-ER9",
+                  "file_size": 83495,
+                  "width": 800,
+                  "height": 437
+                },
+                {
+                  "file_id": "AgACAgEAAxkBAAMTaZ51Mnq2zooR_DbOSXCmmHyMPCAAAnsLaxvlZ_hEt2w-KUf8TWIBAAMCAAN5AAM6BA",
+                  "file_unique_id": "AQADewtrG-Vn-ER-",
+                  "file_size": 111498,
+                  "width": 1024,
+                  "height": 559
+                }
+              ]
+            }
+          },
+          "binary": {
+            "data": {
+              "mimeType": "image/jpeg",
+              "fileType": "image",
+              "fileExtension": "jpg",
+              "data": "filesystem-v2",
+              "fileName": "file_1.jpg",
+              "id": "filesystem-v2:workflows/uRw346TrEaiLtovG/executions/temp/binary_data/c78ca520-c26f-4947-a681-3c8967e0a1d4",
+              "fileSize": "83.5 kB",
+              "bytes": 83495
+            }
+          },
+          "pairedItem": {
+            "item": 0
+          }
+        }
+      ]
+    ],
+    "metadata": {
+      "totalItems": 2,
+      "itemsShown": 2,
+      "truncated": false
+    }
+  }
+}
