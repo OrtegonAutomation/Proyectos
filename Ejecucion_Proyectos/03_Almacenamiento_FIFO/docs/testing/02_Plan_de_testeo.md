@@ -276,17 +276,4 @@ NUEVO → ASIGNADO → EN PROGRESO → RESUELTO → VERIFICADO → CERRADO
 
 ---
 
-## 10. Aprobaciones
-
-| Rol | Nombre | Firma | Fecha |
-|-----|--------|-------|-------|
-| QA Lead | [Pendiente] | | |
-| Líder Técnico | [Pendiente] | | |
-| Gerente de Proyecto IDC | [Pendiente] | | |
-| Representante ODL | [Pendiente] | | |
-
----
-
 **Versión:** 1.0  
-**Estado:** Borrador  
-**Próxima revisión:** [Pendiente]
