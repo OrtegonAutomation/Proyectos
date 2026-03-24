@@ -5,7 +5,7 @@
 [![Documentación](https://img.shields.io/badge/Documentaci%C3%B3n-Completa-success)](https://github.com/OrtegonAutomation/Proyectos)
 
 **Organización**: IDC Confiabilidad
-**Fecha de Actualización**: Febrero 2026  
+**Fecha de Actualización**: Marzo 2026
 **Propósito**: Sistema integral de gestión y documentación para portafolio de 7 proyectos de analítica predictiva
 
 ---
@@ -137,42 +137,63 @@ Cada proyecto en `Ejecucion_Proyectos/` sigue la estructura PMI estándar:
 
 ---
 
-### 3️⃣ Almacenamiento FIFO (⚡ MÁXIMA PRIORIDAD)
-**📂** `03_Almacenamiento_FIFO/`  
-**⏱️ Duración**: 1 mes  
-**🔥 Prioridad**: 🔴 MÁXIMA  
-**💡 Descripción**: Sistema de gestión de almacenamiento FIFO para servidores de monitoreo industrial. Inventario y eliminación automática de archivos con alto rendimiento.
+### 3️⃣ Almacenamiento FIFO ✅ FINALIZADO
+**📂** `03_Almacenamiento_FIFO/`
+**⏱️ Duración**: 1 mes
+**🔥 Prioridad**: 🔴 MÁXIMA
+**📅 Estado**: ✅ **Completado y aprobado para producción** — Marzo 2026
+**💡 Descripción**: Sistema de gestión de almacenamiento FIFO para servidores de monitoreo industrial. Inventario y eliminación automática de archivos con alto rendimiento. Desplegado en servidor `SRVODLRTDNMICA` (ODL Instrumentación y Control).
 
 **Especificaciones Técnicas**:
-- **Stack**: C++17 + WPF (C#/.NET)
-- **Rendimiento**: Inventario de 2TB en <90s, 500GB en <60s
-- **Capacidad**: Hasta 5M archivos
-- **Consumo**: Máx 25% CPU, 500MB RAM
-- **Características**: Dual FIFO (programada + preventiva), bitácora inmutable, alarmas multicanal
+- **Stack**: 100% C# / .NET 8.0 (WPF + Class Library — migrado desde diseño híbrido WPF+C++)
+- **Rendimiento**: Inventario 500 GB en < 60 s; eliminación batch < 10 s/lote
+- **Capacidad**: Hasta 5M archivos, Xeon E5-2695 v4 con baja prioridad de hilos
+- **Consumo**: Máx 25% CPU, 500 MB RAM
+- **Características**: FIFO dual (RF-07 programada global + RF-08 preventiva local por FileSystemWatcher), bitácora CSV append-only con rotación 100 MB, alertas multicanal
 
-**Arquitectura**:
-- Frontend: WPF (6 pestañas: Dashboard, Config, Simulación, Ejecución, Bitácora, Reportes)
-- Backend: C++ nativo (motor FIFO alto rendimiento)
-- Comunicación: Mensajes JSON entre procesos
+**Arquitectura implementada**:
+- `FifoCleanup.Engine` — Class Library (.NET 8.0): modelos, 7 servicios, lógica FIFO
+- `FifoCleanup.UI` — WPF App (.NET 8.0): 6 pestañas (Dashboard, Config, Simulación, Ejecución, Bitácora), MVVM con CommunityToolkit.Mvvm
+- `FifoCleanup.Tests` — Console App: suite propia con 82 casos automatizados (100% aprobados)
 
-**Documentación Especial**:
-- 7 ADRs (Architecture Decision Records)
-- Test Plan, UAT Plan, Test Results
-- Historias de Usuario y Criterios de Aceptación
+**Documentación** — 30 documentos:
+- 7 ADRs con decisiones y alternativas consideradas
+- RF-01 a RF-08 + 10 historias de usuario + criterios de aceptación (CA-01 a CA-12)
+- Plan de pruebas, 82 casos de test, resumen de testeo ✅ 100% aprobado
+- ARQUITECTURA.md, ESPECIFICACION_TECNICA.md, CHANGELOG.md
+- Runbook, Guía de instalación, Guía de configuración, FAQ, Troubleshooting, Contactos SLA
+- Acta de constitución, Declaración de alcance, Cronograma, Control de cambios, Lecciones aprendidas
 
 ---
 
-### 4️⃣ OCR Operativo
-**📂** `04_OCR_Operativo/`  
-**⏱️ Duración**: 1 mes  
-**🔥 Prioridad**: MEDIA  
-**💡 Descripción**: Implementación de sistema OCR para digitalización automática de documentos operativos y mejora de trazabilidad.
+### 4️⃣ OCR Operativo ✅ FINALIZADO
+**📂** `04_OCR_Operativo/`
+**⏱️ Duración**: 1 mes
+**🔥 Prioridad**: MEDIA
+**📅 Estado**: ✅ **Completado y aprobado para operación** — Marzo 2026
+**💡 Descripción**: Agente OCR operativo que digitaliza registros operativos físicos fotografiados (Registro de Fallas Centrifugas — Ingenio Pichichí) y los convierte en datos estructurados consultables. Bot de Telegram con flujo dual: cargue OCR + consulta conversacional en lenguaje natural.
 
-**Objetivos Clave**:
-- Digitalización automática de formatos
-- Reducción de errores de transcripción
-- Mejora en tiempo de procesamiento
-- Integración con sistemas de gestión documental
+**Especificaciones Técnicas**:
+- **Stack**: n8n (orquestación) + Google Gemini Vision / Chat (`gemini-2.5-flash`) + Telegram Bot + Google Sheets
+- **Interfaz**: Bot de Telegram con menú, modo OCR y modo consulta conversacional
+- **OCR**: Gemini Vision extrae cabecera + N ítems por imagen (JSON estricto); una foto → N filas en Sheets
+- **Persistencia**: Google Sheets `Registros_OCR` — 39 columnas (A–AM) con trazabilidad completa
+- **Consulta**: Gemini Chat + Tool de Sheets → respuestas con evidencia real, sin respuestas de memoria
+- **Rendimiento**: OCR completo < 40 s; consulta conversacional < 20 s
+
+**Arquitectura implementada** (24 nodos n8n):
+- `TelegramTrigger` → `ResolverConversacion` (estado por chatId) → `RouterMenu` (5 rutas)
+- Rama OCR: `Analyze an image` → `FormatearDatos` → `GuardarEnSheets` → `NotificarExito`
+- Rama Consulta: `ProcesarConsulta` → `Message a model` + `Get row(s) in sheet` → `ResponderConsulta`
+- Estado persistido: `chatModes` + `chatHistories` por chatId via `getWorkflowStaticData`
+
+**Documentación** — 22 documentos:
+- 4 ADRs (stack n8n+Gemini, motor OCR Gemini Vision, Sheets como BD, workflow dual)
+- RF-01 a RF-09 + RNF-01 a RNF-07 + 10 historias de usuario + criterios de aceptación (CA-01 a CA-07)
+- 4 casos de uso, plan de pruebas, 56 casos de test en 10 grupos, resumen de testeo ✅ 54/54 aprobados (2 defectos corregidos)
+- ARQUITECTURA.md, ESPECIFICACION_TECNICA.md, CHANGELOG.md, ESTRUCTURA_GOOGLE_SHEETS.md
+- Runbook, Manual de captura fotográfica
+- Acta de constitución, Declaración de alcance, Cronograma, Control de cambios, Lecciones aprendidas
 
 ---
 
@@ -482,11 +503,12 @@ Ver ejemplo real: `03_Almacenamiento_FIFO/docs/Decisiones_arquitectura/ADR_0001_
 
 ### 🎓 Lecciones Aprendidas del Portfolio
 
-1. **P3 (FIFO) - Arquitectura Híbrida**: C++ para rendimiento + WPF para UI profesional = éxito
-2. **Documentación temprana**: Crear ADRs durante la decisión, no después
-3. **Templates ahorran tiempo**: 70% de tiempo ahorrado vs. documentar desde cero
-4. **Viernes disciplinados**: Sponsors confían más cuando ven regularidad
-5. **Git + Shared Folders**: Usa Git para código y `.md`, Teams/OneDrive para `.docx`/`.xlsx`/`.pptx`
+1. **P3 (FIFO) - Stack simplificado**: El diseño inicial era WPF+C++; durante la implementación se determinó que .NET 8.0 cumple todos los requisitos de rendimiento con un stack 100% C#, eliminando la complejidad de comunicación inter-proceso
+2. **P4 (OCR) - Gemini Vision vs. OCR dedicado**: Gemini interpreta semánticamente el layout de tablas y checkboxes sin entrenamiento previo; el prompt con JSON estricto es suficiente para formatos físicos estructurados
+3. **P4 (OCR) - Bot dual en un workflow**: Unificar OCR y consulta en un solo bot mejora la experiencia del operador pero requiere gestión de estado explícita por chatId — documentar en ADR desde el inicio
+4. **Documentación temprana paga**: Crear ADRs durante la decisión (no al final) facilita los trade-offs y deja trazabilidad de alternativas descartadas
+5. **Templates ahorran tiempo**: 70% de tiempo ahorrado vs. documentar desde cero
+6. **Git + Shared Folders**: Usa Git para código y `.md`, Teams/OneDrive para `.docx`/`.xlsx`/`.pptx`
 
 ---
 
@@ -563,12 +585,12 @@ git commit -m "Archive: PROJECT_CHARTER v1.0 to PDF"
 
 | Métrica | Target 2026 | Estado Actual |
 |---------|-------------|---------------|
-| Proyectos completados | 7/7 | En progreso |
-| Documentos creados | 230-300 | En desarrollo |
-| Proyectos con documentación completa (30+ docs) | 100% | P3: 13 docs, otros en progreso |
-| Adherencia a ciclo semanal (Viernes) | 100% | Por confirmar |
-| ADRs creados | 50+ | P3: 7 ADRs |
-| Sponsors satisfechos | 100% | Por medir |
+| Proyectos completados | 7/7 | 2/7 finalizados (P3 ✅, P4 ✅) |
+| Documentos creados | 230-300 | **52 documentos** (P3: 30 + P4: 22) |
+| Proyectos con documentación completa (20+ docs) | 100% | P3: 30 docs ✅, P4: 22 docs ✅ |
+| Tests ejecutados y aprobados | 100% | P3: 82/82 ✅, P4: 54/56 ✅ |
+| ADRs creados | 50+ | **11 ADRs** (P3: 7 + P4: 4) |
+| Sponsors satisfechos | 100% | ODL (P3) ✅, Pichichí (P4) en UAT |
 | Portfolio tangible | 1 | ✅ Este repositorio |
 
 ### KPIs por Proyecto
@@ -585,8 +607,8 @@ Ver `Base_Proyectos/_INDICES_REFERENCIAS/DOCUMENTACION_PORTAFOLIO_COMPLETADA.md`
 |----------|----------------|--------------|
 | **P1: Aspen Mtell ODL** | Aspen Mtell, SCADA, ERP | Historiadores, SQL, Dashboards |
 | **P2: Agentes BPC** | Python, ML, BPC APIs | TensorFlow, Pandas, Airflow |
-| **P3: FIFO** | **C++17, WPF (C#/.NET)** | Visual Studio, JSON, Win32 APIs |
-| **P4: OCR** | Python, Tesseract, OpenCV | OCR APIs, Document Processing |
+| **P3: FIFO** ✅ | **100% C# / .NET 8.0** (WPF + Class Library) | Visual Studio, System.Text.Json, CommunityToolkit.Mvvm, LiveChartsCore, ClosedXML |
+| **P4: OCR** ✅ | **n8n + Google Gemini Vision/Chat + Telegram + Google Sheets** | gemini-2.5-flash, Google Sheets API, Telegram Bot API |
 | **P5: Vibración** | Python, Signal Processing, ML | NumPy, SciPy, scikit-learn, Keras |
 | **P6: Detección Crudo** | Python, Computer Vision | OpenCV, YOLO, SCADA Integration |
 | **P7: Optimización Energética** | Python, ML, Optimization | TensorFlow, OR-Tools, TimeSeries |
@@ -675,16 +697,16 @@ Documentación interna de OrtegonAutomation - IDC
 
 ## 📈 Estado del Portfolio
 
-**Última Actualización**: Febrero 2026
+**Última Actualización**: Marzo 2026
 
 ```
 🎯 OBJETIVO: 7 proyectos documentados profesionalmente (230-300 documentos)
 
 📊 PROGRESO:
 ├── P1: Aspen Mtell ODL              [████░░░░░░] 40% - Documentación inicial
-├── P2: Agentes BPC                  [███░░░░░░░] 30% - Documentación inicial
-├── P3: FIFO (PRIORIDAD)             [███████░░░] 70% - 13 documentos + código
-├── P4: OCR Operativo                [███░░░░░░░] 30% - Documentación inicial
+├── P2: Agentes Accionables BPC      [███░░░░░░░] 30% - Documentación inicial
+├── P3: FIFO                         [██████████] 100% ✅ FINALIZADO — 30 docs + código + 82 tests
+├── P4: OCR Operativo                [█████████░] 95% ✅ FINALIZADO — 22 docs + workflow n8n + 56 tests (UAT pendiente)
 ├── P5: Vibración Desfibradora       [████░░░░░░] 40% - Documentación inicial
 ├── P6: Detección Crudo              [███░░░░░░░] 30% - Documentación inicial
 └── P7: Optimización Energética      [███░░░░░░░] 30% - Documentación inicial
@@ -693,6 +715,10 @@ Documentación interna de OrtegonAutomation - IDC
 ✅ Guías maestras: 100% completas (10 archivos, 175 KB)
 ✅ Templates: 100% listos (30+ documentos)
 ✅ Estructura PMI: 100% definida (8 carpetas)
+
+📦 DOCUMENTOS CREADOS: 52 / ~230-300
+   ├── P3 FIFO:         30 docs │ 7 ADRs │ 82 tests ✅ 100% aprobados │ código C# completo
+   └── P4 OCR:          22 docs │ 4 ADRs │ 56 tests ✅ 54/56 aprobados │ workflow n8n + Gemini
 ```
 
 ---
