@@ -1,0 +1,41 @@
+$ErrorActionPreference = "Stop"
+
+# 1) Ajusta SOLO este nombre si tu zip se llama distinto
+$zipName = "FIFO_Release_20260316.zip"
+
+# 2) Rutas base (equipo nuevo)
+$downloads = Join-Path $env:USERPROFILE "Downloads"
+$zip = Join-Path $downloads $zipName
+$pkg = Join-Path $downloads "FIFO_Release_20260316"
+$installPath = "C:\Apps\FIFO"
+
+if (-not (Test-Path $zip)) { throw "No existe el ZIP: $zip" }
+
+# 3) Descomprimir
+Expand-Archive -Path $zip -DestinationPath $pkg -Force
+Get-ChildItem $pkg -Recurse | Unblock-File
+
+# 4) Buscar scripts (soporta carpeta doble dentro del zip)
+$installScript = Get-ChildItem $pkg -Recurse -Filter "01_Instalar_FIFO.ps1" -File | Select-Object -First 1 -Expand FullName
+$smokeScript   = Get-ChildItem $pkg -Recurse -Filter "02_SmokeTest_FIFO.ps1" -File | Select-Object -First 1 -Expand FullName
+if (-not $installScript) { throw "No encontré 01_Instalar_FIFO.ps1" }
+if (-not $smokeScript)   { throw "No encontré 02_SmokeTest_FIFO.ps1" }
+
+# 5) SourceReleasePath = padre de 02_Scripts
+$sourceReleasePath = Split-Path (Split-Path $installScript -Parent) -Parent
+
+# 6) Instalar
+powershell -ExecutionPolicy Bypass -File $installScript -SourceReleasePath $sourceReleasePath -InstallPath $installPath
+
+# 7) Smoke test
+powershell -ExecutionPolicy Bypass -File $smokeScript -InstallPath $installPath -WaitSeconds 12
+
+# 8) Validar bitácora creada
+$bitacora = Get-ChildItem (Join-Path $installPath "bitacora") -Filter "bitacora_*.csv" -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+
+if ($null -eq $bitacora) { throw "No se encontró bitácora en $installPath\bitacora" }
+
+Write-Host "OK: Instalación y smoke test completados."
+Write-Host "Bitácora: $($bitacora.FullName)"

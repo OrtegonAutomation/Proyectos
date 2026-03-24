@@ -106,7 +106,3 @@ El modo simulación debe ser 100% seguro: cero archivos eliminados, resultado id
 - Pre-ejecución: comparar snapshot de simulación vs. estado actual antes de eliminar
 - Datos sintéticos incluyen distribuciones configurables (uniforme, exponencial) para realismo
 
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

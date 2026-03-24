@@ -1,6 +1,7 @@
 using FifoCleanup.Tests.Infrastructure;
 using FifoCleanup.Tests.Models;
 using FifoCleanup.Tests.TestSuites;
+using FifoCleanup.Tests.TestSuites.V1_1;
 
 namespace FifoCleanup.Tests;
 
@@ -12,7 +13,11 @@ class Program
 
         const string ejecutor = "Camilo Ortegon";
         const string basePath = @"D:\FifoTestBed";
-        var reportPath = Path.Combine(basePath, "Reportes", $"TestReport_{DateTime.Now:yyyyMMdd_HHmmss}.tsv");
+        var version = GetVersion(args);
+        var reportFolder = version == "1.1"
+            ? Path.Combine(basePath, "Reportes", "v1.1")
+            : Path.Combine(basePath, "Reportes");
+        var reportPath = Path.Combine(reportFolder, $"TestReport_{DateTime.Now:yyyyMMdd_HHmmss}.tsv");
 
         Console.WriteLine("╔══════════════════════════════════════════════════════╗");
         Console.WriteLine("║   FIFO CLEANUP - SUITE DE PRUEBAS AUTOMATIZADAS     ║");
@@ -42,48 +47,56 @@ class Program
         var allTests = new List<TestCase>();
 
         Console.WriteLine("Registrando suites de prueba...");
-        allTests.AddRange(InventarioTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Inventario: {allTests.Count} tests");
+        if (version == "1.1")
+        {
+            allTests.AddRange(NewFeaturesV11Tests.GetTests(ctx));
+            Console.WriteLine($"  ✓ v1.1 Nuevas funcionalidades: {allTests.Count} tests");
+        }
+        else
+        {
+            allTests.AddRange(InventarioTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Inventario: {allTests.Count} tests");
 
-        int prev = allTests.Count;
-        allTests.AddRange(ConfiguracionTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Configuración: {allTests.Count - prev} tests");
+            int prev = allTests.Count;
+            allTests.AddRange(ConfiguracionTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Configuración: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(SimulacionTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Simulación: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(SimulacionTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Simulación: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(LimpiezaTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Limpieza: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(LimpiezaTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Limpieza: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(BitacoraTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Bitácora: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(BitacoraTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Bitácora: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(RF07Tests.GetTests(ctx));
-        Console.WriteLine($"  ✓ RF-07: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(RF07Tests.GetTests(ctx));
+            Console.WriteLine($"  ✓ RF-07: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(RF08Tests.GetTests(ctx));
-        Console.WriteLine($"  ✓ RF-08: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(RF08Tests.GetTests(ctx));
+            Console.WriteLine($"  ✓ RF-08: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(RendimientoTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Rendimiento/StorageStatus: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(RendimientoTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Rendimiento/StorageStatus: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(IntegracionTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Integración: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(IntegracionTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Integración: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(EdgeCaseTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Edge Cases: {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(EdgeCaseTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Edge Cases: {allTests.Count - prev} tests");
 
-        prev = allTests.Count;
-        allTests.AddRange(PendingFeatureTests.GetTests(ctx));
-        Console.WriteLine($"  ✓ Pendientes (Alarmas/Seguridad/Usabilidad): {allTests.Count - prev} tests");
+            prev = allTests.Count;
+            allTests.AddRange(PendingFeatureTests.GetTests(ctx));
+            Console.WriteLine($"  ✓ Pendientes (Alarmas/Seguridad/Usabilidad): {allTests.Count - prev} tests");
+        }
 
         Console.WriteLine($"\nTotal de pruebas registradas: {allTests.Count}");
         Console.WriteLine("─────────────────────────────────────────────────");
@@ -140,9 +153,15 @@ class Program
 
         // Generate Excel report
         Console.WriteLine("Generando reporte Excel...");
-        var excelPath = @"C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\docs\testing\01_Casos_Test.xlsx";
+        var excelPath = version == "1.1"
+            ? @"C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\docs\testing\v1.1\01_Casos_Test_v1.1.xlsx"
+            : @"C:\Users\IDC INGENIERIA\OneDrive\IDC\Proyectos\Ejecucion_Proyectos\03_Almacenamiento_FIFO\docs\testing\01_Casos_Test.xlsx";
         try
         {
+            var excelDir = Path.GetDirectoryName(excelPath);
+            if (!string.IsNullOrWhiteSpace(excelDir))
+                Directory.CreateDirectory(excelDir);
+
             FifoCleanup.Tests.Tools.ExcelExporter.ExportToExcel(reportPath, excelPath);
             Console.WriteLine($"📊 Excel actualizado: {excelPath}");
         }
@@ -172,5 +191,16 @@ class Program
         }
 
         return failures.Count;
+    }
+
+    private static string GetVersion(string[] args)
+    {
+        for (int i = 0; i < args.Length; i++)
+        {
+            if ((args[i] == "--version" || args[i] == "-v") && i + 1 < args.Length)
+                return args[i + 1].Trim();
+        }
+
+        return "full";
     }
 }

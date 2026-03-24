@@ -114,7 +114,3 @@ T+4h:   Si no se atendió → Email a gerente de operaciones (Roberto)
 | Escalación T1 | Tiempo primera escalación | 2 horas |
 | Escalación T2 | Tiempo segunda escalación | 4 horas |
 
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

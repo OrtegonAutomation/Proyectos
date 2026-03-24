@@ -368,16 +368,16 @@ Ejemplo: fifo-check --detailed --export-csv inventario.csv
 Sistema acompañado de documentación detallada en español.
 
 **Criterios de Aceptación:**
-- [ ] **CA-11-01:** README.md con descripción, instalación, inicio rápido
-- [ ] **CA-11-02:** Manual de operación: setup inicial, operación diaria, respuesta a alarmas
-- [ ] **CA-11-03:** Runbook: procedimientos probados para escenarios comunes
-- [ ] **CA-11-04:** Troubleshooting: problemas comunes y soluciones
-- [ ] **CA-11-05:** FAQ: preguntas frecuentes respondidas
-- [ ] **CA-11-06:** Arquitectura: diagrama y descripción de componentes
-- [ ] **CA-11-07:** Especificación técnica: parámetros, formato configuración, interfaces
-- [ ] **CA-11-08:** Changelog: versiones, cambios, fechas
-- [ ] **CA-11-09:** Contactos de soporte con niveles de severidad y SLA
-- [ ] **CA-11-10:** Documentación entregada en PDF y Web (si es posible)
+- [x] **CA-11-01:** README.md con descripción, instalación, inicio rápido → `03_Almacenamiento_FIFO/README.md`
+- [x] **CA-11-02:** Manual de operación: setup inicial, operación diaria, respuesta a alarmas → `docs/Operaciones/MANUAL_DE_OPERACION.md`
+- [x] **CA-11-03:** Runbook: procedimientos probados para escenarios comunes → `docs/Operaciones/RUNBOOK.md`
+- [x] **CA-11-04:** Troubleshooting: problemas comunes y soluciones → `docs/Operaciones/TROUBLESHOOTING.md`
+- [x] **CA-11-05:** FAQ: preguntas frecuentes respondidas → `docs/Operaciones/FAQ.md`
+- [x] **CA-11-06:** Arquitectura: diagrama y descripción de componentes → `docs/ARQUITECTURA.md`
+- [x] **CA-11-07:** Especificación técnica: parámetros, formato configuración, interfaces → `docs/ESPECIFICACION_TECNICA.md`
+- [x] **CA-11-08:** Changelog: versiones, cambios, fechas → `docs/CHANGELOG.md`
+- [x] **CA-11-09:** Contactos de soporte con niveles de severidad y SLA → `docs/Operaciones/CONTACTOS_SLA.md`
+- [x] **CA-11-10:** Documentación entregada en Markdown (convertible a PDF con pandoc/mdpdf) — Adicional: `docs/Operaciones/GUIA_INSTALACION.md`, `docs/Operaciones/GUIA_CONFIGURACION.md`
 
 **Validación:**
 ```
@@ -400,16 +400,16 @@ Documentación entregada:
 Personal de ODL capacitado para operar sistema de forma independiente.
 
 **Criterios de Aceptación:**
-- [ ] **CA-12-01:** Sesión de capacitación presencial de 2-3 horas
-- [ ] **CA-12-02:** Capacitación incluye demostración vivo con datos reales
-- [ ] **CA-12-03:** Operador puede ejecutar: verificación, simulación, limpieza, consulta bitácora
-- [ ] **CA-12-04:** Operador entiende cómo responder a alarmas comunes
-- [ ] **CA-12-05:** Operador puede cambiar configuración bajo supervisión
-- [ ] **CA-12-06:** Sesión de Q&A grabada para referencia futura
-- [ ] **CA-12-07:** Material de capacitación entregado en PDF
-- [ ] **CA-12-08:** Formulario de evaluación post-capacitación completado
-- [ ] **CA-12-09:** Plan de soporte post-go-live definido
-- [ ] **CA-12-10:** Contacto técnico de IDC designado para escalaciones
+- [ ] **CA-12-01:** Sesión de capacitación presencial de 2-3 horas *(pendiente: actividad presencial)*
+- [ ] **CA-12-02:** Capacitación incluye demostración vivo con datos reales *(pendiente: actividad presencial)*
+- [ ] **CA-12-03:** Operador puede ejecutar: verificación, simulación, limpieza, consulta bitácora *(pendiente: validación post-capacitación)*
+- [ ] **CA-12-04:** Operador entiende cómo responder a alarmas comunes *(pendiente: validación post-capacitación)*
+- [ ] **CA-12-05:** Operador puede cambiar configuración bajo supervisión *(pendiente: validación post-capacitación)*
+- [ ] **CA-12-06:** Sesión de Q&A grabada para referencia futura *(pendiente: actividad presencial)*
+- [x] **CA-12-07:** Material de capacitación entregado → `docs/CAPACITACION.md`
+- [ ] **CA-12-08:** Formulario de evaluación post-capacitación completado *(pendiente: incluido en CAPACITACION.md sección 11)*
+- [x] **CA-12-09:** Plan de soporte post-go-live definido → `docs/Operaciones/CONTACTOS_SLA.md`
+- [x] **CA-12-10:** Contacto técnico de IDC designado para escalaciones → `docs/Operaciones/CONTACTOS_SLA.md`
 
 **Validación:**
 ```

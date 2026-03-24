@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -55,11 +56,34 @@ public partial class MainViewModel : ObservableObject
                 Action = "APLICACION_INICIADA",
                 Source = "UI"
             });
+
+            await StartBackgroundServicesFromConfigAsync();
         }
         catch (Exception ex)
         {
             StatusMessage = $"Error al cargar configuración: {ex.Message}";
             Configuration = App.ConfigService.GetDefault();
+        }
+    }
+
+    private async Task StartBackgroundServicesFromConfigAsync()
+    {
+        if (!Directory.Exists(Configuration.StoragePath))
+        {
+            StatusMessage = $"Ruta de almacenamiento no existe: {Configuration.StoragePath}";
+            return;
+        }
+
+        if (Configuration.EnableScheduledCleanup && !App.ScheduledService.IsRunning)
+        {
+            await App.ScheduledService.StartAsync(Configuration);
+            IsScheduledRunning = true;
+        }
+
+        if (Configuration.EnablePreventiveCleanup && !App.PreventiveService.IsRunning)
+        {
+            await App.PreventiveService.StartAsync(Configuration.StoragePath, Configuration);
+            IsPreventiveRunning = true;
         }
     }
 

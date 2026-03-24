@@ -1,6 +1,6 @@
 # ADR-0003: Formato INI para Archivos de Configuración de Políticas
 
-**Estado:** Aceptada  
+**Estado:** ~~Aceptada~~ → **Superseded** (ver nota abajo)  
 **Fecha:** 2026-02-16  
 **Autor:** IDC Ingeniería  
 **Proyecto:** Gestión de Almacenamiento FIFO para Servidor de Monitoreo  
@@ -8,7 +8,38 @@
 
 ---
 
-## Contexto
+> ### ⚠️ Nota de Supersesión (Marzo 2026)
+>
+> **Esta decisión fue revisada durante la implementación.** El formato de configuración
+> final es **JSON exclusivamente** (`fifo_config.json`), sin componente INI.
+>
+> **Razón del cambio:** Al adoptar arquitectura 100% C#/.NET 8.0 (ver ADR-0001),
+> se eliminó la necesidad de dos formatos. JSON con `System.Text.Json` ofrece:
+>
+> - **Un solo archivo:** `fifo_config.json` con 17 parámetros tipados
+> - **Serialización nativa:** `System.Text.Json` en .NET 8.0 con `camelCase` naming policy
+> - **Validación integrada:** Rangos y tipos verificados en `ConfigurationService.Validate()`
+> - **Simplicidad:** Sin dependencias de Win32 API (`GetPrivateProfileString` innecesario)
+> - **Editable manualmente:** JSON formateado es legible con cualquier editor de texto
+>
+> **Formato implementado:**
+> ```json
+> {
+>   "storagePath": "D:\\MonitoringData",
+>   "thresholdPercent": 85,
+>   "cleanupCapPercent": 20,
+>   "scheduledFrequencyHours": 6,
+>   "enableScheduledCleanup": true,
+>   "enablePreventiveCleanup": true
+> }
+> ```
+>
+> **Supersede:** Este ADR queda como referencia histórica.
+> Ver [GUIA_CONFIGURACION.md](../Operaciones/GUIA_CONFIGURACION.md) para detalle de parámetros.
+
+---
+
+## Contexto (decisión original)
 
 El sistema FIFO requiere archivos de configuración para definir políticas de retención que incluyen:
 
@@ -109,7 +140,3 @@ pattern_2 = *.tmp
 - JSON solo se usa internamente (UI); operador nunca lo edita directamente
 - Validación en carga convierte y verifica tipos (ej: `critical_percent` debe ser entero 50-95)
 
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

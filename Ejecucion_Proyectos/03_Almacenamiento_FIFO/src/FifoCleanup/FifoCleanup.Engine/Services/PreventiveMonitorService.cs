@@ -33,6 +33,10 @@ public class PreventiveMonitorService : IPreventiveMonitorService
     // Control de ráfagas: no evaluar más de 1 vez por minuto por Asset
     private readonly Dictionary<string, DateTime> _lastEvaluation = new();
     private readonly SemaphoreSlim _evaluationLock = new(1, 1);
+    private DateTime _lastCriticalAlertAt = DateTime.MinValue;
+    private DateTime _lastErrorAlertAt = DateTime.MinValue;
+    private DateTime _startedAt = DateTime.MinValue;
+    private bool _startupWindowLogged;
 
     public bool IsRunning { get; private set; }
     public long FilesDetected { get; private set; }
@@ -89,6 +93,8 @@ public class PreventiveMonitorService : IPreventiveMonitorService
             _storagePath = storagePath;
             _config = config;
             _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            _startedAt = DateTime.Now;
+            _startupWindowLogged = false;
 
             _watcher = new FileSystemWatcher(storagePath)
             {
@@ -130,6 +136,15 @@ public class PreventiveMonitorService : IPreventiveMonitorService
                 Details = $"Error al iniciar monitoreo preventivo: {ex.Message}",
                 Result = "ERROR"
             });
+
+            if (ShouldSendAlert(ref _lastErrorAlertAt, TimeSpan.FromMinutes(10)))
+            {
+                await EmailAlertHelper.TrySendCriticalAlertAsync(
+                    config,
+                    "[FIFO][CRITICO] RF-08 no pudo iniciar",
+                    $"RF-08 falló en arranque.\n\nDetalle: {ex.Message}\nFecha: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\nStoragePath: {storagePath}");
+            }
+
             throw;
         }
     }
@@ -243,6 +258,36 @@ public class PreventiveMonitorService : IPreventiveMonitorService
 
         if (daysUntilFull < _config.PreventiveThresholdDays)
         {
+            if (IsInStartupMonitoringWindow())
+            {
+                if (!_startupWindowLogged)
+                {
+                    _startupWindowLogged = true;
+                    await _bitacora.LogAsync(new BitacoraEntry
+                    {
+                        EventType = BitacoraEventType.Information,
+                        Action = "RF08_STARTUP_MONITORING_ONLY",
+                        Details = $"RF-08 en ventana de gracia post-inicio ({_config.StartupMonitoringGraceMinutes} min). Monitoreo activo sin limpieza automática inmediata.",
+                        Result = "SKIPPED"
+                    });
+                }
+
+                return;
+            }
+
+            if (ShouldSendAlert(ref _lastCriticalAlertAt, TimeSpan.FromMinutes(30)))
+            {
+                await EmailAlertHelper.TrySendCriticalAlertAsync(
+                    _config,
+                    "[FIFO][CRITICO] Riesgo de llenado detectado (RF-08)",
+                    $"Asset/Variable: {assetId}/{variableId}\n" +
+                    $"Días proyectados a umbral: {daysUntilFull:F2}\n" +
+                    $"Umbral preventivo: {_config.PreventiveThresholdDays} días\n" +
+                    $"Uso actual: {status.UsagePercent:F1}%\n" +
+                    $"Fecha: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n" +
+                    $"StoragePath: {_storagePath}");
+            }
+
             // Ejecutar limpieza local
             var result = await _cleanup.ExecuteLocalCleanupAsync(
                 assetId, variableId, status, _config, _cts?.Token ?? CancellationToken.None);
@@ -345,7 +390,32 @@ public class PreventiveMonitorService : IPreventiveMonitorService
                     Details = ex.Message,
                     Result = "ERROR"
                 });
+
+                if (ShouldSendAlert(ref _lastErrorAlertAt, TimeSpan.FromMinutes(10)))
+                {
+                    await EmailAlertHelper.TrySendCriticalAlertAsync(
+                        _config,
+                        "[FIFO][CRITICO] Error en procesador RF-08",
+                        $"RF-08 reportó error en su loop de procesamiento.\n\nDetalle: {ex.Message}\nFecha: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\nStoragePath: {_storagePath}");
+                }
             }
         }
+    }
+
+    private static bool ShouldSendAlert(ref DateTime lastSent, TimeSpan cooldown)
+    {
+        if (DateTime.Now - lastSent < cooldown)
+            return false;
+
+        lastSent = DateTime.Now;
+        return true;
+    }
+
+    private bool IsInStartupMonitoringWindow()
+    {
+        if (_config.StartupMonitoringGraceMinutes <= 0)
+            return false;
+
+        return DateTime.Now - _startedAt < TimeSpan.FromMinutes(_config.StartupMonitoringGraceMinutes);
     }
 }

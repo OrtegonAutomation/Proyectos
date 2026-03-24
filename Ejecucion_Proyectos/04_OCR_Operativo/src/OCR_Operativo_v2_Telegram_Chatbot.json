@@ -1,0 +1,1104 @@
+{
+  "name": "OCR_Operativo_v2_Telegram_Chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message",
+          "callback_query"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "id": "trigger-01",
+      "name": "TelegramTrigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        48,
+        144
+      ],
+      "webhookId": "9fb8192a-5a09-439e-a16e-addb80ee392a",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 5,
+        "output": "={{ $json.route === 'ocr_prompt' ? 0 : $json.route === 'chat_prompt' ? 1 : $json.route === 'ocr_process' ? 2 : $json.route === 'chat_query' ? 3 : 4 }}"
+      },
+      "id": "switch-01",
+      "name": "RouterMenu",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        496,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message?.chat?.id || $json.callback_query?.message?.chat?.id }}",
+        "text": "*Subir registro*\n\nEnvie una foto clara y completa del reporte de equipos operativos.\n\nEl sistema identificara todas las filas diligenciadas del documento y las cargara a la base de datos.\n\nRecomendaciones:\n- buena iluminacion\n- formato completo dentro de la imagen\n- texto legible y sin recortes",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "ask-photo-01",
+      "name": "PedirFoto",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        160
+      ],
+      "webhookId": "31ecb56c-97fe-4f22-90a6-d0b732a84cb3",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message?.chat?.id || $json.callback_query?.message?.chat?.id }}",
+        "text": "=*Modo consulta activado*\n\nPuede preguntarme sobre los registros almacenados como si fuera un chat.\n\nEjemplos:\n- Quien es el responsable con mas lineas\n- Cuantas fallas electricas hay\n- Que paso con C4 en enero\n- Cuales filas requieren revision\n\nPuede seguir preguntando o pulsar volver al menu.",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "⬅️ Volver al menu",
+                    "additionalFields": {
+                      "callback_data": "back_menu"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "chat-pending-01",
+      "name": "ActivarModoConsulta",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        352
+      ],
+      "webhookId": "5256c7b0-4e3e-4766-bc40-131f84201bb0",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message?.chat?.id || $json.callback_query?.message?.chat?.id }}",
+        "text": "Procesando imagen con Gemini...",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "notify-proc-01",
+      "name": "NotificarProcesando",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        928
+      ],
+      "webhookId": "acc82b9b-f9a0-4214-97e4-e9f937780068",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-2.5-flash",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "text": "Eres un sistema OCR especializado en el formato 'Reporte de Equipos Operativos'. Analiza la fotografia y devuelve UNICAMENTE JSON valido con esta estructura exacta: {\"documento\":{\"fecha_emision\":\"DD/MM/YYYY o N/A\",\"ubicacion\":\"texto o N/A\",\"planta\":\"texto o N/A\"},\"items\":[{\"item_index\":1,\"fecha_dia\":\"DD o N/A\",\"fecha_mes\":\"MM o N/A\",\"fecha_anio\":\"YYYY o N/A\",\"fecha_registro\":\"DD/MM/YYYY o N/A\",\"hora_inicio\":\"HH:MM o N/A\",\"periodo_inicio\":\"AM/PM/N/A\",\"hora_fin\":\"HH:MM o N/A\",\"periodo_fin\":\"AM/PM/N/A\",\"tiempo_falla_min\":\"numero o N/A\",\"equipos\":{\"c1\":false,\"c2\":false,\"c3\":false,\"c4\":false,\"c5\":false,\"c6\":false,\"bba_miel_1\":false,\"bba_miel_2\":false,\"mezclador\":false,\"gusanillo\":false},\"equipos_afectados\":[\"lista de etiquetas marcadas\"],\"tipo_falla\":{\"categoria\":\"Mecanica/Electrica/Instrumentacion/Otros/N/A\",\"codigo\":\"codigo principal o N/A\",\"mecanica\":\"valor o N/A\",\"electrica\":\"valor o N/A\",\"instrumentacion\":\"valor o N/A\",\"otros\":\"valor o N/A\"},\"observaciones\":\"texto o N/A\",\"firma_hallazgo\":\"texto o N/A\"}]}. Reglas: 1. Genera un item por cada fila diligenciada del formato. 2. Si hay varias filas, devuelvelas todas en items[]. 3. Si una casilla de equipo tiene una X, marca ese booleano en true. 4. No inventes datos. Si no se ve con claridad usa N/A. 5. No agregues texto fuera del JSON. 6. Antes de extraer items, revisa la cabecera superior del formato y trata de leer fecha_emision y ubicacion. Solo usa N/A si son realmente ilegibles. 7. En equipos_afectados usa unicamente estas etiquetas exactas: [\"C1\",\"C2\",\"C3\",\"C4\",\"C5\",\"C6\",\"BBA MIEL 1\",\"BBA MIEL 2\",\"MEZCLADOR\",\"GUSANILLO\"]. 8. Conserva los codigos de falla con punto decimal cuando existan, por ejemplo 1.3, 2.2, 2.3, 3.1. Si el formato muestra dos digitos juntos para una falla, devuelvelos como X.Y. 9. No normalices valores fuera de lo visible en la imagen.",
+        "inputType": "binary",
+        "options": {}
+      },
+      "id": "gemini-image-01",
+      "name": "Analyze an image",
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        2032
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "l1PAQNLbuWlcjTnf",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const geminiJson = $input.first().json;\nconst trigger = $('TelegramTrigger').first().json;\nconst chatId = String(trigger.message?.chat?.id || trigger.callback_query?.message?.chat?.id || '');\nconst updateId = String(trigger.update_id || 'N/A');\nconst messageId = String(trigger.message?.message_id || trigger.callback_query?.message?.message_id || 'N/A');\nconst photos = trigger.message?.photo || [];\nconst fileIdOrigen = photos.length ? String(photos[photos.length - 1].file_id || 'N/A') : 'N/A';\nconst raw = geminiJson.text || geminiJson.content?.parts?.[0]?.text || geminiJson.content || JSON.stringify(geminiJson);\n\nconst toBool = (value) => {\n  if (typeof value === 'boolean') return value;\n  if (typeof value === 'number') return value !== 0;\n  const normalized = String(value || '').trim().toLowerCase();\n  return ['true', '1', 'x', 'si', 'sí', 'yes'].includes(normalized);\n};\n\nconst getText = (value, fallback = 'N/A') => {\n  if (value === undefined || value === null) return fallback;\n  const text = String(value).trim();\n  if (!text) return fallback;\n  const normalized = text.toLowerCase();\n  return ['n/a', 'na', 'null', 'undefined'].includes(normalized) ? fallback : text;\n};\n\nconst normalizeYear = (value) => {\n  const text = getText(value);\n  if (text === 'N/A') return text;\n  return /^\\d{2}$/.test(text) ? `20${text}` : text;\n};\n\nconst normalizeFullDate = (value) => {\n  const text = getText(value);\n  if (text === 'N/A') return text;\n  const match = text.match(/^(\\d{2})\\/(\\d{2})\\/(\\d{2})$/);\n  return match ? `${match[1]}/${match[2]}/20${match[3]}` : text;\n};\n\nconst normalizeFailureCode = (value) => {\n  const text = getText(value);\n  if (text === 'N/A') return text;\n  const compact = text.replace(/\\s+/g, '');\n  if (/^\\d\\.\\d$/.test(compact)) return compact;\n  if (/^\\d{2}$/.test(compact)) return `${compact[0]}.${compact[1]}`;\n  return compact;\n};\n\nconst normalizeKey = (value) => String(value || '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/[^a-z0-9]+/g, ' ')\n  .trim();\n\nconst equipmentLabelMap = {\n  c1: 'C1',\n  c2: 'C2',\n  c3: 'C3',\n  c4: 'C4',\n  c5: 'C5',\n  c6: 'C6',\n  'bba miel 1': 'BBA MIEL 1',\n  'bba miel 2': 'BBA MIEL 2',\n  'bomba miel 1': 'BBA MIEL 1',\n  'bomba miel 2': 'BBA MIEL 2',\n  mezclador: 'MEZCLADOR',\n  gusanillo: 'GUSANILLO',\n};\n\nconst canonicalizeEquipmentLabel = (value) => {\n  const text = getText(value, '');\n  if (!text) return '';\n  const key = normalizeKey(text);\n  return equipmentLabelMap[key] || text.toUpperCase();\n};\n\nconst unique = (values) => [...new Set(values.filter(Boolean))];\n\nlet parsed = null;\ntry {\n  const jsonMatch = raw.match(/\\{[\\s\\S]*\\}|\\[[\\s\\S]*\\]/);\n  if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);\n} catch (error) {\n  parsed = null;\n}\n\nlet documento = {};\nlet items = [];\nif (Array.isArray(parsed)) {\n  items = parsed;\n} else if (parsed && Array.isArray(parsed.items)) {\n  documento = parsed.documento || {};\n  items = parsed.items;\n} else if (parsed && typeof parsed === 'object') {\n  items = [parsed];\n}\n\nif (!items.length) {\n  items = [{\n    item_index: 1,\n    fecha_dia: 'N/A',\n    fecha_mes: 'N/A',\n    fecha_anio: 'N/A',\n    fecha_registro: 'N/A',\n    hora_inicio: 'N/A',\n    periodo_inicio: 'N/A',\n    hora_fin: 'N/A',\n    periodo_fin: 'N/A',\n    tiempo_falla_min: 'N/A',\n    equipos: {},\n    equipos_afectados: [],\n    tipo_falla: {\n      categoria: 'N/A',\n      codigo: 'N/A',\n      mecanica: 'N/A',\n      electrica: 'N/A',\n      instrumentacion: 'N/A',\n      otros: 'N/A',\n    },\n    observaciones: 'N/A',\n    firma_hallazgo: 'N/A',\n    _parse_error: true,\n  }];\n}\n\nconst fechaEmisionDocumento = normalizeFullDate(documento.fecha_emision);\nconst ubicacionDocumento = getText(documento.ubicacion);\nconst plantaDocumento = getText(documento.planta);\n\nreturn items.map((item, index) => {\n  const equipos = item.equipos || {};\n  const tipoFalla = item.tipo_falla || {};\n\n  const equiposDesdeLista = Array.isArray(item.equipos_afectados)\n    ? item.equipos_afectados.map(canonicalizeEquipmentLabel).filter(Boolean)\n    : [];\n\n  const equiposDesdeChecks = [\n    ['C1', equipos.c1],\n    ['C2', equipos.c2],\n    ['C3', equipos.c3],\n    ['C4', equipos.c4],\n    ['C5', equipos.c5],\n    ['C6', equipos.c6],\n    ['BBA MIEL 1', equipos.bba_miel_1],\n    ['BBA MIEL 2', equipos.bba_miel_2],\n    ['MEZCLADOR', equipos.mezclador],\n    ['GUSANILLO', equipos.gusanillo],\n  ].filter(([, value]) => toBool(value)).map(([label]) => label);\n\n  const equiposDerivados = unique([...equiposDesdeLista, ...equiposDesdeChecks]);\n\n  const tipoFallaMecanica = normalizeFailureCode(tipoFalla.mecanica);\n  const tipoFallaElectrica = normalizeFailureCode(tipoFalla.electrica);\n  const tipoFallaInstrumentacion = normalizeFailureCode(tipoFalla.instrumentacion);\n  const tipoFallaOtros = normalizeFailureCode(tipoFalla.otros);\n  const tipoFallaCodigo = [\n    normalizeFailureCode(tipoFalla.codigo),\n    tipoFallaMecanica,\n    tipoFallaElectrica,\n    tipoFallaInstrumentacion,\n    tipoFallaOtros,\n  ].find((value) => value !== 'N/A') || 'N/A';\n\n  const categoriaInferida = tipoFallaMecanica !== 'N/A'\n    ? 'Mecanica'\n    : tipoFallaElectrica !== 'N/A'\n      ? 'Electrica'\n      : tipoFallaInstrumentacion !== 'N/A'\n        ? 'Instrumentacion'\n        : tipoFallaOtros !== 'N/A'\n          ? 'Otros'\n          : 'N/A';\n\n  return {\n    json: {\n      chatId,\n      Timestamp: new Date().toISOString(),\n      Chat_ID: chatId,\n      Update_ID: updateId,\n      Message_ID: messageId,\n      File_ID_Origen: fileIdOrigen,\n      Fecha_Emision_Documento: fechaEmisionDocumento,\n      Ubicacion: ubicacionDocumento,\n      Planta: plantaDocumento,\n      Item_Index: item.item_index ?? index + 1,\n      Fecha_Dia: getText(item.fecha_dia),\n      Fecha_Mes: getText(item.fecha_mes),\n      Fecha_Anio: normalizeYear(item.fecha_anio),\n      Fecha_Registro: normalizeFullDate(item.fecha_registro),\n      Hora_Inicio: getText(item.hora_inicio),\n      Periodo_Inicio: getText(item.periodo_inicio),\n      Hora_Fin: getText(item.hora_fin),\n      Periodo_Fin: getText(item.periodo_fin),\n      Tiempo_Falla_Min: getText(item.tiempo_falla_min),\n      Equipo_C1: toBool(equipos.c1),\n      Equipo_C2: toBool(equipos.c2),\n      Equipo_C3: toBool(equipos.c3),\n      Equipo_C4: toBool(equipos.c4),\n      Equipo_C5: toBool(equipos.c5),\n      Equipo_C6: toBool(equipos.c6),\n      Equipo_BBA_MIEL_1: toBool(equipos.bba_miel_1),\n      Equipo_BBA_MIEL_2: toBool(equipos.bba_miel_2),\n      Equipo_MEZCLADOR: toBool(equipos.mezclador),\n      Equipo_GUSANILLO: toBool(equipos.gusanillo),\n      Equipos_Afectados: equiposDerivados.length ? equiposDerivados.join(', ') : 'N/A',\n      Tipo_Falla_Categoria: getText(tipoFalla.categoria, categoriaInferida),\n      Tipo_Falla_Codigo: tipoFallaCodigo,\n      Tipo_Falla_Mecanica: tipoFallaMecanica,\n      Tipo_Falla_Electrica: tipoFallaElectrica,\n      Tipo_Falla_Instrumentacion: tipoFallaInstrumentacion,\n      Tipo_Falla_Otros: tipoFallaOtros,\n      Observaciones: getText(item.observaciones),\n      Firma_Hallazgo: getText(item.firma_hallazgo),\n      Estado_OCR: item._parse_error ? 'Requiere Revision' : 'Procesado',\n      Respuesta_Cruda: raw,\n    },\n  };\n});"
+      },
+      "id": "format-01",
+      "name": "FormatearDatos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        2032
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "mode": "id",
+          "value": "1YsDdmcT9m6TJEiz6W17XiLIMAuRicgYPML2bQl5RNYY"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registros_OCR",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Chat_ID",
+              "displayName": "Chat_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Update_ID",
+              "displayName": "Update_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message_ID",
+              "displayName": "Message_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "File_ID_Origen",
+              "displayName": "File_ID_Origen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha_Emision_Documento",
+              "displayName": "Fecha_Emision_Documento",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ubicacion",
+              "displayName": "Ubicacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Planta",
+              "displayName": "Planta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Item_Index",
+              "displayName": "Item_Index",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha_Dia",
+              "displayName": "Fecha_Dia",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha_Mes",
+              "displayName": "Fecha_Mes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha_Anio",
+              "displayName": "Fecha_Anio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Fecha_Registro",
+              "displayName": "Fecha_Registro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hora_Inicio",
+              "displayName": "Hora_Inicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Periodo_Inicio",
+              "displayName": "Periodo_Inicio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hora_Fin",
+              "displayName": "Hora_Fin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Periodo_Fin",
+              "displayName": "Periodo_Fin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tiempo_Falla_Min",
+              "displayName": "Tiempo_Falla_Min",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C1",
+              "displayName": "Equipo_C1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C2",
+              "displayName": "Equipo_C2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C3",
+              "displayName": "Equipo_C3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C4",
+              "displayName": "Equipo_C4",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C5",
+              "displayName": "Equipo_C5",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_C6",
+              "displayName": "Equipo_C6",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_BBA_MIEL_1",
+              "displayName": "Equipo_BBA_MIEL_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_BBA_MIEL_2",
+              "displayName": "Equipo_BBA_MIEL_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_MEZCLADOR",
+              "displayName": "Equipo_MEZCLADOR",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipo_GUSANILLO",
+              "displayName": "Equipo_GUSANILLO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "boolean",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Equipos_Afectados",
+              "displayName": "Equipos_Afectados",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Categoria",
+              "displayName": "Tipo_Falla_Categoria",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Codigo",
+              "displayName": "Tipo_Falla_Codigo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Mecanica",
+              "displayName": "Tipo_Falla_Mecanica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Electrica",
+              "displayName": "Tipo_Falla_Electrica",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Instrumentacion",
+              "displayName": "Tipo_Falla_Instrumentacion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tipo_Falla_Otros",
+              "displayName": "Tipo_Falla_Otros",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Observaciones",
+              "displayName": "Observaciones",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Firma_Hallazgo",
+              "displayName": "Firma_Hallazgo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Estado_OCR",
+              "displayName": "Estado_OCR",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Respuesta_Cruda",
+              "displayName": "Respuesta_Cruda",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "sheets-save-01",
+      "name": "GuardarEnSheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1200,
+        2032
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6JPNutKOsdyamGs2",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rows = $('FormatearDatos').all().map((item) => item.json);\nconst first = rows[0] || {};\n\nconst isMissing = (value) => {\n  const text = String(value ?? '').trim();\n  return text === '' || /^n\\/?a$/i.test(text) || /^no detectad/i.test(text);\n};\n\nconst formatField = (value, fallback) => isMissing(value) ? fallback : String(value).trim();\nconst parseDate = (value) => {\n  const text = formatField(value, '');\n  const match = text.match(/^(\\d{2})\\/(\\d{2})\\/(\\d{4})$/);\n  if (!match) return null;\n  return {\n    label: text,\n    time: Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])),\n  };\n};\n\nconst validDates = rows.map((row) => parseDate(row.Fecha_Registro)).filter(Boolean).sort((a, b) => a.time - b.time);\nconst rangoFechas = !validDates.length\n  ? 'No detectado'\n  : validDates[0].label === validDates[validDates.length - 1].label\n    ? validDates[0].label\n    : `${validDates[0].label} a ${validDates[validDates.length - 1].label}`;\n\nconst filasRevision = rows\n  .filter((row) => row.Estado_OCR === 'Requiere Revision')\n  .map((row, index) => row.Item_Index ?? index + 1);\n\nconst resumen = rows.slice(0, 3).map((row) => {\n  const fecha = formatField(row.Fecha_Registro, 'Fecha no detectada');\n  const equipo = formatField(row.Equipos_Afectados, 'Equipo no detectado');\n  const categoria = formatField(row.Tipo_Falla_Categoria, '');\n  const codigo = formatField(row.Tipo_Falla_Codigo, '');\n  const falla = [categoria, codigo].filter(Boolean).join(' ');\n  return `- ${fecha} | ${equipo}${falla ? ` | ${falla}` : ''}`;\n}).join('\\n');\n\nreturn [{\n  json: {\n    chatId: first.chatId || first.Chat_ID || '',\n    total_items: rows.length,\n    items_revision: filasRevision.length,\n    filas_revision: filasRevision.length ? filasRevision.join(', ') : 'Ninguna',\n    rango_fechas: rangoFechas,\n    estado_ocr: filasRevision.length ? 'requiere validacion' : 'estable',\n    resumen: resumen || '- Sin items',\n  },\n}];"
+      },
+      "id": "summary-01",
+      "name": "ResumenCarga",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1488,
+        2032
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "=*Registro procesado*\n\nSe guardaron *{{ $json.total_items }}* fila(s) en Google Sheets.\n\n*Resumen:*\n- Items en revision: {{ $json.items_revision }}\n- Filas para revision: {{ $json.filas_revision }}\n- Rango de fechas detectado: {{ $json.rango_fechas }}\n- Estado OCR: {{ $json.estado_ocr }}\n\n*Primeros registros detectados:*\n{{ $json.resumen }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "notify-ok-01",
+      "name": "NotificarExito",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1712,
+        2032
+      ],
+      "webhookId": "1d2e214c-4610-4141-9427-be96a7557f21",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message?.chat?.id || $json.callback_query?.message?.chat?.id }}",
+        "text": "*OCR Operativo IDC*\n\nAsistente para digitalizar reportes de equipos operativos desde fotografias y organizar la informacion para consulta posterior.\n\nCon este bot puede:\n- iniciar el cargue de un reporte fotografico\n- extraer varias filas de un mismo documento\n- consolidar novedades en una sola base de datos\n\nSeleccione una opcion:",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "📸 Subir registro",
+                    "additionalFields": {
+                      "callback_data": "upload"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "📊 Consultar datos",
+                    "additionalFields": {
+                      "callback_data": "chat"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "menu-01",
+      "name": "MostrarMenu",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        544
+      ],
+      "webhookId": "8bc09951-d583-4ad6-a8b3-6b62fe5462bc",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst event = first.json;\nconst workflowStaticData = $getWorkflowStaticData('global');\nworkflowStaticData.chatModes = workflowStaticData.chatModes || {};\nworkflowStaticData.chatHistories = workflowStaticData.chatHistories || {};\n\nconst chatId = String(event.message?.chat?.id || event.callback_query?.message?.chat?.id || '');\nconst callbackData = String(event.callback_query?.data || '');\nconst text = String(event.message?.text || '').trim();\nconst hasPhoto = Array.isArray(event.message?.photo) && event.message.photo.length > 0;\nconst normalize = (value) => String(value || '')\n  .toLowerCase()\n  .normalize('NFD')\n  .replace(/[\\u0300-\\u036f]/g, '')\n  .replace(/\\s+/g, ' ')\n  .trim();\nconst normalizedText = normalize(text);\nconst currentMode = workflowStaticData.chatModes[chatId] || 'menu';\nconst exitTexts = new Set(['/menu', 'menu', 'volver al menu', 'volver al menú', 'volver', 'salir', 'cancelar']);\n\nlet route = 'menu';\nlet promptType = '';\n\nif (callbackData === 'upload') {\n  workflowStaticData.chatModes[chatId] = 'ocr_wait_photo';\n  delete workflowStaticData.chatHistories[chatId];\n  route = 'ocr_prompt';\n  promptType = 'ocr_start';\n} else if (callbackData === 'chat') {\n  workflowStaticData.chatModes[chatId] = 'chat_query';\n  workflowStaticData.chatHistories[chatId] = [];\n  route = 'chat_prompt';\n  promptType = 'chat_start';\n} else if (callbackData === 'back_menu' || exitTexts.has(normalizedText)) {\n  delete workflowStaticData.chatModes[chatId];\n  delete workflowStaticData.chatHistories[chatId];\n  route = 'menu';\n} else if (hasPhoto) {\n  if (currentMode === 'chat_query') {\n    route = 'chat_query';\n  } else {\n    delete workflowStaticData.chatModes[chatId];\n    route = 'ocr_process';\n  }\n} else if (text) {\n  if (currentMode === 'chat_query') {\n    route = 'chat_query';\n  } else if (currentMode === 'ocr_wait_photo') {\n    route = 'ocr_prompt';\n    promptType = 'ocr_waiting_photo';\n  } else {\n    route = 'menu';\n  }\n}\n\nreturn [{\n  json: {\n    ...event,\n    chatId,\n    route,\n    promptType,\n    queryText: text,\n    currentMode,\n    callbackData,\n  },\n  binary: first.binary,\n}];"
+      },
+      "typeVersion": 2,
+      "position": [
+        272,
+        144
+      ],
+      "name": "ResolverConversacion",
+      "id": "resolver-01",
+      "type": "n8n-nodes-base.code"
+    },
+    {
+      "parameters": {
+        "jsCode": "const resolver = $('ResolverConversacion').first().json;\nconst workflowStaticData = $getWorkflowStaticData('global');\nworkflowStaticData.chatHistories = workflowStaticData.chatHistories || {};\n\nconst chatId = String(resolver.chatId || '');\nconst rawQuery = String(resolver.queryText || '').trim();\nconst history = Array.isArray(workflowStaticData.chatHistories[chatId]) ? workflowStaticData.chatHistories[chatId] : [];\n\nconst schemaLines = [\n  '- Fecha_Registro: fecha del evento en DD/MM/YYYY',\n  '- Equipos_Afectados: equipo(s) afectados, por ejemplo C4 o MEZCLADOR',\n  '- Tipo_Falla_Categoria: Mecanica, Electrica, Instrumentacion u Otros',\n  '- Tipo_Falla_Codigo: codigo de falla como 2.3 o 3.1',\n  '- Observaciones: descripcion del hallazgo',\n  '- Firma_Hallazgo: responsable o firmante del hallazgo',\n  '- Estado_OCR: Procesado o Requiere Revision',\n  '- Tiempo_Falla_Min: tiempo de falla en minutos cuando exista',\n  '- Planta, Ubicacion, Fecha_Emision_Documento: metadatos del documento',\n];\n\nconst semanticMap = [\n  '- \"responsable\", \"firmante\" o \"quien reporto\" suele corresponder a Firma_Hallazgo',\n  '- \"filas\", \"lineas\", \"registros\" o \"items\" se refiere a cantidad de registros en la hoja',\n  '- \"equipo\" suele corresponder a Equipos_Afectados',\n  '- \"falla electrica\" combina Tipo_Falla_Categoria = Electrica y puede apoyarse en Tipo_Falla_Codigo',\n  '- \"revision\" corresponde a Estado_OCR = Requiere Revision',\n];\n\nconst historyText = history.length\n  ? history.map((entry) => (entry.role === 'user' ? 'Usuario: ' : 'Asistente: ') + String(entry.text || '').trim()).join('\\n')\n  : 'Sin historial previo.';\n\nconst prompt = [\n  'Eres un chatbot conversacional para consultar la hoja de Google Sheets llamada Registros_OCR.',\n  'Tienes acceso a una tool de Google Sheets para leer filas de la hoja.',\n  'Usa la tool cuando necesites evidencia de los datos. Para preguntas sobre datos, no respondas sin consultar la tool.',\n  'Responde unicamente con informacion sustentada en los registros obtenidos desde Google Sheets.',\n  'Si no encuentras soporte suficiente en los registros, responde exactamente: No encontrado en los registros.',\n  'Si la pregunta es de conteo, ranking, responsable con mas lineas, tendencias o resumenes, calcula la respuesta a partir de las filas que leas con la tool.',\n  'Si la pregunta es un saludo o una pregunta sobre como usar el chat, responde breve y sin inventar datos de la hoja.',\n  'No afirmes cosas no visibles en los registros.',\n  'Usa espanol claro y respuesta breve.',\n  '',\n  'Esquema util de la hoja:',\n  ...schemaLines,\n  '',\n  'Mapa semantico:',\n  ...semanticMap,\n  '',\n  'Historial reciente:',\n  historyText,\n  '',\n  'Pregunta actual del usuario:',\n  rawQuery || 'Sin pregunta',\n  '',\n  'Formato de respuesta preferido:',\n  'Consulta de registros',\n  '',\n  'Respuesta:',\n  '<respuesta breve sustentada>',\n  '',\n  'Evidencia:',\n  '- detalle 1',\n  '- detalle 2',\n].join('\\n');\n\nreturn [{\n  json: {\n    chatId,\n    userQuery: rawQuery,\n    prompt,\n  },\n}];"
+      },
+      "typeVersion": 2,
+      "position": [
+        736,
+        736
+      ],
+      "name": "ProcesarConsulta",
+      "id": "consult-process-01",
+      "type": "n8n-nodes-base.code"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.responseText }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "⬅️ Volver al menu",
+                    "additionalFields": {
+                      "callback_data": "back_menu"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "typeVersion": 1.2,
+      "position": [
+        2352,
+        432
+      ],
+      "name": "ResponderConsulta",
+      "id": "consult-reply-01",
+      "type": "n8n-nodes-base.telegram",
+      "webhookId": "7145d2d7-6919-45de-9436-4857bd574cdc",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "models/gemini-2.5-flash",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        1776,
+        336
+      ],
+      "id": "consult-gemini-01",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "l1PAQNLbuWlcjTnf",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const source = $('ProcesarConsulta').first().json;\nconst payload = $input.first().json;\nconst workflowStaticData = $getWorkflowStaticData('global');\nworkflowStaticData.chatHistories = workflowStaticData.chatHistories || {};\n\nconst modelParts = Array.isArray(payload?.content?.parts) ? payload.content.parts : [];\nconst candidateParts = Array.isArray(payload?.candidates?.[0]?.content?.parts) ? payload.candidates[0].content.parts : [];\nconst parts = modelParts.length ? modelParts : candidateParts;\nconst partsText = parts.map((part) => typeof part?.text === 'string' ? part.text : '').filter(Boolean).join('\\n').trim();\nconst directText = typeof payload?.text === 'string' ? payload.text.trim() : '';\nconst responseText = (partsText || directText || 'Consulta de registros\\n\\nNo encontrado en los registros.').replace(/\\r/g, '').trim();\n\nconst chatId = String(source.chatId || '');\nconst userQuery = String(source.userQuery || '').trim();\nconst history = Array.isArray(workflowStaticData.chatHistories[chatId]) ? workflowStaticData.chatHistories[chatId] : [];\nif (userQuery) history.push({ role: 'user', text: userQuery });\nhistory.push({ role: 'assistant', text: responseText });\nworkflowStaticData.chatHistories[chatId] = history.slice(-8);\n\nreturn [{ json: { chatId, responseText } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2128,
+        432
+      ],
+      "id": "consult-format-ia-01",
+      "name": "FormatearRespuestaConsulta"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "mode": "id",
+          "value": "1YsDdmcT9m6TJEiz6W17XiLIMAuRicgYPML2bQl5RNYY"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Registros_OCR",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1840,
+        560
+      ],
+      "id": "consult-sheets-tool-01",
+      "name": "Get row(s) in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6JPNutKOsdyamGs2",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.chatId }}",
+        "text": "*Consultando registros...*\n\nEstoy revisando la base de datos para responder con evidencia.",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "consult-notify-01",
+      "name": "NotificarConsultando",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1552,
+        432
+      ],
+      "webhookId": "a5f7f8a7-7e83-4ef7-8de0-8ef94e8f0b40",
+      "credentials": {
+        "telegramApi": {
+          "id": "43BugrwQo0Shx1pv",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# OCR Operativo IDC\n\n## Proposito\nEste workflow convierte Telegram en una interfaz operativa para dos procesos distintos pero conectados:\n- cargue OCR de reportes fotografiados\n- consulta conversacional sobre la base historica\n\n## Resultado esperado\n- reducir digitacion manual\n- convertir una foto en multiples filas estructuradas\n- dejar trazabilidad en Google Sheets\n- responder preguntas con evidencia real de la hoja\n\n## Recorrido de alto nivel\n1. El usuario llega al menu de Telegram.\n2. El workflow identifica si quiere cargar o consultar.\n3. La rama OCR escribe filas en `Registros_OCR`.\n4. La rama de consulta usa Gemini mas la tool de Sheets para responder.\n\n## Regla de diseno\nEl bot debe dejar claro en que modo esta el usuario y que espera del siguiente mensaje.",
+        "height": 648,
+        "width": 560
+      },
+      "id": "doc-sticky-01",
+      "name": "DOC - Vision General",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        -688
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Mensajes y experiencia de usuario\n\n## Nodos de respuesta inmediata\n- `MostrarMenu`: puerta de entrada general\n- `PedirFoto`: explica calidad esperada de la imagen\n- `ActivarModoConsulta`: abre el modo chat y muestra ejemplos utiles\n- `NotificarProcesando`: evita silencio mientras corre OCR\n- `NotificarConsultando`: avisa que la respuesta se esta buscando con evidencia\n- `NotificarExito`: resume el cargue en lenguaje operativo\n\n## Intencion UX\nCada mensaje inmediato cumple una funcion concreta:\n- confirmar que la accion del usuario fue entendida\n- indicar el siguiente paso esperado\n- reducir percepcion de espera durante operaciones lentas\n- devolver un cierre entendible al finalizar el OCR\n\n## Botones actuales\n- `Subir registro`: cambia el chat al modo de espera de foto\n- `Consultar datos`: cambia el chat al modo conversacional\n- `Volver al menu`: limpia contexto y reinicia la interaccion",
+        "height": 1988,
+        "width": 376,
+        "color": 4
+      },
+      "id": "doc-sticky-03",
+      "name": "DOC - Mensajes y UX",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -720
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Rama de consulta conversacional\n\n## Principio rector\nGemini no debe contestar de memoria. Para preguntas sobre datos debe apoyarse en la tool de Google Sheets y responder solo con evidencia de la hoja.\n\n## ProcesarConsulta\n- toma la pregunta actual\n- recupera historial corto por `chatId`\n- construye un prompt con esquema de columnas, mapa semantico y contexto reciente\n- instruye al modelo para usar la tool cuando la pregunta implique datos reales\n\n## Message a model\n- modelo: `gemini-2.5-flash`\n- opera como chatbot textual\n- responde mejor preguntas abiertas, conteos, rankings y seguimiento conversacional\n\n## Tool de Google Sheets\n- fuente: spreadsheet `1YsDdmcT9m6TJEiz6W17XiLIMAuRicgYPML2bQl5RNYY`\n- pestaña: `Registros_OCR`\n- permite consultar filas reales sin prefiltrado rigido\n\n## FormatearRespuestaConsulta\n- extrae el texto util de la respuesta del modelo\n- guarda memoria corta para preguntas de seguimiento\n- recorta historial para que no crezca indefinidamente\n\n## ResponderConsulta\nEntrega la respuesta final y mantiene visible el boton para salir del modo consulta.",
+        "height": 1132,
+        "width": 1508
+      },
+      "id": "doc-sticky-04",
+      "name": "DOC - Consulta Conversacional",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        -416
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Rama OCR: foto a registros estructurados\n\n## Analyze an image\n- usa Gemini en modo `image/analyze`\n- recibe la foto descargada por Telegram\n- el prompt exige JSON estricto con `documento` + `items[]`\n- una sola foto puede producir varias filas\n\n## FormatearDatos\nConvierte la salida del modelo en filas operativas listas para la hoja.\n- normaliza fechas y anios\n- corrige codigos como `22 -> 2.2` cuando aplica\n- unifica equipos detectados por checks y por lista textual\n- genera una fila por cada item del documento\n- conserva `Respuesta_Cruda` para auditoria\n- marca `Estado_OCR = Requiere Revision` si el parseo no fue confiable\n\n## GuardarEnSheets\n- hace `append` en `Registros_OCR`\n- cada item termina como una fila independiente\n\n## ResumenCarga y NotificarExito\n- cuentan filas guardadas\n- detectan filas para revision\n- calculan rango de fechas\n- devuelven un resumen corto y util al operador",
+        "height": 928,
+        "width": 1220
+      },
+      "id": "doc-sticky-05",
+      "name": "DOC - OCR y Persistencia",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        672,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Dependencias, limites y riesgos operativos\n\n## Credenciales requeridas\n- Telegram account\n- Google Sheets account\n- Google Gemini(PaLM) Api account\n\n## Dependencias de datos\n- hoja objetivo: `Registros_OCR`\n- campo clave para preguntas tipo responsable: `Firma_Hallazgo`\n- la calidad de consulta depende de que OCR haya escrito datos consistentes\n\n## Limites conocidos\n- `getWorkflowStaticData()` persiste mejor en ejecuciones reales con el workflow activo\n- en pruebas manuales el estado del chat puede no comportarse igual\n- si la hoja crece mucho, la consulta puede necesitar filtros o paginacion mas cuidadosos\n- si Gemini OCR devuelve estructura inesperada, el flujo prioriza marcar revision antes que perder trazabilidad\n\n## Nodos heredados\n- `LeerDatosSheetsConsulta` y `RouterConsultaIA` no participan en la ejecucion actual\n- se dejaron como referencia del enfoque anterior\n- pueden eliminarse en una limpieza futura si se quiere simplificar el canvas",
+        "height": 748,
+        "width": 560
+      },
+      "id": "doc-sticky-06",
+      "name": "DOC - Dependencias y Riesgos",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Entrada y estado conversacional\n\n## TelegramTrigger\n- escucha `message` y `callback_query`\n- descarga binarios para que las fotos lleguen listas a Gemini OCR\n\n## ResolverConversacion\nEs el punto de control central del workflow.\n- lee texto, botones y fotos\n- calcula la `route` real antes de ejecutar cualquier rama\n- usa `$getWorkflowStaticData('global')` para conservar estado por `chatId`\n\n## Estado persistido por chat\n- `chatModes`: `menu`, `ocr_wait_photo`, `chat_query`\n- `chatHistories`: ultimos turnos usados por la rama conversacional\n\n## RouterMenu\nSalidas activas:\n1. `ocr_prompt`: pedir foto\n2. `chat_prompt`: activar modo consulta\n3. `ocr_process`: procesar una imagen recibida\n4. `chat_query`: responder una pregunta conversacional\n5. `menu`: volver al menu inicial\n\n## Limpieza de contexto\nAl volver al menu o cambiar de modo se limpia el historial para evitar arrastre de contexto entre OCR y consulta.",
+        "height": 1980,
+        "width": 700,
+        "color": 3
+      },
+      "id": "doc-sticky-02",
+      "name": "DOC - Entrada y Estado",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        -720
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "TelegramTrigger": {
+      "main": [
+        [
+          {
+            "node": "ResolverConversacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ResolverConversacion": {
+      "main": [
+        [
+          {
+            "node": "RouterMenu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RouterMenu": {
+      "main": [
+        [
+          {
+            "node": "PedirFoto",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ActivarModoConsulta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NotificarProcesando",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Analyze an image",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ProcesarConsulta",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "MostrarMenu",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze an image": {
+      "main": [
+        [
+          {
+            "node": "FormatearDatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatearDatos": {
+      "main": [
+        [
+          {
+            "node": "GuardarEnSheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GuardarEnSheets": {
+      "main": [
+        [
+          {
+            "node": "ResumenCarga",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ResumenCarga": {
+      "main": [
+        [
+          {
+            "node": "NotificarExito",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ProcesarConsulta": {
+      "main": [
+        [
+          {
+            "node": "NotificarConsultando",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "FormatearRespuestaConsulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FormatearRespuestaConsulta": {
+      "main": [
+        [
+          {
+            "node": "ResponderConsulta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Message a model",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NotificarConsultando": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "2603844d-7cfa-4ff7-b871-7aba7bf90c9a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c0e866bd97dcfb34dc734a62a598215944ba0259d67b3c3368ed991de6cd0bdc"
+  },
+  "id": "mlETA7o6q4B2dIDW",
+  "tags": []
+}

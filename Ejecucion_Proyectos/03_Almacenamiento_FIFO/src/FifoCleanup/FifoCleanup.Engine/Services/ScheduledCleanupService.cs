@@ -23,6 +23,10 @@ public class ScheduledCleanupService : IScheduledCleanupService
     private CancellationTokenSource? _cts;
     private Task? _runningTask;
     private FifoConfiguration _config = new();
+    private DateTime _lastCriticalAlertAt = DateTime.MinValue;
+    private DateTime _lastErrorAlertAt = DateTime.MinValue;
+    private DateTime _startedAt = DateTime.MinValue;
+    private bool _startupWindowLogged;
 
     public bool IsRunning { get; private set; }
     public DateTime? NextScheduledRun { get; private set; }
@@ -47,6 +51,8 @@ public class ScheduledCleanupService : IScheduledCleanupService
         _config = config;
         _cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
         IsRunning = true;
+        _startedAt = DateTime.Now;
+        _startupWindowLogged = false;
 
         _runningTask = Task.Run(() => RunLoopAsync(_cts.Token), _cts.Token);
 
@@ -121,6 +127,14 @@ public class ScheduledCleanupService : IScheduledCleanupService
                     Result = "ERROR"
                 });
 
+                if (ShouldSendAlert(ref _lastErrorAlertAt, TimeSpan.FromMinutes(10)))
+                {
+                    await EmailAlertHelper.TrySendCriticalAlertAsync(
+                        _config,
+                        "[FIFO][CRITICO] RF-07 detenido por error",
+                        $"RF-07 reportó error en servidor.\n\nDetalle: {ex.Message}\nFecha: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\nStoragePath: {_config.StoragePath}");
+                }
+
                 // Esperar 5 minutos antes de reintentar
                 try { await Task.Delay(TimeSpan.FromMinutes(5), ct); }
                 catch (OperationCanceledException) { break; }
@@ -145,8 +159,39 @@ public class ScheduledCleanupService : IScheduledCleanupService
             : 0;
 
         // 3. Decidir
+        if (IsInStartupMonitoringWindow())
+        {
+            if (!_startupWindowLogged)
+            {
+                _startupWindowLogged = true;
+                var msg = $"RF-07 en ventana de gracia post-inicio ({_config.StartupMonitoringGraceMinutes} min). Monitoreo activo sin limpieza automática inmediata.";
+                await _bitacora.LogAsync(new BitacoraEntry
+                {
+                    EventType = BitacoraEventType.CleanupScheduled,
+                    Action = "RF07_STARTUP_MONITORING_ONLY",
+                    Details = msg,
+                    Result = "SKIPPED"
+                });
+                OnCleanupSkipped?.Invoke(this, msg);
+            }
+
+            return;
+        }
+
         if (projectedPercent > _config.ThresholdPercent || status.UsagePercent > _config.ThresholdPercent)
         {
+            if (ShouldSendAlert(ref _lastCriticalAlertAt, TimeSpan.FromMinutes(30)))
+            {
+                await EmailAlertHelper.TrySendCriticalAlertAsync(
+                    _config,
+                    "[FIFO][CRITICO] Umbral de almacenamiento sobrepasado",
+                    $"Uso actual: {status.UsagePercent:F1}%\n" +
+                    $"Uso proyectado: {projectedPercent:F1}%\n" +
+                    $"Umbral: {_config.ThresholdPercent:F1}%\n" +
+                    $"Fecha: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n" +
+                    $"Servidor/StoragePath: {_config.StoragePath}");
+            }
+
             // Ejecutar limpieza general
             var result = await _cleanup.ExecuteGeneralCleanupAsync(status, _config, ct);
             OnCleanupExecuted?.Invoke(this, result);
@@ -193,5 +238,22 @@ public class ScheduledCleanupService : IScheduledCleanupService
             size /= 1024;
         }
         return $"{size:0.##} {sizes[order]}";
+    }
+
+    private static bool ShouldSendAlert(ref DateTime lastSent, TimeSpan cooldown)
+    {
+        if (DateTime.Now - lastSent < cooldown)
+            return false;
+
+        lastSent = DateTime.Now;
+        return true;
+    }
+
+    private bool IsInStartupMonitoringWindow()
+    {
+        if (_config.StartupMonitoringGraceMinutes <= 0)
+            return false;
+
+        return DateTime.Now - _startedAt < TimeSpan.FromMinutes(_config.StartupMonitoringGraceMinutes);
     }
 }

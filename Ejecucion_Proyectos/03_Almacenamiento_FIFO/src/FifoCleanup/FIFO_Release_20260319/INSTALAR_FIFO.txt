@@ -1,0 +1,31 @@
+INSTALACION FIFO v1.1 (ZIP SIEMPRE EN DESCARGAS - COPIAR Y PEGAR TODO)
+
+$ErrorActionPreference = "Stop"
+
+$downloads = Join-Path $env:USERPROFILE "Downloads"
+$zip = Join-Path $downloads "FIFO_Release_20260319.zip"
+$pkg = Join-Path $downloads "FIFO_Release_20260319"
+$install = "C:\Apps\FIFO"
+
+if (Test-Path $zip) {
+    Expand-Archive -Path $zip -DestinationPath $pkg -Force
+}
+
+if (-not (Test-Path $pkg)) {
+    throw "No existe el paquete descomprimido en: $pkg (ni ZIP en: $zip)"
+}
+
+Get-ChildItem $pkg -Recurse | Unblock-File
+
+powershell -ExecutionPolicy Bypass -File "$pkg\02_Scripts\01_Instalar_FIFO.ps1" -SourceReleasePath $pkg -InstallPath $install
+powershell -ExecutionPolicy Bypass -File "$pkg\02_Scripts\02_SmokeTest_FIFO.ps1" -InstallPath $install -WaitSeconds 12
+
+$bitacora = Get-ChildItem "$install\bitacora" -Filter "bitacora_*.csv" -ErrorAction SilentlyContinue |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+
+if ($null -eq $bitacora) { throw "No se encontró bitácora en $install\bitacora" }
+
+Write-Host "OK instalación + smoke test"
+Write-Host "Bitácora:" $bitacora.FullName
+Write-Host "Verificar en config: enableEmailAlerts=false (servidor sin internet)"

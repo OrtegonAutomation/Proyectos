@@ -116,7 +116,3 @@ Requisitos específicos de la bitácora (CA-05):
 | Detalles | Multi-línea | Archivos eliminados, espacio liberado, etc. |
 | Hash línea | SHA-256 parcial | Primeros 16 caracteres |
 
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

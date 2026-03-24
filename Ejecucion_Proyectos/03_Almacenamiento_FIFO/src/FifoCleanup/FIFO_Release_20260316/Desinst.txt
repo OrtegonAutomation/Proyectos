@@ -1,0 +1,19 @@
+$ErrorActionPreference = "Stop"
+
+# 1) Ajusta solo si cambia el nombre
+$pkgRoot = Join-Path $env:USERPROFILE "Downloads\FIFO_Release_20260316"
+$installPath = "C:\Apps\FIFO"
+
+# 2) Buscar script rollback (soporta carpeta doble)
+$rollbackScript = Get-ChildItem -Path $pkgRoot -Recurse -Filter "03_Rollback_FIFO.ps1" -File |
+    Select-Object -First 1 -ExpandProperty FullName
+
+if (-not $rollbackScript) { throw "No encontré 03_Rollback_FIFO.ps1 en $pkgRoot" }
+
+# 3) ReleasePath = padre de 02_Scripts
+$releasePath = Split-Path (Split-Path $rollbackScript -Parent) -Parent
+
+# 4) Ejecutar rollback
+powershell -ExecutionPolicy Bypass -File $rollbackScript -ReleasePath $releasePath -InstallPath $installPath
+
+Write-Host "Rollback ejecutado OK en: $installPath"

@@ -119,8 +119,3 @@ El motor FIFO debe eliminar archivos reales del servidor de monitoreo. Esta es l
 | Espacio libre no coincide post-lote | Alertar pero no abortar (otro proceso pudo escribir) |
 | UI se desconecta durante ejecución | Motor C++ continúa; bitácora registra; UI reconecta y muestra estado |
 | Operador cierra ventana accidentalmente | Modal previene cierre durante ejecución activa (HU-03) |
-
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

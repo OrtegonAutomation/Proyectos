@@ -1,6 +1,6 @@
 # ADR-0001: Arquitectura WPF + C++ para Aplicación FIFO
 
-**Estado:** Aceptada  
+**Estado:** Implementada
 **Fecha:** 2026-02-16  
 **Autor:** IDC Ingeniería  
 **Proyecto:** Gestión de Almacenamiento FIFO para Servidor de Monitoreo  
@@ -8,7 +8,32 @@
 
 ---
 
-## Contexto
+> ### ⚠️ Nota de Supersesión (Marzo 2026)
+>
+> **Esta decisión fue revisada durante la implementación.** La arquitectura final es
+> **100% C# / .NET 8.0** (WPF + Class Library), sin componente C++ nativo.
+>
+> **Razón del cambio:** Durante el desarrollo se determinó que .NET 8.0 proporciona
+> rendimiento suficiente para las operaciones de I/O del proyecto (escaneo de disco,
+> eliminación FIFO) sin necesidad de un proceso C++ separado. Los beneficios incluyen:
+>
+> - **Stack unificado:** Un solo lenguaje (C#) reduce complejidad de mantenimiento
+> - **Sin comunicación inter-proceso:** Eliminación del protocolo JSON entre WPF y C++
+> - **Deployment simplificado:** Un solo ejecutable .NET en lugar de dos binarios
+> - **Testing unificado:** Todas las pruebas en un solo framework
+> - **Rendimiento adecuado:** `System.IO` de .NET 8.0 cumple los CA-07 sin C++ nativo
+>
+> **Arquitectura implementada:**
+> - `FifoCleanup.Engine` — Class Library (.NET 8.0): modelos, servicios, lógica FIFO
+> - `FifoCleanup.UI` — WPF App (.NET 8.0): interfaz gráfica con MVVM (CommunityToolkit.Mvvm)
+> - `FifoCleanup.Tests` — Console App (.NET 8.0): suite de pruebas automatizadas
+>
+> **Supersede:** Este ADR queda como referencia histórica de la decisión original.
+> La implementación real se documenta en [ARQUITECTURA.md](../ARQUITECTURA.md).
+
+---
+
+## Contexto (decisión original)
 
 Se requiere una aplicación de escritorio para gestionar almacenamiento FIFO en servidores de monitoreo industrial de ODL. El sistema debe:
 
@@ -82,7 +107,4 @@ Se requiere una aplicación de escritorio para gestionar almacenamiento FIFO en 
 | RAM máximo | < 500 MB | CA-07-07 |
 | Dashboard carga | < 2s | HU-01 |
 
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]
+--

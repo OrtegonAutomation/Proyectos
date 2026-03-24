@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Motor de lógica FIFO: inventario, limpieza, simulación, monitoreo RF-07/RF-08")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f1118683618b9ab8e004de54a48e9b83e056c463")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1edf15e2e79b0ccf82d40a5b4ba0706f4ee9fb8a")]
 [assembly: System.Reflection.AssemblyProductAttribute("FifoCleanup.Engine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FifoCleanup.Engine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

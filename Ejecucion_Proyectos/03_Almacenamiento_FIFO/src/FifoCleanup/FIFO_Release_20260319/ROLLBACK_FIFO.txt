@@ -1,0 +1,24 @@
+ROLLBACK FIFO v1.1 (ZIP SIEMPRE EN DESCARGAS - COPIAR Y PEGAR TODO)
+
+$ErrorActionPreference = "Stop"
+
+$downloads = Join-Path $env:USERPROFILE "Downloads"
+$zip = Join-Path $downloads "FIFO_Release_20260319.zip"
+$pkg = Join-Path $downloads "FIFO_Release_20260319"
+$install = "C:\Apps\FIFO"
+
+if (Test-Path $zip) {
+    Expand-Archive -Path $zip -DestinationPath $pkg -Force
+}
+
+if (-not (Test-Path $pkg)) { throw "No existe el paquete descomprimido en: $pkg (ni ZIP en: $zip)" }
+if (-not (Test-Path "$pkg\04_Backup_Original")) { throw "No existe carpeta de backups: $pkg\04_Backup_Original" }
+
+Get-ChildItem $pkg -Recurse | Unblock-File
+
+powershell -ExecutionPolicy Bypass -File "$pkg\02_Scripts\03_Rollback_FIFO.ps1" -ReleasePath $pkg -InstallPath $install
+
+if (-not (Test-Path "$install\FifoCleanup.exe")) { throw "Rollback ejecutado pero no se encontró FifoCleanup.exe en $install" }
+
+Write-Host "OK rollback"
+Write-Host "Validar manualmente apertura de: $install\FifoCleanup.exe"

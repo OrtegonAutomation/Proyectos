@@ -125,8 +125,3 @@ Un único mecanismo de limpieza no puede cubrir ambos escenarios eficientemente.
  BITÁCORA       BITÁCORA
  "Preventiva"   "Programada"
 ```
-
----
-
-**Revisores:** [Pendiente]  
-**Aprobado por:** [Pendiente]

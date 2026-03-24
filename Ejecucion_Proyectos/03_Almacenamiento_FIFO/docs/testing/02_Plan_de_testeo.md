@@ -3,8 +3,8 @@
 **Proyecto:** Gestión de Almacenamiento FIFO para Servidor de Monitoreo  
 **Cliente:** ODL Instrumentación y Control  
 **Empresa:** IDC Ingeniería  
-**Versión:** 1.0  
-**Estado:** Borrador  
+**Versión:** 1.1 (Addendum v1.1 incluido)  
+**Estado:** Finalizado
 **Fecha:** 2026-02-16
 
 ---
@@ -42,6 +42,7 @@ El plan cubre:
 | Historias de Usuario | 0.2 | `Requisitos/HISTORIAS_DE_USUARIO.md` |
 | Casos de Uso | 0.3 | `Requisitos/RESUMEN_ACTUALIZACION.md` |
 | ADRs | 1.0 | `Decisiones_arquitectura/ADR_0001 a ADR_0007` |
+| Plan de Test v1.1 | 1.1 | `testing/v1.1/02_Plan_de_testeo_v1.1.md` |
 
 ---
 
@@ -262,31 +263,25 @@ NUEVO → ASIGNADO → EN PROGRESO → RESUELTO → VERIFICADO → CERRADO
 
 ---
 
-## 9. Entregables de Testing
+## 9. Addendum v1.1 — alcance reducido a nuevas funcionalidades
 
-| Entregable | Formato | Responsable | Cuándo |
-|------------|---------|-------------|--------|
-| Plan de Pruebas (este documento) | Markdown/PDF | QA Lead | Antes de Fase 1 |
-| Casos de Prueba | Excel (TEST_CASES.xlsx) | QA | Antes de Fase 1 |
-| Plan UAT | Markdown/PDF | QA + Cliente | Antes de Fase 8 |
-| Resultados de ejecución | Excel (test_results_live.xlsx) | QA | Durante ejecución |
-| Reporte de defectos | Excel/Tracker | QA | Continuo |
-| Resumen final de pruebas | PDF (TEST_RESULTS_SUMMARY) | QA Lead | Post Fase 8 |
-| Certificación de aceptación | Documento firmado | Cliente ODL | Post UAT |
+Para v1.1 se ejecuta una suite enfocada exclusivamente en cambios nuevos:
 
----
+- Reactivación automática tras reinicio de servidor
+- Monitoreo en tiempo real RF-08 sin eliminación no deseada
+- RF-07 en modo monitoreo (sin cleanup)
+- Resiliencia de alertas email en entorno sin internet
 
-## 10. Aprobaciones
+### Ejecución
 
-| Rol | Nombre | Firma | Fecha |
-|-----|--------|-------|-------|
-| QA Lead | [Pendiente] | | |
-| Líder Técnico | [Pendiente] | | |
-| Gerente de Proyecto IDC | [Pendiente] | | |
-| Representante ODL | [Pendiente] | | |
+```powershell
+cd src\FifoCleanup\FifoCleanup.Tests
+dotnet run -c Release -- --version 1.1
+```
 
----
+### Salidas versionadas
 
-**Versión:** 1.0  
-**Estado:** Borrador  
-**Próxima revisión:** [Pendiente]
+- TSV: `D:\FifoTestBed\Reportes\v1.1\TestReport_*.tsv`
+- Excel: `docs/testing/v1.1/01_Casos_Test_v1.1.xlsx`
+- Resumen: `docs/testing/v1.1/04_Resumen_de_testeo_v1.1.md`
+

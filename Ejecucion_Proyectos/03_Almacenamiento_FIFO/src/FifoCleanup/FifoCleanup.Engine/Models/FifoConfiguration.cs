@@ -72,4 +72,31 @@ public class FifoConfiguration
     /// <summary>Pausa en milisegundos entre eliminación de carpetas consecutivas.
     /// Reduce picos de I/O en discos compartidos. 0 = sin pausa.</summary>
     public int DeleteThrottleMs { get; set; } = 50;
+
+    /// <summary>Habilita envío de alertas por email para eventos críticos.</summary>
+    public bool EnableEmailAlerts { get; set; } = false;
+
+    /// <summary>Correo destino para alertas críticas.</summary>
+    public string AlertEmailTo { get; set; } = "camilo.ortegonc@outlook.com";
+
+    /// <summary>Servidor SMTP para envío de alertas.</summary>
+    public string SmtpHost { get; set; } = "smtp.office365.com";
+
+    /// <summary>Puerto SMTP.</summary>
+    public int SmtpPort { get; set; } = 587;
+
+    /// <summary>Indica si SMTP usa SSL/TLS.</summary>
+    public bool SmtpUseSsl { get; set; } = true;
+
+    /// <summary>Usuario SMTP.</summary>
+    public string SmtpUser { get; set; } = string.Empty;
+
+    /// <summary>Contraseña SMTP (ideal: contraseña de aplicación).</summary>
+    public string SmtpPassword { get; set; } = string.Empty;
+
+    /// <summary>Correo remitente para alertas.</summary>
+    public string SmtpFrom { get; set; } = string.Empty;
+
+    /// <summary>Ventana de gracia tras iniciar servicios (minutos) para monitoreo sin limpieza automática inmediata.</summary>
+    public int StartupMonitoringGraceMinutes { get; set; } = 10;
 }
