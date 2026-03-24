@@ -14,6 +14,7 @@
 
 | Métrica | Valor | Estado |
 |---------|-------|--------|
+<<<<<<< HEAD
 | Total casos de prueba | 82 | ✅ |
 | Ejecutados | 82 / 82 | ✅ 100% |
 | Pasados | 82 | ✅ 100% |
@@ -170,19 +171,6 @@
 - TC-1101: Permisos escritura ruta datos
 - TC-1102: Bitácora append-only
 
----
-
-## 5. Casos N/A (No Automatizables)
-
-| TC | Descripción | Razón | Versión |
-|----|-------------|-------|---------|
-| TC-1201 | Alarma al superar umbral | RF-06 no implementado | v2.0 |
-| TC-1202 | Notificación email/syslog | RF-06 no implementado | v2.0 |
-| TC-1303 | RBAC roles de usuario | RF-09 no implementado | v2.0 |
-| TC-1401 | Interfaz responde escaneo | Requiere UI interactiva | v1.1 |
-| TC-1402 | Mensajes validación | Requiere UI interactiva | v1.1 |
-| TC-1403 | Barra progreso | Requiere UI interactiva | v1.1 |
-| TC-1404 | Botón Guardar disabled | Requiere UI interactiva | v1.1 |
 
 ---
 
@@ -232,8 +220,8 @@
 
 | Archivo | Ubicación | Formato | Registros |
 |---------|-----------|---------|-----------|
-| Reporte TSV | D:\FifoTestBed\Reportes\TestReport_20260223_132351.tsv | TSV | 89 |
-| Reporte Excel | C:\Users\IDC INGENIERIA\OneDrive\...\01_Casos_Test.xlsx | XLSX | 89 |
+| Reporte TSV | D:\FifoTestBed\Reportes\TestReport_20260223_132351.tsv | TSV | 82 |
+| Reporte Excel | C:\Users\IDC INGENIERIA\OneDrive\...\01_Casos_Test.xlsx | XLSX | 82 |
 | Resumen Testeo | Este documento | Markdown | - |
 
 **Elementos de Reporte Excel:**
@@ -258,10 +246,6 @@
 6. ✅ Integración end-to-end funcional
 7. ✅ Edge cases manejados correctamente
 
-**Limitaciones Conocidas:**
-- ⚪ RF-06 (Alarmas): Pendiente implementación v2.0
-- ⚪ RF-09 (RBAC): Pendiente implementación v2.0
-- ⚪ Tests UI: Requieren validación manual en v1.1
 
 ### Recomendación Final
 ✅ **APROBADO PARA DESPLIEGUE A PRODUCCIÓN**

@@ -272,6 +272,7 @@ Para v1.1 se ejecuta una suite enfocada exclusivamente en cambios nuevos:
 - RF-07 en modo monitoreo (sin cleanup)
 - Resiliencia de alertas email en entorno sin internet
 
+<<<<<<< HEAD
 ### Ejecución
 
 ```powershell
